@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ResolveNugetPackages>false</ResolveNugetPackages>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{4947E899-489D-3390-968E-DC830F1A8517}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+    <Platform>Win32</Platform>
+    <ProjectName>ALL_BUILD</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\MagicTower\MagicTower\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Building Custom Rule D:/MagicTower/MagicTower/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+D:\应用\CMake\bin\cmake.exe -SD:/MagicTower/MagicTower -BD:/MagicTower/MagicTower/win32-build --check-stamp-file D:/MagicTower/MagicTower/win32-build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\MagicTower\MagicTower\cocos2d\cmake\Modules\CocosBuildHelpers.cmake;D:\MagicTower\MagicTower\cocos2d\cmake\Modules\CocosBuildSet.cmake;D:\MagicTower\MagicTower\cocos2d\cmake\Modules\CocosConfigDefine.cmake;D:\MagicTower\MagicTower\cocos2d\cmake\Modules\CocosConfigDepend.cmake;D:\MagicTower\MagicTower\win32-build\CMakeFiles\3.23.1\CMakeCCompiler.cmake;D:\MagicTower\MagicTower\win32-build\CMakeFiles\3.23.1\CMakeCXXCompiler.cmake;D:\MagicTower\MagicTower\win32-build\CMakeFiles\3.23.1\CMakeRCCompiler.cmake;D:\MagicTower\MagicTower\win32-build\CMakeFiles\3.23.1\CMakeSystem.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeCCompiler.cmake.in;D:\应用\CMake\share\cmake-3.23\Modules\CMakeCCompilerABI.c;D:\应用\CMake\share\cmake-3.23\Modules\CMakeCInformation.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeCXXCompiler.cmake.in;D:\应用\CMake\share\cmake-3.23\Modules\CMakeCXXCompilerABI.cpp;D:\应用\CMake\share\cmake-3.23\Modules\CMakeCXXInformation.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeCommonLanguageInclude.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeCompilerIdDetection.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeDetermineCCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeDetermineCXXCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeDetermineCompileFeatures.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeDetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeDetermineCompilerABI.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeDetermineCompilerId.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeDetermineRCCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeDetermineSystem.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeFindBinUtils.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeGenericSystem.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeInitializeConfigs.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeLanguageInformation.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeParseArguments.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeParseImplicitIncludeInfo.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeParseImplicitLinkInfo.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeParseLibraryArchitecture.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeRCCompiler.cmake.in;D:\应用\CMake\share\cmake-3.23\Modules\CMakeRCInformation.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeSystem.cmake.in;D:\应用\CMake\share\cmake-3.23\Modules\CMakeSystemSpecificInformation.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeSystemSpecificInitialize.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeTestCCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeTestCXXCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeTestCompilerCommon.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeTestRCCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\ADSP-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\ARMCC-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\ARMClang-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\AppleClang-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\Borland-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\CMakeCommonCompilerMacros.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\Clang-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\Comeau-CXX-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\Cray-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\FujitsuClang-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\GHS-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\GNU-C-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\HP-C-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\IAR-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\IBMClang-C-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\IBMClang-CXX-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\Intel-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\IntelLLVM-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\LCC-C-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\LCC-CXX-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\MSVC-C.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\MSVC-CXX.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\MSVC-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\NVHPC-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\PGI-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\PathScale-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\SCO-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\TI-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\Watcom-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\XL-C-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\XLClang-C-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\XLClang-CXX-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\zOS-C-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CompilerId\VS-10.vcxproj.in;D:\应用\CMake\share\cmake-3.23\Modules\Internal\FeatureTesting.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Platform\Windows-Determine-CXX.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Platform\Windows-MSVC-C.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Platform\Windows-MSVC-CXX.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Platform\Windows-MSVC.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Platform\Windows.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Platform\WindowsPaths.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\MagicTower\MagicTower\win32-build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Building Custom Rule D:/MagicTower/MagicTower/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+D:\应用\CMake\bin\cmake.exe -SD:/MagicTower/MagicTower -BD:/MagicTower/MagicTower/win32-build --check-stamp-file D:/MagicTower/MagicTower/win32-build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\MagicTower\MagicTower\cocos2d\cmake\Modules\CocosBuildHelpers.cmake;D:\MagicTower\MagicTower\cocos2d\cmake\Modules\CocosBuildSet.cmake;D:\MagicTower\MagicTower\cocos2d\cmake\Modules\CocosConfigDefine.cmake;D:\MagicTower\MagicTower\cocos2d\cmake\Modules\CocosConfigDepend.cmake;D:\MagicTower\MagicTower\win32-build\CMakeFiles\3.23.1\CMakeCCompiler.cmake;D:\MagicTower\MagicTower\win32-build\CMakeFiles\3.23.1\CMakeCXXCompiler.cmake;D:\MagicTower\MagicTower\win32-build\CMakeFiles\3.23.1\CMakeRCCompiler.cmake;D:\MagicTower\MagicTower\win32-build\CMakeFiles\3.23.1\CMakeSystem.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeCCompiler.cmake.in;D:\应用\CMake\share\cmake-3.23\Modules\CMakeCCompilerABI.c;D:\应用\CMake\share\cmake-3.23\Modules\CMakeCInformation.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeCXXCompiler.cmake.in;D:\应用\CMake\share\cmake-3.23\Modules\CMakeCXXCompilerABI.cpp;D:\应用\CMake\share\cmake-3.23\Modules\CMakeCXXInformation.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeCommonLanguageInclude.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeCompilerIdDetection.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeDetermineCCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeDetermineCXXCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeDetermineCompileFeatures.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeDetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeDetermineCompilerABI.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeDetermineCompilerId.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeDetermineRCCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeDetermineSystem.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeFindBinUtils.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeGenericSystem.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeInitializeConfigs.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeLanguageInformation.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeParseArguments.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeParseImplicitIncludeInfo.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeParseImplicitLinkInfo.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeParseLibraryArchitecture.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeRCCompiler.cmake.in;D:\应用\CMake\share\cmake-3.23\Modules\CMakeRCInformation.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeSystem.cmake.in;D:\应用\CMake\share\cmake-3.23\Modules\CMakeSystemSpecificInformation.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeSystemSpecificInitialize.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeTestCCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeTestCXXCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeTestCompilerCommon.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CMakeTestRCCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\ADSP-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\ARMCC-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\ARMClang-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\AppleClang-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\Borland-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\CMakeCommonCompilerMacros.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\Clang-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\Comeau-CXX-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\Cray-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\FujitsuClang-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\GHS-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\GNU-C-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\HP-C-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\IAR-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\IBMClang-C-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\IBMClang-CXX-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\Intel-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\IntelLLVM-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\LCC-C-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\LCC-CXX-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\MSVC-C.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\MSVC-CXX.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\MSVC-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\NVHPC-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\PGI-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\PathScale-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\SCO-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\TI-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\Watcom-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\XL-C-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\XLClang-C-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\XLClang-CXX-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\zOS-C-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;D:\应用\CMake\share\cmake-3.23\Modules\CompilerId\VS-10.vcxproj.in;D:\应用\CMake\share\cmake-3.23\Modules\Internal\FeatureTesting.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Platform\Windows-Determine-CXX.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Platform\Windows-MSVC-C.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Platform\Windows-MSVC-CXX.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Platform\Windows-MSVC.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Platform\Windows.cmake;D:\应用\CMake\share\cmake-3.23\Modules\Platform\WindowsPaths.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\MagicTower\MagicTower\win32-build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="D:\MagicTower\MagicTower\win32-build\ZERO_CHECK.vcxproj">
+      <Project>{41ECC10A-EB02-35D1-ABBD-2DF780DBF984}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="D:\MagicTower\MagicTower\win32-build\MagicTower.vcxproj">
+      <Project>{6D35A530-6691-3C51-9553-DABCB96A1A4F}</Project>
+      <Name>MagicTower</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\MagicTower\MagicTower\win32-build\engine\cocos\core\cocos2d.vcxproj">
+      <Project>{B45B692F-948F-3A8D-A7A6-F780F5F3C9DA}</Project>
+      <Name>cocos2d</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\MagicTower\MagicTower\win32-build\engine\external\clipper\ext_clipper.vcxproj">
+      <Project>{02FD8D32-67BA-34D2-885B-49D24E4FB9E8}</Project>
+      <Name>ext_clipper</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\MagicTower\MagicTower\win32-build\engine\external\ConvertUTF\ext_convertUTF.vcxproj">
+      <Project>{393269B2-43CD-31F1-B956-89173A32E3DC}</Project>
+      <Name>ext_convertUTF</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\MagicTower\MagicTower\win32-build\engine\external\edtaa3func\ext_edtaa3func.vcxproj">
+      <Project>{0A3692CA-48BF-3021-9CFA-535853F2D2F4}</Project>
+      <Name>ext_edtaa3func</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\MagicTower\MagicTower\win32-build\engine\external\md5\ext_md5.vcxproj">
+      <Project>{6C4170BF-B9A9-3E8F-B90C-8F7C7DB3331B}</Project>
+      <Name>ext_md5</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\MagicTower\MagicTower\win32-build\engine\external\poly2tri\ext_poly2tri.vcxproj">
+      <Project>{D1BDC22B-5437-3799-B0DB-8AA4CC2B4DB8}</Project>
+      <Name>ext_poly2tri</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\MagicTower\MagicTower\win32-build\engine\external\recast\ext_recast.vcxproj">
+      <Project>{996ACC9B-891D-3DE1-A4A6-03DAB1FE74DA}</Project>
+      <Name>ext_recast</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\MagicTower\MagicTower\win32-build\engine\external\tinyxml2\ext_tinyxml2.vcxproj">
+      <Project>{C7B8577F-880C-3B47-A688-BD674058585F}</Project>
+      <Name>ext_tinyxml2</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\MagicTower\MagicTower\win32-build\engine\external\unzip\ext_unzip.vcxproj">
+      <Project>{34E6CD2D-1F29-3BDE-B319-CFF35C7D95F5}</Project>
+      <Name>ext_unzip</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\MagicTower\MagicTower\win32-build\engine\external\xxhash\ext_xxhash.vcxproj">
+      <Project>{BD674FBE-4F0C-31F2-B5C7-68B3D4432CA6}</Project>
+      <Name>ext_xxhash</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\MagicTower\MagicTower\win32-build\engine\external\xxtea\ext_xxtea.vcxproj">
+      <Project>{E99C6B6D-A546-3955-A5BC-CDCCD2A7EB1C}</Project>
+      <Name>ext_xxtea</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\MagicTower\MagicTower\win32-build\engine\external\external.vcxproj">
+      <Project>{9FD69C1B-19F1-367C-B097-44D59E404A66}</Project>
+      <Name>external</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
