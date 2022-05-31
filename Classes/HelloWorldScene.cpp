@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-
+#pragma execution_character_set("utf-8")
 #include "HelloWorldScene.h"
 USING_NS_CC;
 
@@ -47,15 +47,16 @@ bool HelloWorld::init()
         return false;
     }
 
-    auto visibleSize = Director::getInstance()->getVisibleSize();  // å®šä¹‰åœ°å›¾çš„å¯è§†åŒ–å°ºå¯¸
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();  // å®šä¹‰åœ°å›¾çš„å¯è§†åŒ–åŸç‚¹
-    auto backgroudImage = Sprite::create("é­”å¡”.png", Rect(240,0,550,483));
+    auto visibleSize = Director::getInstance()->getVisibleSize();  // ¶¨ÒåµØÍ¼µÄ¿ÉÊÓ»¯³ß´ç
+    Vec2 origin = Director::getInstance()->getVisibleOrigin();  // ¶¨ÒåµØÍ¼µÄ¿ÉÊÓ»¯Ô­µã
+    auto backgroudImage = Sprite::create("mota.jpg", Rect(240,0,550,483));
     backgroudImage -> setAnchorPoint(Vec2::ZERO);
     this -> addChild(backgroudImage);
     
 
-    auto label = Label::createWithTTF("é­”å¡”50å±‚", "fonts/Songti.ttc", 40);
+    auto label = Label::createWithTTF("Ä§Ëş50²ã", "fonts/Songti.ttc", 40);
     auto magic_tower = Label::createWithTTF("Magic Tower", "fonts/Apple Chancery.ttf", 30);
+    
     if (label == nullptr)
     {
         problemLoading("fonts/Songti.ttc");
@@ -78,12 +79,12 @@ bool HelloWorld::init()
     
     MenuItemFont::setFontName("fonts/arial.ttf");
     MenuItemFont::setFontSize(28);
-    auto item1 = MenuItemFont::create("é‡æ–°å¼€å§‹æ¸¸æˆ");  // æ–‡æœ¬èœå•ï¼Œæ¥å—ä¸¤ä¸ªå‚æ•°ï¼Œè¦æ˜¾ç¤ºçš„æ–‡æœ¬å’Œå›è°ƒå‡½æ•°æŒ‡é’ˆ
-    auto item2 = MenuItemFont::create("è½½å…¥å­˜æ¡£");
-    auto item3 = MenuItemFont::create("æ¸¸æˆè¯´æ˜");
-    auto item4 = MenuItemFont::create("é€‰é¡¹");
-    auto item5 = MenuItemFont::create("é€€å‡ºæ¸¸æˆ");
-
+    auto item1 = MenuItemFont::create("ÖØĞÂ¿ªÊ¼ÓÎÏ·");  // ÎÄ±¾²Ëµ¥£¬½ÓÊÜÁ½¸ö²ÎÊı£¬ÒªÏÔÊ¾µÄÎÄ±¾ºÍ»Øµ÷º¯ÊıÖ¸Õë
+    auto item2 = MenuItemFont::create("ÔØÈë´æµµ");
+    auto item3 = MenuItemFont::create("ÓÎÏ·ËµÃ÷");
+    auto item4 = MenuItemFont::create("Ñ¡Ïî");
+    auto item5 = MenuItemFont::create("ÍË³öÓÎÏ·");
+    // changes
     
     // create menu, it's an autorelease object
     auto menu = Menu::create(item1, item2, item3, item4, item5, NULL);
@@ -93,6 +94,7 @@ bool HelloWorld::init()
      
     return true;
 }
+
 
 
 
