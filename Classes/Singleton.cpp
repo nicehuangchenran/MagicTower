@@ -1,5 +1,5 @@
 #include "Singleton.h"
-
+/*
 template <class T>
 inline T* Singleton<T>::instance()
 {
@@ -16,3 +16,4 @@ void Singleton<T>::release()
 	delete _instance;
 	//_instance = 0;
 }
+*/
