@@ -12,7 +12,8 @@ class GameMap;
 class Hero;
 class ControlLayer;
 
-class Global : public Singleton<Global> {
+class Global
+{
 public:
 	Global(void) :
 		gameScene(NULL), gameLayer(NULL), controlLayer(NULL), gameMap(NULL), hero(NULL),
