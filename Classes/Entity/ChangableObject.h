@@ -6,7 +6,10 @@
 USING_NS_CC;
 
 class ChangableObject :public Node {
-
+public:
+	ChangableObject();
+	~ChangableObject();
+	virtual void meetWithHero();
 };
 
-#endif
+#endif // !_CHANGABLE_OBJECT_H_

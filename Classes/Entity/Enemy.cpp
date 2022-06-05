@@ -1,10 +1,14 @@
 #include "Enemy.h"
 
-Enemy::Enemy(void) {
+Enemy::Enemy() {
 	dictIdx = 0;
 	graphID = 0;
 }
 
-Enemy::~Enemy(void) {
+Enemy::~Enemy() {
+
+}
+
+void Enemy::meetWithHero() {
 
 }

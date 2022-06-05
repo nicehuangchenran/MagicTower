@@ -10,8 +10,10 @@ class Potion :public ChangableObject {
 public:
 	Potion();
 	~Potion();
+	void meetWithHero();
 
 private:
+	Sprite* spritePotion;
 
 };
 

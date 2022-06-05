@@ -5,3 +5,7 @@ Potion::Potion() {
 
 Potion::~Potion() {
 }
+
+void Potion::meetWithHero() {
+	//¸Ä±äÑªÁ¿
+}

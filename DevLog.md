@@ -32,4 +32,4 @@ jiaoao : 完成了选项设置界面的编写
 
 jiaoao : 完成了音量调节功能和游戏说明
 
-lxy : 将Classes目录结构改变；修改了头文件包含的相关内容；创建了Key类、Potion类
+lxy : 将Classes目录结构改变；修改了头文件包含的相关内容；修改和完善了Entity中各个类的部分内容；丰富了Constants.h；

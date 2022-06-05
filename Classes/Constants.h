@@ -1,8 +1,18 @@
 #pragma once
-#ifndef __CONSTANTS_H__
-#define __CONSTANTS_H__
+#ifndef _CONSTANTS_H_
+#define _CONSTANTS_H_
 
+#include <map>
+// 
 const int ObjectSize = 32;
+
+// 道具颜色对应的数字
+const int ITEM_COLOR_YELLOW = 1;
+const int ITEM_COLOR_BLUE = 2;
+const int ITEM_COLOR_RED = 3;
+
+// 怪物名到怪物ID的映射
+std::map<std::string, int> enemyID;
 
 typedef enum
 {
@@ -49,4 +59,4 @@ enum
 	kFadeLayer,
 };
 
-#endif
+#endif // !_CONSTANTS_H_

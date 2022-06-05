@@ -10,8 +10,10 @@ class Key :public ChangableObject {
 public:
 	Key();
 	~Key();
+	void meetWithHero();
 
 protected:
+	Sprite* keySprite;
 
 };
 

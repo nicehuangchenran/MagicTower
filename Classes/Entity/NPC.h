@@ -10,6 +10,7 @@ class NPC :public ChangableObject {
 public:
 	NPC(const ValueMap& dict, const int& x, const int& y);
 	~NPC();
+	void meetWithHero();
 protected:
 	Sprite* npcSprite;
 	int npcID;
