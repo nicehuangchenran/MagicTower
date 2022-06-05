@@ -9,8 +9,8 @@ USING_NS_CC;
 class Enemy : public ChangableObject
 {
 public:
-	Enemy(void);
-	~Enemy(void);
+	Enemy();
+	~Enemy();
 
 	//怪物在TileMap上的位置
 	Point enemyTileCoord;
@@ -20,6 +20,9 @@ public:
 
 	//怪物在字典中的index
 	int dictIdx;
+
+	void meetWithHero();
+
 };
 
 #endif // !_ENEMY_H_

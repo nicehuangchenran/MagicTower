@@ -26,3 +26,7 @@ NPC::NPC(const ValueMap& dict, const int& x, const int& y) {
 NPC::~NPC() {
 
 }
+
+void NPC::meetWithHero() {
+	//触发对话
+}

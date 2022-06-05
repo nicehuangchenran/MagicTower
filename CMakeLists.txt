@@ -56,6 +56,7 @@ list(APPEND GAME_SOURCE
      Classes/Entity/NPC.cpp
      Classes/Entity/Key.cpp
      Classes/Entity/Potion.cpp
+     Classes/Entity/Hero.cpp
      Classes/AppDelegate.cpp
      Classes/Global.cpp
      )
@@ -68,6 +69,7 @@ list(APPEND GAME_HEADER
      Classes/Entity/NPC.h
      Classes/Entity/Key.h
      Classes/Entity/Potion.h
+     Classes/Entity/Hero.h
      Classes/AppDelegate.h
      Classes/Constants.h
      Classes/Global.h
