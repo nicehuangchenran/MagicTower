@@ -2,7 +2,7 @@
 //  SettingScene.hpp
 //  MagicTower
 //
-//  Created by ½¹æñ on 2022/6/1.
+//  Created by ç„¦éªœ on 2022/6/1.
 //
 
 #ifndef SettingScene_h
