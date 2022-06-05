@@ -26,9 +26,7 @@
 
 #include "HelloWorldScene.h"
 #include "SettingScene.h"
-#include "SimpleAudioEngine.h"
-
-using namespace CocosDenshion;
+#include "AudioEngine.h"
 USING_NS_CC;
 
 Scene* HelloWorld::createScene()
@@ -95,13 +93,10 @@ bool HelloWorld::init()
     menu->alignItemsVertically();
     menu->setPosition(Point(origin.x + visibleSize.width / 2, origin.y + visibleSize.height - label->getContentSize().height * 7));
     this->addChild(menu, 1);
-    //AudioEngine::preload("test_music");
-    //AudioEngine::play2d("backgroundMusic", true);
-    auto bgMusic = SimpleAudioEngine::sharedEngine();
-    bgMusic->preloadBackgroundMusic("backgroundMusic.wav");
-    bgMusic->playBackgroundMusic("backgroundMusic.wav");
-    bgMusic->setBackgroundMusicVolume(0.5f);
-    log("%f", bgMusic->getBackgroundMusicVolume());
+    
+    AudioEngine::preload("backgroundMusic.wav");
+    AudioEngine::play2d("backgroundMusic.wav", true);
+
     return true;
 }
 

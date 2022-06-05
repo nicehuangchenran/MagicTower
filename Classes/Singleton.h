@@ -21,12 +21,12 @@ inline T* Singleton<T>::instance() {
 	return _instance;
 }
 
-template <class T>
-void Singleton<T>::release() {
-	unique_ptr<T>instPtr(_instance);
-	if (!instPtr)
-		return;
-}
+//template <class T>
+//void Singleton<T>::release() {
+//	unique_ptr<T>instPtr(_instance);
+//	if (!instPtr)
+//		return;
+//}
 
 //声明静态变量
 #define DECLARE_SINGLETON_MEMBER(_Ty)	\

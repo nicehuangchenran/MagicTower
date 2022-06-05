@@ -8,8 +8,7 @@
 #include "SettingScene.h"
 #include "HelloWorldScene.h"
 #include "ui/CocosGUI.h"
-#include "SimpleAudioEngine.h"
-using namespace CocosDenshion;
+#include "AudioEngine.h"
 USING_NS_CC;
 Scene* Setting::createScene()
 {
@@ -68,7 +67,7 @@ void Setting::onChangedSlider(Ref* PSender, cocos2d::ui::Slider::EventType type)
     {
         auto slider = dynamic_cast<cocos2d::ui::Slider*>(PSender);
         float percent = slider->getPercent() / 100.0f;
-        SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(percent);
+        AudioEngine::setVolume(0, percent);
     }
 }
 
