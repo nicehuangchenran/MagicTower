@@ -11,7 +11,8 @@
 #include "ui/CocosGUI.h"
 #include "AudioEngine.h"
 
-USING_NS_CC;
+USING_NS_CC; 
+using namespace cocos2d::experimental;
 
 Scene* Introduction::createScene()
 {

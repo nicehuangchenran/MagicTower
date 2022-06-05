@@ -48,26 +48,30 @@ endif()
 
 # add cross-platforms source files and header files 
 list(APPEND GAME_SOURCE
+     Classes/Scene/HelloWorldScene.cpp
+     Classes/Scene/SettingScene.cpp
+     Classes/Scene/Introduction.cpp
+     Classes/Entity/ChangableObject.cpp
+     Classes/Entity/Enemy.cpp
+     Classes/Entity/NPC.cpp
+     Classes/Entity/Key.cpp
+     Classes/Entity/Potion.cpp
      Classes/AppDelegate.cpp
-     Classes/HelloWorldScene.cpp
-     Classes/ChangableObject.cpp
-     Classes/Enemy.cpp
      Classes/Global.cpp
-     Classes/NPC.cpp
-     Classes/SettingScene.cpp
-     Classes/Introduction.cpp
      )
 list(APPEND GAME_HEADER
+     Classes/Scene/HelloWorldScene.h
+     Classes/Scene/SettingScene.h
+     Classes/Scene/Introduction.h
+     Classes/Entity/ChangableObject.h
+     Classes/Entity/Enemy.h
+     Classes/Entity/NPC.h
+     Classes/Entity/Key.h
+     Classes/Entity/Potion.h
      Classes/AppDelegate.h
-     Classes/HelloWorldScene.h
-     Classes/ChangableObject.h
      Classes/Constants.h
-     Classes/Enemy.h
      Classes/Global.h
      Classes/Headers.h
-     Classes/NPC.h
-     Classes/SettingScene.h
-     Classes/Introduction.h
     )
 
 if(ANDROID)

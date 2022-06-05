@@ -26,4 +26,10 @@ jiaoao : 完成了开始界面的编写
 zzh : 完成了Enemy Global NPC三个类的部分内容
 
 ## 6.3
-jiaoao: 完成了选项设置界面的编写
+jiaoao : 完成了选项设置界面的编写
+
+## 6.5
+
+jiaoao : 完成了音量调节功能和游戏说明
+
+lxy : 将Classes目录结构改变；修改了头文件包含的相关内容；创建了Key类、Potion类
