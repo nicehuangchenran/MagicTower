@@ -9,6 +9,6 @@ ChangableObject::~ChangableObject() {
 }
 
 void ChangableObject::meetWithHero() {
-	//在子类种实现具体变化
-	//精灵图片消失
+	//鍦ㄥ瓙绫荤瀹炵幇鍏蜂綋鍙樺寲
+	//绮剧伒鍥剧墖娑堝け
 }

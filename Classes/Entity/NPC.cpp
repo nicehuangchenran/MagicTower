@@ -28,5 +28,5 @@ NPC::~NPC() {
 }
 
 void NPC::meetWithHero() {
-	//´¥·¢¶Ô»°
+	//è§¦å‘å¯¹è¯
 }

@@ -7,5 +7,5 @@ Key::~Key() {
 }
 
 void Key::meetWithHero() {
-	//�ı�Կ��������״̬
+	//改变钥匙数量的状态
 }

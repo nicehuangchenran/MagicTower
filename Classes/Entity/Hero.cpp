@@ -9,10 +9,10 @@ Hero::~Hero() {
 }
 
 Hero* Hero::create() {
-	//newÉêÇë¿Õ¼ä
+	//newç”³è¯·ç©ºé—´
 	Hero* heroPointer = new(std::nothrow) Hero;
 
-	//Òì³£´¦Àí
+	//å¼‚å¸¸å¤„ç†
 	if (heroPointer && heroPointer->init()) {
 		return heroPointer;
 	}
@@ -23,12 +23,12 @@ Hero* Hero::create() {
 }
 
 bool Hero::init() {
-	//µ÷ÓÃ¸¸Àà³õÊ¼»¯º¯Êı
+	//è°ƒç”¨çˆ¶ç±»åˆå§‹åŒ–å‡½æ•°
 	if (!Node::init()) {
 		return false;
 	}
 
-	//½øĞĞ³õÊ¼»¯
+	//è¿›è¡Œåˆå§‹åŒ–
 
 	return true;
 }

@@ -7,5 +7,5 @@ Potion::~Potion() {
 }
 
 void Potion::meetWithHero() {
-	//�ı�Ѫ��
+	//改变血量
 }
