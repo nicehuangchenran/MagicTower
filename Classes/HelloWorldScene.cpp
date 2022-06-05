@@ -22,13 +22,12 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#pragma execution_character_set("utf-8")
+
 
 #include "HelloWorldScene.h"
 #include "SettingScene.h"
-#include "SimpleAudioEngine.h"
-
-using namespace CocosDenshion;
+#include "AudioEngine.h"
+#include "Introduction.h"
 USING_NS_CC;
 
 Scene* HelloWorld::createScene()
@@ -59,7 +58,7 @@ bool HelloWorld::init()
     this->addChild(backgroundImage);
 
 
-    auto label = Label::createWithTTF("Ä§Ëþ", "fonts/Songti.ttc", 40);
+    auto label = Label::createWithTTF("é­”å¡”", "fonts/Songti.ttc", 40);
     auto magic_tower = Label::createWithTTF("Magic Tower", "fonts/Apple Chancery.ttf", 30);
 
     if (label == nullptr)
@@ -84,37 +83,42 @@ bool HelloWorld::init()
 
     MenuItemFont::setFontName("fonts/arial.ttf");
     MenuItemFont::setFontSize(28);
-    auto item1 = MenuItemFont::create("ÖØÐÂ¿ªÊ¼ÓÎÏ·");
-    auto item2 = MenuItemFont::create("ÔØÈë´æµµ");
-    auto item3 = MenuItemFont::create("ÓÎÏ·ËµÃ÷");
-    auto item4 = MenuItemFont::create("Ñ¡ÏîÉèÖÃ", CC_CALLBACK_1(HelloWorld::menuItemSetting, this));
-    auto item5 = MenuItemFont::create("ÍË³öÓÎÏ·", CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
+    auto item1 = MenuItemFont::create("é‡æ–°å¼€å§‹æ¸¸æˆ");
+    auto item2 = MenuItemFont::create("è½½å…¥å­˜æ¡£");
+    auto item3 = MenuItemFont::create("æ¸¸æˆè¯´æ˜Ž", CC_CALLBACK_1(HelloWorld::menuItemIntro, this));
+    auto item4 = MenuItemFont::create("é€‰é¡¹è®¾ç½®", CC_CALLBACK_1(HelloWorld::menuItemSetting, this));
+    auto item5 = MenuItemFont::create("é€€å‡ºæ¸¸æˆ", CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
 
     // create menu, it's an autorelease object
     auto menu = Menu::create(item1, item2, item3, item4, item5, NULL);
     menu->alignItemsVertically();
     menu->setPosition(Point(origin.x + visibleSize.width / 2, origin.y + visibleSize.height - label->getContentSize().height * 7));
     this->addChild(menu, 1);
-    //AudioEngine::preload("test_music");
-    //AudioEngine::play2d("backgroundMusic", true);
-    auto bgMusic = SimpleAudioEngine::sharedEngine();
-    bgMusic->preloadBackgroundMusic("backgroundMusic.wav");
-    bgMusic->playBackgroundMusic("backgroundMusic.wav");
-    bgMusic->setBackgroundMusicVolume(0.5f);
-    log("%f", bgMusic->getBackgroundMusicVolume());
+    
+    AudioEngine::preload("backgroundMusic.wav");
+    AudioEngine::setVolume(0, 0.5);
+    AudioEngine::play2d("backgroundMusic.wav", true);
+
     return true;
 }
 
 
 void HelloWorld::menuItemSetting(cocos2d::Ref* PSender)
 {
+    if (Setting::isEffect)    AudioEngine::play2d("button_click.wav");
     auto sc = Setting::createScene();
     Director::getInstance()->pushScene(TransitionFadeTR::create(2.0f, sc));
+    
 }
 
 void HelloWorld::menuCloseCallback(cocos2d::Ref* PSender)
 {
+    if (Setting::isEffect) AudioEngine::play2d("button_click.wav");
     Director::getInstance()->end();
 }
 
-
+void HelloWorld::menuItemIntro(Ref *PSender)
+{
+    if (Setting::isEffect) AudioEngine::play2d("button_click.wav");
+    Director::getInstance() -> pushScene(TransitionFadeTR::create(2.0f, Introduction::createScene() ) );
+}

@@ -12,7 +12,7 @@ NPC::NPC(const ValueMap& dict, const int& x, const int& y) {
 	npcSprite = Sprite::create(imagePath, rect);
 	npcSprite->setAnchorPoint(Point::ZERO);
 	npcSprite->setPosition(position);
-
+    
 	//sGlobal->gameLayer->addChild(npcSprite, kZNPC);
 	/*Animate* animation = sAnimationMgr->createAnimate(npcID);
 	if (animation != NULL)

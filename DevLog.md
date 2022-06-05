@@ -24,3 +24,6 @@ jiaoao : 完成了开始界面的编写
 
 ## 6.2
 zzh : 完成了Enemy Global NPC三个类的部分内容
+
+## 6.3
+jiaoao: 完成了选项设置界面的编写

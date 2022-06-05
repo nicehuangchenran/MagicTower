@@ -9,6 +9,7 @@
 #define HelloWorldScene_h
 
 #include "cocos2d.h"
+
 class HelloWorld :public cocos2d::Scene
 {
 public:
@@ -19,7 +20,7 @@ public:
 
     void menuItemSetting(cocos2d::Ref* PSender);
     void menuCloseCallback(cocos2d::Ref* PSender);
-
+    void menuItemIntro(Ref* PSender);
     CREATE_FUNC(HelloWorld);
 };
 

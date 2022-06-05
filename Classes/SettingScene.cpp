@@ -2,19 +2,19 @@
 //  SettingScene.cpp
 //  MagicTower
 //
-//  Created by ½¹æñ on 2022/6/1.
+//  Created by ç„¦éªœ on 2022/6/1.
 //
-#pragma execution_character_set("utf-8")
+
 #include "SettingScene.h"
 #include "HelloWorldScene.h"
 #include "ui/CocosGUI.h"
-#include "SimpleAudioEngine.h"
-using namespace CocosDenshion;
+#include "AudioEngine.h"
 USING_NS_CC;
 Scene* Setting::createScene()
 {
     return Setting::create();
 }
+bool Setting::isEffect = true;
 
 bool Setting::init()
 {
@@ -26,24 +26,24 @@ bool Setting::init()
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    //±³¾°Í¼Æ¬
+    //èƒŒæ™¯å›¾ç‰‡
     auto backgroundImage = Sprite::create("mota.jpg", Rect(240, 0, 550, 483));
     backgroundImage->setAnchorPoint(Vec2::ZERO);
     this->addChild(backgroundImage);
-    // ¿ª¹Ø²Ëµ¥
+    // å¼€å…³èœå•
     auto toggleSoundMenuitem = MenuItemToggle::createWithCallback(CC_CALLBACK_1(Setting::menuItemSoundToggleCallback, this), MenuItemFont::create("on"), MenuItemFont::create("off"), nullptr);
     toggleSoundMenuitem->setPosition(Vec2(400, 300));
 
-    auto soundLabel = MenuItemFont::create("ÒôÐ§£º");
+    auto soundLabel = MenuItemFont::create("éŸ³æ•ˆï¼š");
     soundLabel->setPosition(Vec2(200, 300));
     addChild(soundLabel);
 
-    auto musicLabel = MenuItemFont::create("ÒôÀÖ£º");
+    auto musicLabel = MenuItemFont::create("éŸ³ä¹ï¼š");
     musicLabel->setPosition(Vec2(200, 150));
     addChild(musicLabel);
 
 
-    auto okMenuItem = MenuItemFont::create("Íê³É", CC_CALLBACK_1(Setting::menuItemBack, this));
+    auto okMenuItem = MenuItemFont::create("å®Œæˆ", CC_CALLBACK_1(Setting::menuItemBack, this));
     okMenuItem->setPosition(Vec2(visibleSize.width / 2, 50));
     cocos2d::ui::Slider* slider = cocos2d::ui::Slider::create();
     slider->loadBarTexture("Slider_Back.png"); // what the slider looks like
@@ -55,7 +55,7 @@ bool Setting::init()
     slider->addEventListener(CC_CALLBACK_2(Setting::onChangedSlider, this));
 
     addChild(slider);
-    //½«¿ª¹Ø²Ëµ¥ºÍÎÄ±¾²Ëµ¥¼ÓÈëmenu²Ëµ¥ÖÐ
+    //å°†å¼€å…³èœå•å’Œæ–‡æœ¬èœå•åŠ å…¥menuèœå•ä¸­
     Menu* menu = Menu::create(toggleSoundMenuitem, okMenuItem, nullptr);
     menu->setPosition(Vec2::ZERO);
     addChild(menu);
@@ -68,16 +68,25 @@ void Setting::onChangedSlider(Ref* PSender, cocos2d::ui::Slider::EventType type)
     {
         auto slider = dynamic_cast<cocos2d::ui::Slider*>(PSender);
         float percent = slider->getPercent() / 100.0f;
-        SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(percent);
+        AudioEngine::setVolume(0, percent);
     }
 }
 
 void Setting::menuItemSoundToggleCallback(cocos2d::Ref* PSender)
 {
-    // ÉèÖÃÒôÐ§¿ªÆô»ò¹Ø±Õ
+    auto soundToggleMenuItem = (MenuItemToggle*) PSender;
+    if (isEffect)
+    {
+        AudioEngine::play2d("button_click.wav");
+    }
+    if (soundToggleMenuItem -> getSelectedIndex() == 1) isEffect = false;
+    else{
+        isEffect = true;
+        AudioEngine::play2d("button_click.wav");
+    }
 }
 
-// µã»÷Íê³ÉÊ±£¬·µ»ØÖ÷½çÃæ
+// ç‚¹å‡»å®Œæˆæ—¶ï¼Œè¿”å›žä¸»ç•Œé¢
 void Setting::menuItemBack(cocos2d::Ref* Psender)
 {
     Director::getInstance()->popScene();
