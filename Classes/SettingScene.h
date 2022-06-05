@@ -13,6 +13,7 @@
 class Setting :public cocos2d::Scene
 {
 public:
+    static bool isEffect;
     static cocos2d::Scene* createScene();
     virtual bool init();
     void menuItemSoundToggleCallback(cocos2d::Ref* PSender);

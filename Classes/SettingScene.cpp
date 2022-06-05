@@ -14,6 +14,7 @@ Scene* Setting::createScene()
 {
     return Setting::create();
 }
+bool Setting::isEffect = true;
 
 bool Setting::init()
 {
@@ -73,7 +74,16 @@ void Setting::onChangedSlider(Ref* PSender, cocos2d::ui::Slider::EventType type)
 
 void Setting::menuItemSoundToggleCallback(cocos2d::Ref* PSender)
 {
-    // 设置音效开启或关闭
+    auto soundToggleMenuItem = (MenuItemToggle*) PSender;
+    if (isEffect)
+    {
+        AudioEngine::play2d("button_click.wav");
+    }
+    if (soundToggleMenuItem -> getSelectedIndex() == 1) isEffect = false;
+    else{
+        isEffect = true;
+        AudioEngine::play2d("button_click.wav");
+    }
 }
 
 // 点击完成时，返回主界面

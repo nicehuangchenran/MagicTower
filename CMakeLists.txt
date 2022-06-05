@@ -55,6 +55,7 @@ list(APPEND GAME_SOURCE
      Classes/Global.cpp
      Classes/NPC.cpp
      Classes/SettingScene.cpp
+     Classes/Introduction.cpp
      )
 list(APPEND GAME_HEADER
      Classes/AppDelegate.h
@@ -66,6 +67,7 @@ list(APPEND GAME_HEADER
      Classes/Headers.h
      Classes/NPC.h
      Classes/SettingScene.h
+     Classes/Introduction.h
     )
 
 if(ANDROID)

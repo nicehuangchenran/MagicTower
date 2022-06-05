@@ -27,6 +27,7 @@
 #include "HelloWorldScene.h"
 #include "SettingScene.h"
 #include "AudioEngine.h"
+#include "Introduction.h"
 USING_NS_CC;
 
 Scene* HelloWorld::createScene()
@@ -84,7 +85,7 @@ bool HelloWorld::init()
     MenuItemFont::setFontSize(28);
     auto item1 = MenuItemFont::create("重新开始游戏");
     auto item2 = MenuItemFont::create("载入存档");
-    auto item3 = MenuItemFont::create("游戏说明");
+    auto item3 = MenuItemFont::create("游戏说明", CC_CALLBACK_1(HelloWorld::menuItemIntro, this));
     auto item4 = MenuItemFont::create("选项设置", CC_CALLBACK_1(HelloWorld::menuItemSetting, this));
     auto item5 = MenuItemFont::create("退出游戏", CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
 
@@ -95,6 +96,7 @@ bool HelloWorld::init()
     this->addChild(menu, 1);
     
     AudioEngine::preload("backgroundMusic.wav");
+    AudioEngine::setVolume(0, 0.5);
     AudioEngine::play2d("backgroundMusic.wav", true);
 
     return true;
@@ -103,13 +105,20 @@ bool HelloWorld::init()
 
 void HelloWorld::menuItemSetting(cocos2d::Ref* PSender)
 {
+    if (Setting::isEffect)    AudioEngine::play2d("button_click.wav");
     auto sc = Setting::createScene();
     Director::getInstance()->pushScene(TransitionFadeTR::create(2.0f, sc));
+    
 }
 
 void HelloWorld::menuCloseCallback(cocos2d::Ref* PSender)
 {
+    if (Setting::isEffect) AudioEngine::play2d("button_click.wav");
     Director::getInstance()->end();
 }
 
-
+void HelloWorld::menuItemIntro(Ref *PSender)
+{
+    if (Setting::isEffect) AudioEngine::play2d("button_click.wav");
+    Director::getInstance() -> pushScene(TransitionFadeTR::create(2.0f, Introduction::createScene() ) );
+}
