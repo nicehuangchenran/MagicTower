@@ -1,12 +1,12 @@
 //
-//  MyHelloWorldScene.hpp
+//  MyHelloWorldScene.h
 //  MagicTower
 //
 //  Created by 焦骜 on 2022/5/16.
 //
 
-#ifndef HelloWorldScene_h
-#define HelloWorldScene_h
+#ifndef _HELLO_WORLD_SCENE_H_
+#define _HELLO_WORLD_SCENE_H_
 
 #include "cocos2d.h"
 
@@ -25,4 +25,4 @@ public:
 };
 
 
-#endif /* HelloWorldScene_h */
+#endif // !_HELLO_WORLD_SCENE_H_

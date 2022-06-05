@@ -23,12 +23,12 @@
  ****************************************************************************/
 
 
-
 #include "HelloWorldScene.h"
 #include "SettingScene.h"
 #include "AudioEngine.h"
 #include "Introduction.h"
-USING_NS_CC;
+USING_NS_CC; 
+using namespace cocos2d::experimental;
 
 Scene* HelloWorld::createScene()
 {

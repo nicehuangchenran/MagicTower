@@ -1,12 +1,13 @@
 //
-//  SettingScene.hpp
+//  SettingScene.h
 //  MagicTower
 //
 //  Created by 焦骜 on 2022/6/1.
 //
 
-#ifndef SettingScene_h
-#define SettingScene_h
+#ifndef _SETTING_SCENE_H_
+#define _SETTING_SCENE_H_
+
 #include "ui/CocosGUI.h"
 #include "cocos2d.h"
 
@@ -22,5 +23,4 @@ public:
     CREATE_FUNC(Setting);
 };
 
-
-#endif /* SettingScene_h */
+#endif // !_SETTING_SCENE_H_
