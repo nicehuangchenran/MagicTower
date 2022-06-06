@@ -2,17 +2,25 @@
 #ifndef _CONSTANTS_H_
 #define _CONSTANTS_H_
 
-#include <map>
-// 
-const int ObjectSize = 32;
+// 方格大小
+const int OBJECT_SIZE = 32;
 
-// 道具颜色对应的数字
-const int ITEM_COLOR_YELLOW = 1;
-const int ITEM_COLOR_BLUE = 2;
-const int ITEM_COLOR_RED = 3;
+// 道具颜色
+const int ITEM_COLOR_YELLOW = 0;
+const int ITEM_COLOR_BLUE = 1;
+const int ITEM_COLOR_RED = 2;
 
-// 怪物名到怪物ID的映射
-std::map<std::string, int> enemyID;
+//剑盾种类
+const int WEAPON_TYPE_IRON = 0;
+const int WEAPON_TYPE_SLIVER = 1;
+const int WEAPON_TYPE_KNIGHT = 2;
+const int WEAPON_TYPE_HOLY = 3;
+
+//移动方向
+const int DIRECTION_UP = 0;
+const int DIRECTION_DOWN = 1;
+const int DIRECTION_LEFT = 2;
+const int DIRECTION_RIGHT = 3;
 
 typedef enum
 {
