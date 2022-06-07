@@ -1,12 +1,11 @@
 #ifndef _NPC_H_
 #define _NPC_H_
 
-#include "cocos2d.h"
-#include "ChangableObject.h"
+#include "Headers.h"
 
 USING_NS_CC;
 
-class NPC :public ChangableObject {
+class NPC {
 public:
 	NPC(const ValueMap& dict, const int& x, const int& y);
 	~NPC();

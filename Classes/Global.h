@@ -41,6 +41,6 @@ public:
 	Point heroSpawnTileCoord;
 };
 
-#define sGlobal Global::instance()
+//#define sGlobal Global::instance()
 
 #endif // !_GLOBAL_H_
