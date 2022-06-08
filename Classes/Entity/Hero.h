@@ -18,6 +18,10 @@ public:
 	void getGem(const int color); //获得宝石
 	void getSword(const int type); //获得剑
 	void getShield(const int type); //获得盾
+	void fightWithEnemy(const int enemyID); //与怪物战斗
+	bool isStopping; //是否处于静止状态（用于动画时禁止其他操作）
+
+	friend class FightLayer;
 	
 protected:
 	Sprite* sprite; //精灵

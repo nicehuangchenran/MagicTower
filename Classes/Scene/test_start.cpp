@@ -55,6 +55,5 @@ bool test_start::init()
     auto dispatcher = Director::getInstance()->getEventDispatcher();
 
     dispatcher->addEventListenerWithSceneGraphPriority(listenerkey, this);
-
     return true;
 }

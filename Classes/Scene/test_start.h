@@ -1,6 +1,5 @@
-
-#ifndef test_start_hpp
-#define test_start_hpp
+#ifndef _TEST_START_H_
+#define _TEST_START_H_
 
 #include "cocos2d.h"
 class test_start:public cocos2d::Scene
@@ -13,4 +12,4 @@ public:
     CREATE_FUNC(test_start);
 };
 
-#endif /* test_start_h */
+#endif // !_TEST_START_H_
