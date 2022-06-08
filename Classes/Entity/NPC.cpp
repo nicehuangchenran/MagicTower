@@ -1,4 +1,4 @@
-#include "NPC.h"
+#include "Headers.h"
 
 NPC::NPC(const ValueMap& dict, const int& x, const int& y) {
 	npcID = dict.at("name").asInt();
