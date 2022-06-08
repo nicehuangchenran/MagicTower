@@ -1,8 +1,8 @@
 #ifndef _GLOBAL_H_
 #define _GLOBAL_H_
 
-#include "Headers.h"
 #include "Singleton.h"
+#include "Entity/Enemy.h"
 
 using namespace cocos2d;
 
@@ -16,10 +16,20 @@ class Global
 {
 
 public:
-	Global(void) :
+	Global() :
 		gameScene(NULL), gameLayer(NULL), controlLayer(NULL), gameMap(NULL), hero(NULL),
+
 		currentLevel(0), heroSpawnTileCoord(Point{ 1, 1 }) {}
 	
+
+		currentLevel(0), heroSpawnTileCoord(Point{ 1, 1 })
+	{
+		initEnemyMap();
+	};
+
+	//初始化怪物信息映射
+	void initEnemyMap();
+
 
 	//游戏场景
 	GameScene *gameScene;
@@ -41,9 +51,17 @@ public:
 
 	//勇士出现的起始位置
 	Vec2 heroSpawnTileCoord;
+	
+	// 怪物ID到怪物数据的映射
+	std::map<int, Enemy> enemyMap;
 };
 
 
+
 //#define sGlobal Global::getInstance()
+=======
+//#define sGlobal Global::instance()
+static Global* sGlobal = new Global;
+
 
 #endif // !_GLOBAL_H_

@@ -1,18 +1,20 @@
-#include "Hero.h"
-#include "Constants.h"
+#include "Headers.h"
 
 Hero::Hero() {
 	sGlobal->hero = this;
 }
 
-Hero::~Hero() {}
+Hero::~Hero() 
+{
+	delete fightLayer;
+}
 
 
 //创建对象
 Hero* Hero::create()
 {
 	//new申请空间
-	Hero* heroPointer = new(std::nothrow) Hero;
+	Hero* heroPointer = new Hero;
 
 	//异常处理
 	if (heroPointer && heroPointer->init())
@@ -30,26 +32,32 @@ Hero* Hero::create()
 bool Hero::init()
 {
 	//调用父类初始化函数
-	if (!Node::init())
-	{
-		return false;
-	}
+	if (!Node::init()) { return false; }
 
 	//初始化状态数据
 	position = Point(0, 0);
-	atk = 10;
-	def = 10;
-	blood = 400;
-	gold = 100;
+	blood = INIT_BLOOD;
+	atk = INIT_ATK;
+	def = INIT_DEF;
+	gold = INIT_GOLD;
 	key[ITEM_COLOR_YELLOW] = 0;
 	key[ITEM_COLOR_BLUE] = 0;
 	key[ITEM_COLOR_RED] = 0;
 
+	//战斗界面
+	fightLayer = new FightLayer;
+
 	//设置精灵
+
 	heroImage = Sprite::create("img/1.png", 
 		Rect(0, OBJECT_SIZE*10+1, OBJECT_SIZE,OBJECT_SIZE));//创建精灵
 	heroImage->setAnchorPoint(Point::ZERO);//设置锚点为左下角
 	this->addChild(heroImage);//绑定精灵
+
+	sprite = Sprite::create("img/1.png", Rect(0, OBJECT_SIZE * 10 + 1, OBJECT_SIZE, OBJECT_SIZE));//创建精灵
+	sprite->setAnchorPoint(Point::ZERO);//设置锚点为左下角
+	this->addChild(sprite);//绑定精灵
+
 
 	return true;
 }
@@ -103,6 +111,7 @@ void Hero::move(EventKeyboard::KeyCode code)
 	// 移动到新位置
 	this->runAction(MoveBy::create(0.2f, moveDist));
 }
+
 
 void Hero::walkAnimation(int faceDirection)
 {
@@ -166,13 +175,13 @@ CollisionType Hero::collisionCheck(Vec2 heroPosition)
 
 
 
+=======
+
 //获得钥匙
 void Hero::getKey(const int color)
 {
 	this->key[color]++;
 }
-
-
 
 //获得药水
 //---待修改：血量增加需要乘上系数【当前区域数】---
@@ -250,3 +259,22 @@ void Hero::getShield(const int type)
 	this->def += addDef;
 }
 
+void Hero::fightWithEnemy(Scene* scene, const int enemyID)
+{
+	//禁用其他动作
+	this->isStopping = 0;
+
+	//检查怪物ID是否正确
+	if (enemyID < 1 || enemyID > ENEMY_NUM) { return; }
+
+	//获取怪物信息
+	Enemy* enemy = new Enemy; //在fightLayer->fight(this, enemy)里delete
+	*enemy = sGlobal->enemyMap[enemyID];
+
+	//初始化显示
+	scene->addChild(fightLayer);//fightLayer不能作为hero的child
+	fightLayer->initDisplay(this, enemy);
+
+	//进行回合制战斗
+	fightLayer->fight(scene, this, enemy);
+}

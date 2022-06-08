@@ -7,32 +7,40 @@ USING_NS_CC;
 
 class Hero :public Node {
 public:
-	Sprite* heroImage;  // ÓÂÊ¿ĞÎÏóÍ¼Æ¬
+	Sprite* heroImage;  // å‹‡å£«å½¢è±¡å›¾ç‰‡
 	int faceDirection;
 	Hero();
 	~Hero();
-	static Hero* create(); //´´½¨¶ÔÏó
-	bool init(); //³õÊ¼»¯¶ÔÏó
-	void move(EventKeyboard::KeyCode code); //ÒÆ¶¯Ò»¸ñ
+	static Hero* create(); //åˆ›å»ºå¯¹è±¡
+	bool init(); //åˆå§‹åŒ–å¯¹è±¡
+	void move(EventKeyboard::KeyCode code); //ç§»åŠ¨ä¸€æ ¼
 	CollisionType collisionCheck(Vec2 heroPosition);
-	void getKey(const int color); //»ñµÃÔ¿³×
-	void getPotion(const int color); //»ñµÃÒ©Ë®
-	void getGem(const int color); //»ñµÃ±¦Ê¯
-	void getSword(const int type); //»ñµÃ½£
-	void getShield(const int type); //»ñµÃ¶Ü
+	void getKey(const int color); //è·å¾—é’¥åŒ™
+	void getPotion(const int color); //è·å¾—è¯æ°´
+	void getGem(const int color); //è·å¾—å®çŸ³
+	void getSword(const int type); //è·å¾—å‰‘
+	void getShield(const int type); //è·å¾—ç›¾
+	void fightWithEnemy(Scene* scene, const int enemyID); //ä¸æ€ªç‰©æˆ˜æ–—
+	bool isStopping; //æ˜¯å¦å¤„äºé™æ­¢çŠ¶æ€ï¼ˆç”¨äºåŠ¨ç”»æ—¶ç¦æ­¢å…¶ä»–æ“ä½œï¼‰
+
+	friend class FightLayer;
 	
 protected:
-	Sprite* sprite; //¾«Áé
-	Point position; //Î»ÖÃ
-	Vec2 targetTilePosition;  // Ä¿±êÎ»ÖÃµÄTile×ø±ê
-	Vec2 targetGLPosition;  // Ä¿±êÎ»ÖÃµÄopenGL×ø±ê
-	int targetTileGID; // Ä¿±êÎ»ÖÃµÄGIDÊı¾İ
+	Sprite* sprite; //ç²¾çµ
+	Point position; //ä½ç½®
 
-	int atk; //¹¥»÷Á¦
-	int def; //·ÀÓùÁ¦
-	int blood; //ÑªÁ¿
-	int gold; //½ğ±Ò
-	int key[3]; //ÓµÓĞÔ¿³×Êı
+	Vec2 targetTilePosition;  // ç›®æ ‡ä½ç½®çš„Tileåæ ‡
+	Vec2 targetGLPosition;  // ç›®æ ‡ä½ç½®çš„openGLåæ ‡
+	int targetTileGID; // ç›®æ ‡ä½ç½®çš„GIDæ•°æ®
+
+
+	FightLayer* fightLayer; //æˆ˜æ–—ç•Œé¢
+
+	int atk; //æ”»å‡»åŠ›
+	int def; //é˜²å¾¡åŠ›
+	int blood; //è¡€é‡
+	int gold; //é‡‘å¸
+	int key[3]; //æ‹¥æœ‰é’¥åŒ™æ•°
 };
 
 #endif // !_HERO_H_

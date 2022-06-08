@@ -61,6 +61,7 @@ list(APPEND GAME_SOURCE
      Classes/Entity/GameMap.cpp
      Classes/AppDelegate.cpp
      Classes/Global.cpp
+     Classes/FightLayer.cpp
      )
 list(APPEND GAME_HEADER
      Classes/Scene/HelloWorldScene.h
@@ -78,6 +79,7 @@ list(APPEND GAME_HEADER
      Classes/Constants.h
      Classes/Global.h
      Classes/Headers.h
+     Classes/FightLayer.h
     )
 
 if(ANDROID)
