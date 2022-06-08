@@ -14,9 +14,14 @@ class ControlLayer;
 
 class Global
 {
+
 public:
 	Global() :
 		gameScene(NULL), gameLayer(NULL), controlLayer(NULL), gameMap(NULL), hero(NULL),
+
+		currentLevel(0), heroSpawnTileCoord(Point{ 1, 1 }) {}
+	
+
 		currentLevel(0), heroSpawnTileCoord(Point{ 1, 1 })
 	{
 		initEnemyMap();
@@ -24,6 +29,7 @@ public:
 
 	//初始化怪物信息映射
 	void initEnemyMap();
+
 
 	//游戏场景
 	GameScene *gameScene;
@@ -50,7 +56,12 @@ public:
 	std::map<int, Enemy> enemyMap;
 };
 
+
+
+//#define sGlobal Global::getInstance()
+=======
 //#define sGlobal Global::instance()
 static Global* sGlobal = new Global;
+
 
 #endif // !_GLOBAL_H_

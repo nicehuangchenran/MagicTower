@@ -25,7 +25,7 @@ bool test_start::init()
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     
-    _tileMap = TMXTiledMap::create("test_map.tmx");
+    _tileMap = TMXTiledMap::create("1.tmx");
     _tileMap -> setAnchorPoint(Vec2(0.5,0.5));
     _tileMap -> setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height / 2));
     addChild(_tileMap, 0, 1);
@@ -33,25 +33,21 @@ bool test_start::init()
     auto tileMapSize = Size(_tileMap->getMapSize().width * tileSize.width, _tileMap->getMapSize().height * tileSize.height);
 
     auto hero = Hero::create();
+
+    sGlobal->hero =hero;
+    sGlobal -> hero->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2));
+    addChild(sGlobal -> hero, 0);
+
     hero->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2));
     addChild(hero, 0); 
+
 
     hero->fightWithEnemy(this, 1);
     auto listenerkey = EventListenerKeyboard::create();
 
     listenerkey->onKeyPressed = ([=](EventKeyboard::KeyCode code, Event* event)
-        {
-            switch (code)
-            {
-            case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
-            {
-                hero->runAction(MoveBy::create(0.5f, Vec2(OBJECT_SIZE, 0)));
-                break;
-            }
-            default:    break;
-
-            }
-        });
+        {sGlobal->hero->move(code);
+            });
     auto dispatcher = Director::getInstance()->getEventDispatcher();
 
     dispatcher->addEventListenerWithSceneGraphPriority(listenerkey, this);
