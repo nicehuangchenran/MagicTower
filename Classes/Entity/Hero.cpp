@@ -61,22 +61,22 @@ void Hero::move(EventKeyboard::KeyCode code)
 	Point moveDist;
 	switch (code)
 	{
-		case EventKeyboard::KeyCode::KEY_UP_ARROW:
-			faceDirection = DIRECTION_UP;
-			moveDist = Point(0, OBJECT_SIZE);
-			break;
-		case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
-			faceDirection = DIRECTION_DOWN;
-			moveDist = Point(0, -OBJECT_SIZE);
-			break;
-		case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
-			faceDirection = DIRECTION_LEFT;
-			moveDist = Point(-OBJECT_SIZE, 0);
-			break;
-		case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
-			faceDirection = DIRECTION_RIGHT;
-			moveDist = Point(OBJECT_SIZE, 0);
-			break;
+	case EventKeyboard::KeyCode::KEY_UP_ARROW:
+		faceDirection = DIRECTION_UP;
+		moveDist = Point(0, OBJECT_SIZE);
+		break;
+	case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
+		faceDirection = DIRECTION_DOWN;
+		moveDist = Point(0, -OBJECT_SIZE);
+		break;
+	case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
+		faceDirection = DIRECTION_LEFT;
+		moveDist = Point(-OBJECT_SIZE, 0);
+		break;
+	case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
+		faceDirection = DIRECTION_RIGHT;
+		moveDist = Point(OBJECT_SIZE, 0);
+		break;
 	}
 
 	//碰撞检测
@@ -84,9 +84,29 @@ void Hero::move(EventKeyboard::KeyCode code)
 	//修改位置状态
 	targetGLPosition += moveDist;
 
-	//动画
 
-	auto heroTexture = Director::getInstance()->getTextureCache() -> addImage("img/1.png");
+	CollisionType colli = collisionCheck(targetGLPosition);
+
+	if (colli == kWall || colli == kEnemy || colli == kDoor || colli == kNPC)
+	{
+		// 脸部方向改变，绘制新图
+		this->heroImage ->
+			setTextureRect(Rect(0, OBJECT_SIZE * faceDirection + 1, OBJECT_SIZE, OBJECT_SIZE));
+		return;
+	}
+
+	// 行走动画
+	walkAnimation(faceDirection);
+	// 脸部方向改变，绘制新图
+	this -> heroImage ->
+		setTextureRect(Rect(0, OBJECT_SIZE * faceDirection + 1, OBJECT_SIZE, OBJECT_SIZE));
+	// 移动到新位置
+	this->runAction(MoveBy::create(0.2f, moveDist));
+}
+
+void Hero::walkAnimation(int faceDirection)
+{
+	auto heroTexture = Director::getInstance()->getTextureCache()->addImage("img/1.png");
 
 	SpriteFrame* frame0 = SpriteFrame::createWithTexture(heroTexture,
 		Rect(OBJECT_SIZE * 0, OBJECT_SIZE * faceDirection, OBJECT_SIZE, OBJECT_SIZE));
@@ -102,13 +122,9 @@ void Hero::move(EventKeyboard::KeyCode code)
 	animFrames.pushBack(frame2);
 	animFrames.pushBack(frame3);
 	Animation* animation = Animation::createWithSpriteFrames(animFrames, 0.05f);
-	//auto animate = Animate::create(animation);
 	heroImage->runAction(Repeat::create(Animate::create(animation), 1));
-	this -> heroImage ->
-		setTextureRect(Rect(0, OBJECT_SIZE * faceDirection + 1, OBJECT_SIZE, OBJECT_SIZE));
-	this->runAction(MoveBy::create(0.2f, moveDist));
-}
 
+}
 CollisionType Hero::collisionCheck(Vec2 heroPosition)
 {
 	targetTilePosition = sGlobal->gameMap->tileCoordForPosition(heroPosition);
@@ -129,7 +145,12 @@ CollisionType Hero::collisionCheck(Vec2 heroPosition)
 		// fight() 开始战斗
 		return kEnemy; 
 	}
-
+	targetTileGID = sGlobal->gameMap->getItemLayer()->getTileGIDAt(targetTilePosition);
+	if (targetTileGID)
+	{
+		// pickupItem() 拾取物品
+		return kEnemy;
+	}
 	// 对应图块是门
 	targetTileGID = sGlobal->gameMap->getDoorLayer()->getTileGIDAt(targetTilePosition);
 	if (targetTileGID)
