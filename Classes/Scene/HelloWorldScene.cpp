@@ -25,11 +25,11 @@
 
 #include "HelloWorldScene.h"
 #include "SettingScene.h"
-#include "AudioEngine.h"
+#include "test_start.h"
 #include "Introduction.h"
-
+#include "SimpleAudioEngine.h"
 USING_NS_CC; 
-using namespace cocos2d::experimental;
+using namespace CocosDenshion;
 
 Scene* HelloWorld::createScene()
 {
@@ -84,7 +84,7 @@ bool HelloWorld::init()
 
     MenuItemFont::setFontName("fonts/arial.ttf");
     MenuItemFont::setFontSize(28);
-    auto item1 = MenuItemFont::create("重新开始游戏");
+    auto item1 = MenuItemFont::create("重新开始游戏", CC_CALLBACK_1(HelloWorld::menuItemStart, this));
     auto item2 = MenuItemFont::create("载入存档");
     auto item3 = MenuItemFont::create("游戏说明", CC_CALLBACK_1(HelloWorld::menuItemIntro, this));
     auto item4 = MenuItemFont::create("选项设置", CC_CALLBACK_1(HelloWorld::menuItemSetting, this));
@@ -96,9 +96,10 @@ bool HelloWorld::init()
     menu->setPosition(Point(origin.x + visibleSize.width / 2, origin.y + visibleSize.height - label->getContentSize().height * 7));
     this->addChild(menu, 1);
     
-    AudioEngine::preload("backgroundMusic.wav");
-    AudioEngine::setVolume(0, 0.5);
-    AudioEngine::play2d("backgroundMusic.wav", true);
+
+    SimpleAudioEngine::getInstance()->preloadBackgroundMusic("backgroundMusic.wav");
+    SimpleAudioEngine::getInstance()->playBackgroundMusic("backgroundMusic.wav", true);
+    SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(0.5f);
 
     return true;
 }
@@ -106,7 +107,7 @@ bool HelloWorld::init()
 
 void HelloWorld::menuItemSetting(cocos2d::Ref* PSender)
 {
-    if (Setting::isEffect)    AudioEngine::play2d("button_click.wav");
+    if (Setting::isEffect)    SimpleAudioEngine::getInstance()->playEffect("button_click.wav");
     auto sc = Setting::createScene();
     Director::getInstance()->pushScene(TransitionFadeTR::create(2.0f, sc));
     
@@ -114,12 +115,18 @@ void HelloWorld::menuItemSetting(cocos2d::Ref* PSender)
 
 void HelloWorld::menuCloseCallback(cocos2d::Ref* PSender)
 {
-    if (Setting::isEffect) AudioEngine::play2d("button_click.wav");
+    if (Setting::isEffect) SimpleAudioEngine::getInstance()->playEffect("button_click.wav");
     Director::getInstance()->end();
 }
 
 void HelloWorld::menuItemIntro(Ref *PSender)
 {
-    if (Setting::isEffect) AudioEngine::play2d("button_click.wav");
+    if (Setting::isEffect) SimpleAudioEngine::getInstance()->playEffect("button_click.wav");
     Director::getInstance() -> pushScene(TransitionFadeTR::create(2.0f, Introduction::createScene() ) );
+}
+
+void HelloWorld::menuItemStart(Ref* PSender)
+{
+    if (Setting::isEffect)  SimpleAudioEngine::getInstance()->playEffect("button_click.wav");
+    Director::getInstance()->pushScene(TransitionFadeTR::create(2.0f, test_start::createScene()));
 }

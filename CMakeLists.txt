@@ -51,6 +51,7 @@ list(APPEND GAME_SOURCE
      Classes/Scene/HelloWorldScene.cpp
      Classes/Scene/SettingScene.cpp
      Classes/Scene/Introduction.cpp
+     Classes/Scene/test_start.cpp
      Classes/Entity/ChangableObject.cpp
      Classes/Entity/Enemy.cpp
      Classes/Entity/NPC.cpp
@@ -65,6 +66,7 @@ list(APPEND GAME_HEADER
      Classes/Scene/HelloWorldScene.h
      Classes/Scene/SettingScene.h
      Classes/Scene/Introduction.h
+     Classes/Scene/test_start.h
      Classes/Entity/ChangableObject.h
      Classes/Entity/Enemy.h
      Classes/Entity/NPC.h

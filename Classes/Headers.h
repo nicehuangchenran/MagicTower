@@ -9,9 +9,6 @@
 
 #include "Entity/NPC.h"
 #include "Entity/Enemy.h"
-#include "Entity/Hero.h"
-#include "Entity/GameMap.h"
 
-static Global* sGlobal;
 
 #endif

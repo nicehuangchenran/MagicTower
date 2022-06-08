@@ -9,10 +9,10 @@
 #include "SettingScene.h"
 #include "HelloWorldScene.h"
 #include "ui/CocosGUI.h"
-#include "AudioEngine.h"
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC; 
-using namespace cocos2d::experimental;
+using namespace CocosDenshion;
 
 Scene* Introduction::createScene()
 {
@@ -51,6 +51,6 @@ bool Introduction::init()
 
 void Introduction::menuItemBack(Ref *PSender)
 {
-    if (Setting::isEffect)  AudioEngine::play2d("button_click.wav");
+    if (Setting::isEffect)  SimpleAudioEngine::getInstance()->playEffect("button_click.wav");
     Director::getInstance() -> popScene();
 }

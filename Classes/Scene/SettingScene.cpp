@@ -8,10 +8,10 @@
 #include "SettingScene.h"
 #include "HelloWorldScene.h"
 #include "ui/CocosGUI.h"
-#include "AudioEngine.h"
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC; 
-using namespace cocos2d::experimental;
+using namespace CocosDenshion;
 
 Scene* Setting::createScene()
 {
@@ -71,7 +71,7 @@ void Setting::onChangedSlider(Ref* PSender, cocos2d::ui::Slider::EventType type)
     {
         auto slider = dynamic_cast<cocos2d::ui::Slider*>(PSender);
         float percent = slider->getPercent() / 100.0f;
-        AudioEngine::setVolume(0, percent);
+        SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(percent);
     }
 }
 
@@ -80,18 +80,22 @@ void Setting::menuItemSoundToggleCallback(cocos2d::Ref* PSender)
     auto soundToggleMenuItem = (MenuItemToggle*) PSender;
     if (isEffect)
     {
-        AudioEngine::play2d("button_click.wav");
+        SimpleAudioEngine::getInstance() -> playEffect("button_click.wav");
     }
     if (soundToggleMenuItem -> getSelectedIndex() == 1) isEffect = false;
     else{
         isEffect = true;
-        AudioEngine::play2d("button_click.wav");
+        SimpleAudioEngine::getInstance()->playEffect("button_click.wav");
     }
 }
 
 // 点击完成时，返回主界面
 void Setting::menuItemBack(cocos2d::Ref* Psender)
 {
+    if (isEffect)
+    {
+        SimpleAudioEngine::getInstance()->playEffect("button_click.wav");
+    }
     Director::getInstance()->popScene();
 }
 
