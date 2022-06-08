@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "AppDelegate.h"
-#include "HelloWorldScene.h"
+#include "Scene/HelloWorldScene.h"
 // #define USE_AUDIO_ENGINE 1
 
 #if USE_AUDIO_ENGINE
@@ -119,7 +119,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 // This function will be called when the app is inactive. Note, when receiving a phone call it is invoked.
 void AppDelegate::applicationDidEnterBackground() {
     Director::getInstance()->stopAnimation();
-
+    
 #if USE_AUDIO_ENGINE
     AudioEngine::pauseAll();
 #endif
