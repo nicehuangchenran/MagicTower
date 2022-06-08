@@ -43,8 +43,8 @@ bool Hero::init()
 	key[ITEM_COLOR_RED] = 0;
 
 	//设置精灵
-	sprite = Sprite::create("imageResourses.jpg", 
-		Rect((OBJECT_SIZE + 1) * 23,(OBJECT_SIZE + 1) *26, OBJECT_SIZE, OBJECT_SIZE));//创建精灵
+	sprite = Sprite::create("img/1.png", 
+		Rect(0, OBJECT_SIZE*10+1, OBJECT_SIZE,OBJECT_SIZE));//创建精灵
 	sprite->setAnchorPoint(Point::ZERO);//设置锚点为左下角
 	this->addChild(sprite);//绑定精灵
 
@@ -80,11 +80,16 @@ void Hero::move(const int direction)
 	//动画
 }
 
+
+
+
 //获得钥匙
 void Hero::getKey(const int color)
 {
 	this->key[color]++;
 }
+
+
 
 //获得药水
 //---待修改：血量增加需要乘上系数【当前区域数】---

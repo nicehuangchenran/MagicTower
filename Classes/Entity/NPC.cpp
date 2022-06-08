@@ -8,7 +8,7 @@ NPC::NPC(const ValueMap& dict, const int& x, const int& y) {
 	rect = Rect(x1, y1, OBJECT_SIZE, OBJECT_SIZE);
 	Point position = Point(x, y);
 	NPCTileCoord = sGlobal->gameMap->tileCoordForPosition(position);
-
+	
 	npcSprite = Sprite::create(imagePath, rect);
 	npcSprite->setAnchorPoint(Point::ZERO);
 	npcSprite->setPosition(position);
