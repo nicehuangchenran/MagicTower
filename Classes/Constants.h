@@ -24,25 +24,16 @@ const int WEAPON_TYPE_KNIGHT = 2; //骑士剑盾
 const int WEAPON_TYPE_HOLY = 3; //神圣剑盾
 
 //移动方向
-
-
-const int DIRECTION_DOWN = 10;
-const int DIRECTION_UP = 13;
-const int DIRECTION_RIGHT = 12;
-const int DIRECTION_LEFT = 11;
-
-
-const int DIRECTION_UP = 0; //向上
-const int DIRECTION_DOWN = 1; //向下
-const int DIRECTION_LEFT = 2; //向左
-const int DIRECTION_RIGHT = 3; //向右
+const int DIRECTION_UP = 13; //向上
+const int DIRECTION_DOWN = 10; //向下
+const int DIRECTION_LEFT = 11; //向左
+const int DIRECTION_RIGHT = 12; //向右
 
 //英雄初始数值
 const int INIT_BLOOD = 400; //血量
 const int INIT_ATK = 10; //攻击
 const int INIT_DEF = 10; //防御
 const int INIT_GOLD = 100; //金币
-
 
 //传送门种类
 const int UP_TELEPORT = 0; //上楼

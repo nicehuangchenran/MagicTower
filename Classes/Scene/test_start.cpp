@@ -25,24 +25,25 @@ bool test_start::init()
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     
-    _tileMap = TMXTiledMap::create("1.tmx");
+    //添加UI界面
+    gameUI = Sprite::create("img/2.png");
+    gameUI->setPosition(visibleSize / 2);
+    gameUI->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    addChild(gameUI);
+
+    //添加地图
+    _tileMap = GameMap::create("1.tmx");
     _tileMap -> setAnchorPoint(Vec2(0.5,0.5));
     _tileMap -> setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height / 2));
     addChild(_tileMap, 0, 1);
     auto tileSize = _tileMap->getTileSize();
     auto tileMapSize = Size(_tileMap->getMapSize().width * tileSize.width, _tileMap->getMapSize().height * tileSize.height);
 
-    auto hero = Hero::create();
+    //添加英雄
+    auto hero = Hero::create(Vec2(0, 0));
+    sGlobal->hero->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2 + 32));
+    addChild(sGlobal->hero, 0);
 
-    sGlobal->hero =hero;
-    sGlobal -> hero->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2));
-    addChild(sGlobal -> hero, 0);
-
-    hero->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2));
-    addChild(hero, 0); 
-
-
-    hero->fightWithEnemy(this, 1);
     auto listenerkey = EventListenerKeyboard::create();
 
     listenerkey->onKeyPressed = ([=](EventKeyboard::KeyCode code, Event* event)

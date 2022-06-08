@@ -11,15 +11,14 @@ class GameMap :public TMXTiledMap {
 	CC_SYNTHESIZE(TMXLayer*, enemyLayer, EnemyLayer);
 	CC_SYNTHESIZE(TMXLayer*, doorLayer, DoorLayer);
 	CC_SYNTHESIZE(TMXLayer*, itemLayer, ItemLayer);
-public:
 
-	GameMap* create(const char* finepath);
+public:
+	GameMap();
+	static GameMap* create(const char* filePath);
 	void mapInit();
 	void initEnemy();
 	void initObject();
-	GameMap();
 	Point tileCoordForPosition(Point position);
-	
 };
 
 #endif // !_GAME_MAP_H_

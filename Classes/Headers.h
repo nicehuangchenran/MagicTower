@@ -15,10 +15,7 @@
 #include "Entity/Hero.h"
 #include "Entity/GameMap.h"
 
+extern Global* sGlobal;
 
-static Global* sGlobal = new Global;
-
-#endif
-=======
 #endif // !_HEADERS_H_
 
