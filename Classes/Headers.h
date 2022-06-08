@@ -10,6 +10,5 @@
 #include "Entity/NPC.h"
 #include "Entity/Enemy.h"
 
-#include "Entity/Hero.h"
 
 #endif
