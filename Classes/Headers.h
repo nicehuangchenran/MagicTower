@@ -13,6 +13,6 @@
 #include "Entity/Hero.h"
 #include "Entity/GameMap.h"
 
-static Global* sGlobal;
+static Global* sGlobal = new Global;
 
 #endif

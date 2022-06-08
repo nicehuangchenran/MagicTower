@@ -20,10 +20,12 @@ const int WEAPON_TYPE_KNIGHT = 2;
 const int WEAPON_TYPE_HOLY = 3;
 
 //移动方向
-const int DIRECTION_UP = 0;
-const int DIRECTION_DOWN = 1;
-const int DIRECTION_LEFT = 2;
-const int DIRECTION_RIGHT = 3;
+
+const int DIRECTION_DOWN = 10;
+const int DIRECTION_UP = 13;
+const int DIRECTION_RIGHT = 12;
+const int DIRECTION_LEFT = 11;
+
 
 //传送门种类
 const int UP_TELEPORT = 0;

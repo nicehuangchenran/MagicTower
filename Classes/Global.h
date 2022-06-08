@@ -14,10 +14,12 @@ class ControlLayer;
 
 class Global
 {
+
 public:
 	Global(void) :
 		gameScene(NULL), gameLayer(NULL), controlLayer(NULL), gameMap(NULL), hero(NULL),
-		currentLevel(0), heroSpawnTileCoord(Point{ 1, 1 }) {};
+		currentLevel(0), heroSpawnTileCoord(Point{ 1, 1 }) {}
+	
 
 	//游戏场景
 	GameScene *gameScene;
@@ -41,6 +43,7 @@ public:
 	Vec2 heroSpawnTileCoord;
 };
 
-//#define sGlobal Global::instance()
+
+//#define sGlobal Global::getInstance()
 
 #endif // !_GLOBAL_H_
