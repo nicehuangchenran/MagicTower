@@ -43,8 +43,9 @@ bool Hero::init()
 	key[ITEM_COLOR_RED] = 0;
 
 	//设置精灵
-	sprite = Sprite::create("img/1.png", Rect(0, OBJECT_SIZE * 10, OBJECT_SIZE, OBJECT_SIZE * 11));//创建精灵
-	sprite->setAnchorPoint(Point::ZERO);//设置锚点为左上角
+	sprite = Sprite::create("imageResourses.jpg", 
+		Rect((OBJECT_SIZE + 1) * 23,(OBJECT_SIZE + 1) *26, OBJECT_SIZE, OBJECT_SIZE));//创建精灵
+	sprite->setAnchorPoint(Point::ZERO);//设置锚点为左下角
 	this->addChild(sprite);//绑定精灵
 
 	return true;
@@ -160,3 +161,4 @@ void Hero::getShield(const int type)
 	}
 	this->def += addDef;
 }
+

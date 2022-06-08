@@ -7,7 +7,9 @@
 #include "Global.h"
 #include "Constants.h"
 
-#include "NPC.h"
-#include "Enemy.h"
+#include "Entity/NPC.h"
+#include "Entity/Enemy.h"
+
+#include "Entity/Hero.h"
 
 #endif

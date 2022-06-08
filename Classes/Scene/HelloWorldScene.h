@@ -21,6 +21,7 @@ public:
     void menuItemSetting(cocos2d::Ref* PSender);
     void menuCloseCallback(cocos2d::Ref* PSender);
     void menuItemIntro(Ref* PSender);
+    void menuItemStart(Ref* PSender);
     CREATE_FUNC(HelloWorld);
 };
 

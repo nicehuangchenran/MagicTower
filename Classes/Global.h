@@ -38,7 +38,7 @@ public:
 	int currentLevel;
 
 	//勇士出现的起始位置
-	Point heroSpawnTileCoord;
+	Vec2 heroSpawnTileCoord;
 };
 
 #define sGlobal Global::instance()

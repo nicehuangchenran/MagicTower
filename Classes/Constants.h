@@ -2,6 +2,9 @@
 #ifndef _CONSTANTS_H_
 #define _CONSTANTS_H_
 
+const auto visibleSize = Director::getInstance()->getVisibleSize();
+const Vec2 origin = Director::getInstance()->getVisibleOrigin();
+
 // 方格大小
 const int OBJECT_SIZE = 32;
 
@@ -21,6 +24,10 @@ const int DIRECTION_UP = 0;
 const int DIRECTION_DOWN = 1;
 const int DIRECTION_LEFT = 2;
 const int DIRECTION_RIGHT = 3;
+
+//传送门种类
+const int UP_TELEPORT = 0;
+const int DOWN_TELEPORT = 1;
 
 typedef enum
 {
@@ -66,5 +73,6 @@ enum
 	kControlLayer,
 	kFadeLayer,
 };
+
 
 #endif // !_CONSTANTS_H_
