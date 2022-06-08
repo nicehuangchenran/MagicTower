@@ -41,7 +41,7 @@ void FightLayer::initDisplay(const Hero* const hero, const Enemy* const enemy)
 	this->addChild(enemyLabel);
 }
 
-void FightLayer::fight(Hero* hero, Enemy* enemy)
+void FightLayer::fight(Scene* scene, Hero* hero, Enemy* enemy)
 {
 	this->schedule([=](float dlt)
 		{
@@ -103,21 +103,25 @@ void FightLayer::fight(Hero* hero, Enemy* enemy)
 				this->removeChild(heroLabel);
 				this->removeChild(enemyLabel);
 				this->removeChild(fightWindow);
+				scene->removeChild(this);
 
 				//停止计时器
 				this->unschedule("fight");
 
-				//获得金币
-				hero->gold += enemy->gold;
-
 				//释放空间
 				delete enemy;
 
-				//怪物图片消失
-
-
 				//状态恢复
 				hero->isStopping = 1;
+
+				if (hero->blood) //战胜
+				{
+					//获得金币
+					hero->gold += enemy->gold;
+
+					//怪物图片消失
+
+				}
 			}
 		}, 0.7f, "fight");
 }

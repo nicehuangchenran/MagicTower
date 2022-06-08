@@ -31,12 +31,12 @@ bool test_start::init()
     addChild(_tileMap, 0, 1);
     auto tileSize = _tileMap->getTileSize();
     auto tileMapSize = Size(_tileMap->getMapSize().width * tileSize.width, _tileMap->getMapSize().height * tileSize.height);
-    
-    auto hero = Hero::create();
-    hero->init();
-    hero->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2));
-    addChild(hero, 0);
 
+    auto hero = Hero::create();
+    hero->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2));
+    addChild(hero, 0); 
+
+    hero->fightWithEnemy(this, 1);
     auto listenerkey = EventListenerKeyboard::create();
 
     listenerkey->onKeyPressed = ([=](EventKeyboard::KeyCode code, Event* event)

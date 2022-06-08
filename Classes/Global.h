@@ -45,7 +45,7 @@ public:
 
 	//勇士出现的起始位置
 	Vec2 heroSpawnTileCoord;
-
+	
 	// 怪物ID到怪物数据的映射
 	std::map<int, Enemy> enemyMap;
 };

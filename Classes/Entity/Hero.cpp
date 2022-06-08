@@ -2,13 +2,16 @@
 
 Hero::Hero() {}
 
-Hero::~Hero() {}
+Hero::~Hero() 
+{
+	delete fightLayer;
+}
 
 //创建对象
 Hero* Hero::create()
 {
 	//new申请空间
-	Hero* heroPointer = new(std::nothrow) Hero;
+	Hero* heroPointer = new Hero;
 
 	//异常处理
 	if (heroPointer && heroPointer->init())
@@ -37,6 +40,9 @@ bool Hero::init()
 	key[ITEM_COLOR_YELLOW] = 0;
 	key[ITEM_COLOR_BLUE] = 0;
 	key[ITEM_COLOR_RED] = 0;
+
+	//战斗界面
+	fightLayer = new FightLayer;
 
 	//设置精灵
 	sprite = Sprite::create("img/1.png", Rect(0, OBJECT_SIZE * 10 + 1, OBJECT_SIZE, OBJECT_SIZE));//创建精灵
@@ -157,7 +163,7 @@ void Hero::getShield(const int type)
 	this->def += addDef;
 }
 
-void Hero::fightWithEnemy(const int enemyID)
+void Hero::fightWithEnemy(Scene* scene, const int enemyID)
 {
 	//禁用其他动作
 	this->isStopping = 0;
@@ -166,14 +172,13 @@ void Hero::fightWithEnemy(const int enemyID)
 	if (enemyID < 1 || enemyID > ENEMY_NUM) { return; }
 
 	//获取怪物信息
-	Enemy* enemy = new Enemy;
+	Enemy* enemy = new Enemy; //在fightLayer->fight(this, enemy)里delete
 	*enemy = sGlobal->enemyMap[enemyID];
 
 	//初始化显示
-	FightLayer* fightLayer = new FightLayer;
+	scene->addChild(fightLayer);//fightLayer不能作为hero的child
 	fightLayer->initDisplay(this, enemy);
 
 	//进行回合制战斗
-	fightLayer->fight(this, enemy);
-	delete fightLayer;
+	fightLayer->fight(scene, this, enemy);
 }
