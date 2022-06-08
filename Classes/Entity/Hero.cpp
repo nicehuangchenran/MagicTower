@@ -1,24 +1,26 @@
 #include "Headers.h"
 
-Hero::Hero() {
-	sGlobal->hero = this;
-}
+Hero::Hero() {}
 
 Hero::~Hero() 
 {
 	delete fightLayer;
 }
 
-
 //创建对象
-Hero* Hero::create()
+Hero* Hero::create(Vec2 tilePosition)
 {
 	//new申请空间
-	Hero* heroPointer = new Hero;
+	static Hero* heroPointer = new Hero;
 
 	//异常处理
-	if (heroPointer && heroPointer->init())
+	if (heroPointer && heroPointer->init(tilePosition))
 	{
+		if (sGlobal->hero) //释放空间
+		{
+			delete sGlobal->hero;
+		}
+		sGlobal->hero = heroPointer;
 		return heroPointer;
 	}
 	else
@@ -29,13 +31,14 @@ Hero* Hero::create()
 }
 
 //初始化对象
-bool Hero::init()
+bool Hero::init(Vec2 tilePosition)
 {
 	//调用父类初始化函数
 	if (!Node::init()) { return false; }
 
 	//初始化状态数据
-	position = Point(0, 0);
+	targetTilePosition = tilePosition;
+	targetGLPosition = tilePosition * OBJECT_SIZE;
 	blood = INIT_BLOOD;
 	atk = INIT_ATK;
 	def = INIT_DEF;
@@ -48,16 +51,9 @@ bool Hero::init()
 	fightLayer = new FightLayer;
 
 	//设置精灵
-
-	heroImage = Sprite::create("img/1.png", 
-		Rect(0, OBJECT_SIZE*10+1, OBJECT_SIZE,OBJECT_SIZE));//创建精灵
-	heroImage->setAnchorPoint(Point::ZERO);//设置锚点为左下角
-	this->addChild(heroImage);//绑定精灵
-
-	sprite = Sprite::create("img/1.png", Rect(0, OBJECT_SIZE * 10 + 1, OBJECT_SIZE, OBJECT_SIZE));//创建精灵
-	sprite->setAnchorPoint(Point::ZERO);//设置锚点为左下角
-	this->addChild(sprite);//绑定精灵
-
+	image = Sprite::create("img/1.png", Rect(0, OBJECT_SIZE * 10 + 1, OBJECT_SIZE, OBJECT_SIZE));//创建精灵
+	image->setAnchorPoint(Point::ZERO);//设置锚点为左下角
+	this->addChild(image);//绑定精灵
 
 	return true;
 }
@@ -87,27 +83,28 @@ void Hero::move(EventKeyboard::KeyCode code)
 		break;
 	}
 
-	//碰撞检测
-
-	//修改位置状态
+	//计算目标位置
 	targetGLPosition += moveDist;
 
-
+	/* 有bug，暂时注释掉
+	
+	//碰撞检测
 	CollisionType colli = collisionCheck(targetGLPosition);
 
 	if (colli == kWall || colli == kEnemy || colli == kDoor || colli == kNPC)
 	{
 		// 脸部方向改变，绘制新图
-		this->heroImage ->
-			setTextureRect(Rect(0, OBJECT_SIZE * faceDirection + 1, OBJECT_SIZE, OBJECT_SIZE));
+		this->image->setTextureRect(Rect(0, OBJECT_SIZE * faceDirection + 1, OBJECT_SIZE, OBJECT_SIZE));
 		return;
 	}
+	*/
 
 	// 行走动画
 	walkAnimation(faceDirection);
+
 	// 脸部方向改变，绘制新图
-	this -> heroImage ->
-		setTextureRect(Rect(0, OBJECT_SIZE * faceDirection + 1, OBJECT_SIZE, OBJECT_SIZE));
+	this->image->setTextureRect(Rect(0, OBJECT_SIZE * faceDirection + 1, OBJECT_SIZE, OBJECT_SIZE));
+
 	// 移动到新位置
 	this->runAction(MoveBy::create(0.2f, moveDist));
 }
@@ -131,9 +128,10 @@ void Hero::walkAnimation(int faceDirection)
 	animFrames.pushBack(frame2);
 	animFrames.pushBack(frame3);
 	Animation* animation = Animation::createWithSpriteFrames(animFrames, 0.05f);
-	heroImage->runAction(Repeat::create(Animate::create(animation), 1));
+	image->runAction(Repeat::create(Animate::create(animation), 1));
 
 }
+
 CollisionType Hero::collisionCheck(Vec2 heroPosition)
 {
 	targetTilePosition = sGlobal->gameMap->tileCoordForPosition(heroPosition);
@@ -168,14 +166,7 @@ CollisionType Hero::collisionCheck(Vec2 heroPosition)
 		return kDoor;
 	}
 	return kNone;
-
-	
-
 }
-
-
-
-=======
 
 //获得钥匙
 void Hero::getKey(const int color)

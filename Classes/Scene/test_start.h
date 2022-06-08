@@ -2,12 +2,15 @@
 #define _TEST_START_H_
 
 #include "cocos2d.h"
+#include "Entity/GameMap.h"
+
 class test_start:public cocos2d::Scene
 {
 public:
-    cocos2d::TMXTiledMap* _tileMap;
+    GameMap* _tileMap;
     static cocos2d::Scene* createScene();
     virtual bool init();
+    cocos2d::Sprite* gameUI;
     
     CREATE_FUNC(test_start);
 };

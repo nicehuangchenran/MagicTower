@@ -17,11 +17,10 @@ public:
     static cocos2d::Scene* createScene();
 
     virtual bool init();
-
-    void menuItemSetting(cocos2d::Ref* PSender);
-    void menuCloseCallback(cocos2d::Ref* PSender);
-    void menuItemIntro(Ref* PSender);
-    void menuItemStart(Ref* PSender);
+    void menuItemSetting(cocos2d::Ref* PSender); //选项设置
+    void menuCloseCallback(cocos2d::Ref* PSender); //退出游戏
+    void menuItemIntro(Ref* PSender); //游戏说明
+    void menuItemStart(Ref* PSender); //开始游戏
     CREATE_FUNC(HelloWorld);
 };
 

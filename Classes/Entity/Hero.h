@@ -2,32 +2,30 @@
 #define _HERO_H_
 
 #include "cocos2d.h"
-#include "Headers.h"
 USING_NS_CC;
 
 class Hero :public Node {
 public:
-	Sprite* heroImage;  // 勇士形象图片
 	int faceDirection;
 	Hero();
 	~Hero();
-	static Hero* create(); //创建对象
-	bool init(); //初始化对象
+	static Hero* create(Vec2 position); //创建对象
+	bool init(Vec2 position); //初始化对象
 	void move(EventKeyboard::KeyCode code); //移动一格
-	CollisionType collisionCheck(Vec2 heroPosition);
 	void getKey(const int color); //获得钥匙
 	void getPotion(const int color); //获得药水
 	void getGem(const int color); //获得宝石
 	void getSword(const int type); //获得剑
 	void getShield(const int type); //获得盾
 	void fightWithEnemy(Scene* scene, const int enemyID); //与怪物战斗
+	void walkAnimation(int faceDirection);
+	CollisionType collisionCheck(Vec2 heroPosition);
 	bool isStopping; //是否处于静止状态（用于动画时禁止其他操作）
 
 	friend class FightLayer;
 	
 protected:
-	Sprite* sprite; //精灵
-	Point position; //位置
+	Sprite* image; //勇士形象图片
 
 	Vec2 targetTilePosition;  // 目标位置的Tile坐标
 	Vec2 targetGLPosition;  // 目标位置的openGL坐标

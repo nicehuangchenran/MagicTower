@@ -1,5 +1,14 @@
 #include "Headers.h"
 
+Global* sGlobal = new Global;
+
+Global::Global() :
+	gameScene(nullptr), gameLayer(nullptr), controlLayer(nullptr), gameMap(nullptr), hero(nullptr), 
+	currentLevel(0), heroSpawnTileCoord(Point{ 1, 1 })
+{
+	initEnemyMap();
+};
+
 void Global::initEnemyMap()
 {
 	std::ifstream in;

@@ -13,11 +13,19 @@
 USING_NS_CC; 
 using namespace CocosDenshion;
 
+bool Setting::isEffect = true;
+
+//当文件不存在时打印错误信息
+static void problemLoading(const char* filename)
+{
+    printf("Error while loading: %s\n", filename);
+    printf("Depending on how you compiled you might have to add 'Resources/' in front of filenames in HelloWorldScene.cpp\n");
+}
+
 Scene* Setting::createScene()
 {
     return Setting::create();
 }
-bool Setting::isEffect = true;
 
 bool Setting::init()
 {
@@ -29,36 +37,47 @@ bool Setting::init()
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    //背景图片
-    auto backgroundImage = Sprite::create("mota.jpg", Rect(240, 0, 550, 483));
-    backgroundImage->setAnchorPoint(Vec2::ZERO);
-    this->addChild(backgroundImage);
-    // 开关菜单
-    auto toggleSoundMenuitem = MenuItemToggle::createWithCallback(CC_CALLBACK_1(Setting::menuItemSoundToggleCallback, this), MenuItemFont::create("on"), MenuItemFont::create("off"), nullptr);
-    toggleSoundMenuitem->setPosition(Vec2(400, 300));
+    //添加背景图片
+    auto backgroundImage = Sprite::create("mota.jpg");
+    if (backgroundImage == nullptr)
+    {
+        problemLoading("mota.jpg");
+    }
+    else
+    {
+        backgroundImage->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+        backgroundImage->setPosition(visibleSize / 2);
+        this->addChild(backgroundImage);
+    }
 
+    //音量开关
+    auto toggleSoundMenuitem = MenuItemToggle::createWithCallback(CC_CALLBACK_1(Setting::menuItemSoundToggleCallback, this), MenuItemFont::create(isEffect ? "on" : "off"), MenuItemFont::create(isEffect ? "off" : "on"), nullptr);
+    toggleSoundMenuitem->setPosition(Vec2(450, 300));
+
+    //添加选项说明
     auto soundLabel = MenuItemFont::create("音效：");
-    soundLabel->setPosition(Vec2(200, 300));
+    soundLabel->setPosition(Vec2(250, 300));
     addChild(soundLabel);
-
     auto musicLabel = MenuItemFont::create("音乐：");
-    musicLabel->setPosition(Vec2(200, 150));
+    musicLabel->setPosition(Vec2(250, 200));
     addChild(musicLabel);
 
-
-    auto okMenuItem = MenuItemFont::create("完成", CC_CALLBACK_1(Setting::menuItemBack, this));
-    okMenuItem->setPosition(Vec2(visibleSize.width / 2, 50));
+    //添加滑动条
     cocos2d::ui::Slider* slider = cocos2d::ui::Slider::create();
     slider->loadBarTexture("Slider_Back.png"); // what the slider looks like
     slider->loadSlidBallTextures("SliderNode_Normal.png", "SliderNode_Press.png", "SliderNode_Disable.png");
     slider->loadProgressBarTexture("Slider_PressBar.png");
     slider->setMaxPercent(100);
     slider->setPercent(50);
-    slider->setPosition(Vec2(400, 150));
+    slider->setPosition(Vec2(450, 200));
     slider->addEventListener(CC_CALLBACK_2(Setting::onChangedSlider, this));
-
     addChild(slider);
-    //将开关菜单和文本菜单加入menu菜单中
+
+    //完成按钮
+    auto okMenuItem = MenuItemFont::create("完成", CC_CALLBACK_1(Setting::menuItemBack, this));
+    okMenuItem->setPosition(Vec2(visibleSize.width / 2, 50));
+
+    //将开关和完成加入菜单
     Menu* menu = Menu::create(toggleSoundMenuitem, okMenuItem, nullptr);
     menu->setPosition(Vec2::ZERO);
     addChild(menu);
@@ -82,14 +101,9 @@ void Setting::menuItemSoundToggleCallback(cocos2d::Ref* PSender)
     {
         SimpleAudioEngine::getInstance() -> playEffect("button_click.wav");
     }
-    if (soundToggleMenuItem -> getSelectedIndex() == 1) isEffect = false;
-    else{
-        isEffect = true;
-        SimpleAudioEngine::getInstance()->playEffect("button_click.wav");
-    }
+    isEffect ^= 1;
 }
 
-// 点击完成时，返回主界面
 void Setting::menuItemBack(cocos2d::Ref* Psender)
 {
     if (isEffect)
