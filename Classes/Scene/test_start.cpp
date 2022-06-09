@@ -28,7 +28,7 @@ bool test_start::init()
     //添加UI界面
     gameUI = Sprite::create("img/2.png");
     gameUI->setPosition(visibleSize / 2);
-    gameUI->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    //gameUI->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     addChild(gameUI);
 
     //添加地图
@@ -38,10 +38,9 @@ bool test_start::init()
     addChild(_tileMap, 0, 1);
     auto tileSize = _tileMap->getTileSize();
     auto tileMapSize = Size(_tileMap->getMapSize().width * tileSize.width, _tileMap->getMapSize().height * tileSize.height);
-
     //添加英雄
     auto hero = Hero::create(Vec2(0, 0));
-    sGlobal->hero->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2 + 32));
+    sGlobal->hero->setPosition(Vec2(origin.x + OBJECT_SIZE * 10, origin.y));
     addChild(sGlobal->hero, 0);
 
     auto listenerkey = EventListenerKeyboard::create();

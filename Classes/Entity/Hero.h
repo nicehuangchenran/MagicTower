@@ -18,15 +18,14 @@ public:
 	void getSword(const int type); //获得剑
 	void getShield(const int type); //获得盾
 	void fightWithEnemy(Scene* scene, const int enemyID); //与怪物战斗
-	void walkAnimation(int faceDirection);
-	CollisionType collisionCheck(Vec2 heroPosition);
+	void walkAnimation(int faceDirection);  // 行走动画
+	CollisionType collisionCheck(Vec2 targetGLPosition);  // 判断碰撞类型
 	bool isStopping; //是否处于静止状态（用于动画时禁止其他操作）
 
 	friend class FightLayer;
 	
 protected:
 	Sprite* image; //勇士形象图片
-
 	Vec2 targetTilePosition;  // 目标位置的Tile坐标
 	Vec2 targetGLPosition;  // 目标位置的openGL坐标
 	int targetTileGID; // 目标位置的GID数据

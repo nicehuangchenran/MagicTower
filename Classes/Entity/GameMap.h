@@ -2,6 +2,7 @@
 #define _GAME_MAP_H_
 
 #include "Headers.h"
+
 USING_NS_CC;
 
 class GameMap :public TMXTiledMap {
@@ -19,6 +20,9 @@ public:
 	void initEnemy();
 	void initObject();
 	Point tileCoordForPosition(Point position);
+	Vector<Enemy*> enemyArray;
+	//Map<int, Teleport*> teleportDict; // 传送门类待定义
+	//Map<int, NPC*> npcDict;  // 有bug，暂且搁置
 };
 
 #endif // !_GAME_MAP_H_
