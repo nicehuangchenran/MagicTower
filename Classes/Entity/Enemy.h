@@ -29,6 +29,12 @@ public:
 	int type; //怪物类型
 	Vec2 graphPosition; //在素材图片中的位置
 
+	
+	int startGID;
+
+	
+	int index;
+
 	Enemy& operator =(const Enemy& e)
 	{
 		this->blood = e.blood;

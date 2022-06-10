@@ -28,7 +28,6 @@ bool test_start::init()
     //添加UI界面
     gameUI = Sprite::create("img/2.png");
     gameUI->setPosition(visibleSize / 2);
-    gameUI->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     addChild(gameUI);
 
     //添加地图
@@ -40,15 +39,30 @@ bool test_start::init()
     auto tileMapSize = Size(_tileMap->getMapSize().width * tileSize.width, _tileMap->getMapSize().height * tileSize.height);
 
     //添加英雄
-    auto hero = Hero::create(Vec2(0, 0));
-    sGlobal->hero->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2 + 32));
+    auto hero = Hero::create(this, Vec2(0, 0));
+    sGlobal->hero->setPosition(Vec2(origin.x + OBJECT_SIZE * 10, origin.y));
     addChild(sGlobal->hero, 0);
+
+    //英雄信息
+    heroLabel = Label::create(hero->getInfo(), "Arial", 25);
+    heroLabel->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    heroLabel->setPosition(90, 295);
+    addChild(heroLabel);
+    schedule([=](float dlt)
+        {
+            heroLabel->setString(hero->getInfo());
+            if (0)
+            {
+                unschedule("infoDisplay");
+            }
+        },0.1f,"infoDisplay");
 
     auto listenerkey = EventListenerKeyboard::create();
 
-    listenerkey->onKeyPressed = ([=](EventKeyboard::KeyCode code, Event* event)
-        {sGlobal->hero->move(code);
-            });
+    listenerkey->onKeyPressed = [=](EventKeyboard::KeyCode code, Event* event)
+        {
+            sGlobal->hero->move(code);
+        };
     auto dispatcher = Director::getInstance()->getEventDispatcher();
 
     dispatcher->addEventListenerWithSceneGraphPriority(listenerkey, this);

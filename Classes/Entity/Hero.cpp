@@ -2,19 +2,19 @@
 
 Hero::Hero() {}
 
-Hero::~Hero() 
+Hero::~Hero()
 {
 	delete fightLayer;
 }
 
 //创建对象
-Hero* Hero::create(Vec2 tilePosition)
+Hero* Hero::create(Scene* scene, Vec2 tilePosition)
 {
 	//new申请空间
 	static Hero* heroPointer = new Hero;
 
 	//异常处理
-	if (heroPointer && heroPointer->init(tilePosition))
+	if (heroPointer && heroPointer->init(scene, tilePosition))
 	{
 		if (sGlobal->hero) //释放空间
 		{
@@ -31,7 +31,7 @@ Hero* Hero::create(Vec2 tilePosition)
 }
 
 //初始化对象
-bool Hero::init(Vec2 tilePosition)
+bool Hero::init(Scene* scene, Vec2 tilePosition)
 {
 	//调用父类初始化函数
 	if (!Node::init()) { return false; }
@@ -50,9 +50,13 @@ bool Hero::init(Vec2 tilePosition)
 	//战斗界面
 	fightLayer = new FightLayer;
 
+	//绑定场景
+	this->scene = scene;
+
 	//设置精灵
 	image = Sprite::create("img/1.png", Rect(0, OBJECT_SIZE * 10 + 1, OBJECT_SIZE, OBJECT_SIZE));//创建精灵
 	image->setAnchorPoint(Point::ZERO);//设置锚点为左下角
+	
 	this->addChild(image);//绑定精灵
 
 	return true;
@@ -84,11 +88,13 @@ void Hero::move(EventKeyboard::KeyCode code)
 	}
 
 	//计算目标位置
-	targetGLPosition += moveDist;
-
-	/* 有bug，暂时注释掉
+	targetGLPosition = this->getPosition() + moveDist;
+	targetGLPosition.x -= 160;  // 将GL坐标系原点设为(160,0)，待用函数封装
+	//测试坐标
+	//log("%d, %d", sGlobal->gameMap->getMapSize().width, sGlobal->gameMap->getMapSize().height);
 	
 	//碰撞检测
+	
 	CollisionType colli = collisionCheck(targetGLPosition);
 
 	if (colli == kWall || colli == kEnemy || colli == kDoor || colli == kNPC)
@@ -97,8 +103,8 @@ void Hero::move(EventKeyboard::KeyCode code)
 		this->image->setTextureRect(Rect(0, OBJECT_SIZE * faceDirection + 1, OBJECT_SIZE, OBJECT_SIZE));
 		return;
 	}
-	*/
-
+	
+	
 	// 行走动画
 	walkAnimation(faceDirection);
 
@@ -132,39 +138,49 @@ void Hero::walkAnimation(int faceDirection)
 
 }
 
-CollisionType Hero::collisionCheck(Vec2 heroPosition)
+CollisionType Hero::collisionCheck(Vec2 targetGLPosition)
 {
-	targetTilePosition = sGlobal->gameMap->tileCoordForPosition(heroPosition);
+	targetTilePosition = sGlobal -> gameMap -> tileCoordForPosition(targetGLPosition);
 	// 地图边界
+	
 	if (targetTilePosition.x < 0 || targetTilePosition.y < 0 ||
 		targetTilePosition.x > sGlobal->gameMap->getMapSize().width - 1 ||
 		targetTilePosition.y > sGlobal->gameMap->getMapSize().height - 1)
 	{
 		return kWall;
 	}
+
 	// 对应图块是地图内的墙
 	targetTileGID = sGlobal->gameMap->getWallLayer()->getTileGIDAt(targetTilePosition);
 	if (targetTileGID)	return kWall;
+
 	// 对应图块是怪物
 	targetTileGID = sGlobal->gameMap->getEnemyLayer()->getTileGIDAt(targetTilePosition);
 	if (targetTileGID) 
 	{ 
-		// fight() 开始战斗
+		this->fightWithEnemy(targetTileGID, targetTilePosition);
 		return kEnemy; 
 	}
+	
 	targetTileGID = sGlobal->gameMap->getItemLayer()->getTileGIDAt(targetTilePosition);
 	if (targetTileGID)
 	{
-		// pickupItem() 拾取物品
+		getKey(ITEM_COLOR_YELLOW);  // 得到道具（判断颜色）
+		sGlobal->gameMap->getItemLayer()->removeTileAt(targetTilePosition);  // 删除道具
 		return kEnemy;
 	}
 	// 对应图块是门
 	targetTileGID = sGlobal->gameMap->getDoorLayer()->getTileGIDAt(targetTilePosition);
 	if (targetTileGID)
 	{
-		// opendoor() 开门
+		// 门检测，减钥匙
+		// ...
+		// 删除门
+		sGlobal->gameMap->getDoorLayer()->removeTileAt(targetTilePosition);
 		return kDoor;
 	}
+
+
 	return kNone;
 }
 
@@ -250,7 +266,7 @@ void Hero::getShield(const int type)
 	this->def += addDef;
 }
 
-void Hero::fightWithEnemy(Scene* scene, const int enemyID)
+void Hero::fightWithEnemy(const int enemyID, Vec2 targetTilePosition)
 {
 	//禁用其他动作
 	this->isStopping = 0;
@@ -263,9 +279,16 @@ void Hero::fightWithEnemy(Scene* scene, const int enemyID)
 	*enemy = sGlobal->enemyMap[enemyID];
 
 	//初始化显示
-	scene->addChild(fightLayer);//fightLayer不能作为hero的child
+	scene->addChild(fightLayer); //fightLayer不能作为hero的child
 	fightLayer->initDisplay(this, enemy);
 
 	//进行回合制战斗
-	fightLayer->fight(scene, this, enemy);
+	fightLayer->fight(scene, this, enemy, targetTilePosition);
+}
+std::string Hero::getInfo()
+{
+	return Value(blood).asString() + "\n" 
+		 + Value(atk).asString() + "\n" 
+		 + Value(def).asString() + "\n" 
+		 + Value(gold).asString();
 }
