@@ -1,6 +1,7 @@
 #include "Headers.h"
 
-NPC::NPC(const ValueMap& dict, const int& x, const int& y) {
+NPC::NPC(const ValueMap& dict, const int& x, const int& y) 
+{
 	npcID = dict.at("name").asInt();
 	type = dict.at("type").asString();
 	imagePath = dict.at("image").asString();

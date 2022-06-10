@@ -12,7 +12,7 @@ GameMap::~GameMap()
 
 GameMap* GameMap::create(const char* filePath)
 {
-    GameMap* gameMapP = new GameMap();
+    auto gameMapP = new GameMap();
     if (gameMapP->initWithTMXFile(filePath))
     {
         gameMapP->autorelease();
@@ -28,8 +28,6 @@ GameMap* GameMap::create(const char* filePath)
 
 void GameMap::mapInit()
 {
-   
-   
     floorLayer = this->getLayer("floor");
     wallLayer = this->getLayer("wall");
     itemLayer = this->getLayer("item");
@@ -41,12 +39,10 @@ void GameMap::mapInit()
 
 void GameMap::initEnemy()
 {
-
     enemyLayer = this->getLayer("enemy");
-
+  
     Size s = enemyLayer->getLayerSize();
-
-
+  
     for (int x = 0; x < s.width; x++)
     {
         for (int y = 0; y < s.height; y++)
@@ -69,22 +65,26 @@ void GameMap::initEnemy()
     }
 }
 
-void GameMap::initObject() {
-    TMXObjectGroup* group = this->objectGroupNamed("object");
+void GameMap::initObject()
+{
+    auto group = this->objectGroupNamed("object");
     const ValueVector& objects = group->getObjects();
-    for (ValueVector::const_iterator it = objects.begin(); it != objects.end(); it++) {
+    for (ValueVector::const_iterator it = objects.begin(); it != objects.end(); it++)
+    {
         const ValueMap& dict = (*it).asValueMap();
         int x = dict.at("x").asInt();
         int y = dict.at("y").asInt();
-        Point tileCoord = tileCoordForPosition(Point(x, y));
+        auto tileCoord = tileCoordForPosition(Point(x, y));
         int index = tileCoord.x + tileCoord.y * this->getMapSize().width;
         std::string type = dict.at("type").asString();
+      
         // 如果对象种类是npc，创建对象并加入npcDict中
         if (type == "npc") 
         {
             NPC* npc = new NPC(dict, x, y);
             //npcDict.insert(index, npc);
         }
+      
         // 如果对象种类是teleport，创建对象并加入teleportDict中
         if (type == "teleport")
         {
@@ -101,6 +101,7 @@ Point GameMap::tileCoordForPosition(Point position)
     int y = (((this->getMapSize().height - 1) * this->getTileSize().height) - position.y) / this->getTileSize().height;
     return Point(x, y);
 }
+
 // tile坐标 -> GL坐标
 Point GameMap::positionForTileCoord(Point tileCoord)
 {
@@ -108,35 +109,47 @@ Point GameMap::positionForTileCoord(Point tileCoord)
     return pos;
 }
 
-void GameMap::showTip(const char* tip, Point startPosition) {
-    //新建一个文本标签
-    LabelTTF* tipLabel = LabelTTF::create(tip, "Arial", 20);
-
-    tipLabel->setPosition(startPosition + Point(16, 16));
-
-    this->addChild(tipLabel, kZTip, kZTip);
+void GameMap::showTip(const char* tip)
+{
+    //添加一个文本标签
+    auto tipLabel = LabelTTF::create(tip, "Arial", 20);
+    tipLabel->setPosition(16, 16); //设置位置
+    sGlobal->hero->addChild(tipLabel, kZTip);
 
     //定义动画效果
     Action* action = Sequence::create(
         MoveBy::create(0.5f, Point(0, 32)),
-        DelayTime::create(0.5f), FadeOut::create(0.2f),
-        CallFuncN::create(CC_CALLBACK_1(GameMap::onShowTipDone, this)),
+        DelayTime::create(0.5f),
+        FadeOut::create(0.3f),
+        [=]() 
+        {
+            sGlobal->hero->removeChild(tipLabel);
+        },
         NULL);
 
     tipLabel->runAction(action);
 }
 
-void GameMap::onShowTipDone(Node* pSender) {
+void GameMap::onShowTipDone(Node* pSender) 
+{
     //删掉文本标签
-    this->getChildByTag(kZTip)->removeFromParentAndCleanup(true);
+    this->removeChild(this->getChildByTag(kZTip));
 }
 
-void GameMap::showInfo(const char* info, int time) {
-    auto label = Label::createWithTTF(info, "fonts/Marker Felt.ttf", 36);
-    label->setPosition(100, 200); //设置标签位置
-    label->enableShadow(Color4B::GREEN, Size(10, 10)); //设置阴影效果
-    label->enableOutline(Color4B::RED, 3); //设置边框效果
-    this->addChild(label, 0); //加入到场景中
-    Sleep(time);
-    this->removeChild(label);
+void GameMap::showInfo(const char* info, int time)
+{
+    auto label = Label::createWithTTF(info, "fonts/Marker Felt.ttf", 24);
+    label->setPosition(16, 54); //设置标签位置
+    label->enableShadow(Color4B(166, 166, 166, 166), Size(3, 3)); //设置阴影效果
+    label->enableOutline(Color4B::RED, 2); //设置边框效果
+    sGlobal->hero->addChild(label, 0); //加到英雄身上（加在this会被挡住）
+
+    sGlobal->hero->isStopping = false;
+    schedule([=](float dlt)
+        {
+            sGlobal->hero->isStopping = true;
+            sGlobal->hero->removeChild(label);
+            unschedule("tip");
+        }
+    , time / 1000.0f, "tip");
 }

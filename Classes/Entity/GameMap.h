@@ -5,7 +5,10 @@
 
 USING_NS_CC;
 
-class GameMap :public TMXTiledMap {
+class NPC;
+
+class GameMap :public TMXTiledMap 
+{
 	// 为了方便调用不同层，使用cocos宏定义
 	CC_SYNTHESIZE(TMXLayer*, floorLayer, FloorLayer);
 	CC_SYNTHESIZE(TMXLayer*, wallLayer, WallLayer);
@@ -22,7 +25,7 @@ public:
 	void initObject();
 	Point tileCoordForPosition(Point position);  // GL坐标 -> tile坐标
 	Point positionForTileCoord(Point tileCoord);  // tile坐标 -> GL坐标
-	void showTip(const char* tip, Point startPosition);
+	void showTip(const char* tip);
 	void onShowTipDone(Node* pSender);
 	void deleteDoor(Vec2 position);
 	void showInfo(const char* info, int time);
