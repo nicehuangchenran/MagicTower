@@ -11,6 +11,9 @@ public:
     static cocos2d::Scene* createScene();
     virtual bool init();
     cocos2d::Sprite* gameUI;
+    cocos2d::Label* weaponLabel;
+    cocos2d::Label* heroLabel;
+    cocos2d::Label* keyLabel;
     
     CREATE_FUNC(test_start);
 };
