@@ -14,7 +14,7 @@ NPC::NPC(const ValueMap& dict, const int& x, const int& y)
 	npcSprite->setAnchorPoint(Point::ZERO);
 	npcSprite->setPosition(position);
     
-	//sGlobal->gameLayer->addChild(npcSprite, kZNPC);
+	//sGlobal->gameLayer->addChild(npcSprite);
 	/*Animate* animation = sAnimationMgr->createAnimate(npcID);
 	if (animation != NULL)
 	{

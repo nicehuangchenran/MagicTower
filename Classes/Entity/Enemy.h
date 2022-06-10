@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "ChangableObject.h"
+#include "Constants.h"
 
 USING_NS_CC;
 
@@ -26,7 +27,7 @@ public:
 	int atk; //怪物攻击力
 	int def; //怪物防御力
 	int gold; //怪物掉落金币
-	int type; //怪物类型
+	ENEMY_TYPE type; //怪物类型
 	Vec2 graphPosition; //在素材图片中的位置
 
 	

@@ -39,7 +39,7 @@ public:
 	Hero *hero;
 
 	//目标地图的层数
-	int currentLevel = 1;
+	int currentLevel;
 
 	//勇士出现的起始位置
 	Vec2 heroSpawnTileCoord;

@@ -1,39 +1,27 @@
 #include "Headers.h"
 #include "Scene/HelloWorldScene.h"
+
 Hero::Hero() {}
 
-Hero::~Hero()
-{
-	//delete fightLayer;
-}
+Hero::~Hero() {}
 
-//创建对象
 Hero* Hero::create(test_start* scene, Vec2 tilePosition)
 {
-	//new申请空间
 	Hero* heroPointer = new Hero;
 
 	//异常处理
-	
 	if (heroPointer && heroPointer->init(scene, tilePosition))
-	{/*
-		if (sGlobal->hero) //释放空间
-		{
-			delete sGlobal->hero;
-		}*/
+	{
+		heroPointer->autorelease();
 		sGlobal->hero = heroPointer;
 		return heroPointer;
 	}
-	
 	else
 	{
-		delete heroPointer;
 		return nullptr;
 	}
-	
 }
 
-//初始化对象
 bool Hero::init(test_start* scene, Vec2 tilePosition)
 {
 	//调用父类初始化函数
@@ -45,17 +33,23 @@ bool Hero::init(test_start* scene, Vec2 tilePosition)
 	//初始化状态数据
 	targetTilePosition = tilePosition;
 	targetGLPosition = sGlobal -> gameMap -> positionForTileCoord(tilePosition);
-	blood = INIT_BLOOD;
-	atk = INIT_ATK;
-	def = INIT_DEF;
-	gold = INIT_GOLD;
-	key[ITEM_COLOR_YELLOW] = 1;
-	key[ITEM_COLOR_BLUE] = 0;
-	key[ITEM_COLOR_RED] = 0;
-	sword = "无";
-	shield = "无";
 	isStopping = true;
-	floor = 1;
+	if (sGlobal->hero)
+	{
+		*this = *sGlobal->hero;
+	}
+	else
+	{
+		blood = INIT_BLOOD;
+		atk = INIT_ATK;
+		def = INIT_DEF;
+		gold = INIT_GOLD;
+		key[YELLOW] = 1;
+		key[BLUE] = 0;
+		key[RED] = 0;
+		sword = "无";
+		shield = "无";
+	}
 
 	//战斗界面
 	fightLayer = new FightLayer;
@@ -85,19 +79,19 @@ void Hero::move(EventKeyboard::KeyCode code)
 	switch (code)
 	{
 		case EventKeyboard::KeyCode::KEY_UP_ARROW:
-			faceDirection = DIRECTION_UP;
+			faceDirection = UP;
 			moveDist = Point(0, OBJECT_SIZE);
 			break;
 		case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
-			faceDirection = DIRECTION_DOWN;
+			faceDirection = DOWN;
 			moveDist = Point(0, -OBJECT_SIZE);
 			break;
 		case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
-			faceDirection = DIRECTION_LEFT;
+			faceDirection = LEFT;
 			moveDist = Point(-OBJECT_SIZE, 0);
 			break;
 		case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
-			faceDirection = DIRECTION_RIGHT;
+			faceDirection = RIGHT;
 			moveDist = Point(OBJECT_SIZE, 0);
 			break;
 		default:
@@ -112,8 +106,8 @@ void Hero::move(EventKeyboard::KeyCode code)
 	//log("%f, %f", sGlobal->gameMap->getMapSize().width, sGlobal->gameMap->getMapSize().height);
 	
 	//碰撞检测
-	CollisionType colli = collisionCheck(targetGLPosition);
-	if (colli == kWall || colli == kEnemy || colli == kDoor || colli == kNPC)
+	COLLISION_TYPE colli = collisionCheck(targetGLPosition);
+	if (colli == COLLI_WALL || colli == COLLI_ENEMY || colli == COLLI_DOOR || colli == COLLI_NPC)
 	{
 		//脸部方向改变，绘制新图
 		this->image->setTextureRect(Rect(0, OBJECT_SIZE * faceDirection + 1, OBJECT_SIZE, OBJECT_SIZE));
@@ -162,7 +156,7 @@ void Hero::walkAnimation(int faceDirection)
 	image->runAction(Repeat::create(Animate::create(animation), 1));
 }
 
-CollisionType Hero::collisionCheck(Vec2 targetGLPosition)
+COLLISION_TYPE Hero::collisionCheck(Vec2 targetGLPosition)
 {
 	targetTilePosition = sGlobal -> gameMap -> tileCoordForPosition(targetGLPosition);
 	//地图边界
@@ -172,14 +166,14 @@ CollisionType Hero::collisionCheck(Vec2 targetGLPosition)
 		targetTilePosition.x > sGlobal->gameMap->getMapSize().width - 1 ||
 		targetTilePosition.y > sGlobal->gameMap->getMapSize().height - 1)
 	{
-		return kWall;
+		return COLLI_WALL;
 	}
 
 	//对应图块是地图内的墙
 	targetTileGID = sGlobal->gameMap->getWallLayer()->getTileGIDAt(targetTilePosition);
 	if (targetTileGID)
 	{
-		return kWall;
+		return COLLI_WALL;
 	}
 	
 	//对应图块是怪物
@@ -187,7 +181,7 @@ CollisionType Hero::collisionCheck(Vec2 targetGLPosition)
 	if (targetTileGID)
 	{ 
 		this->fightWithEnemy(targetTileGID, targetTilePosition);
-		return kEnemy; 
+		return COLLI_ENEMY; 
 	}
 	
 	//对应图块是道具
@@ -200,7 +194,7 @@ CollisionType Hero::collisionCheck(Vec2 targetGLPosition)
 		//删除道具
 		sGlobal->gameMap->getItemLayer()->removeTileAt(targetTilePosition);  
 
-		return kItem;
+		return COLLI_ITEM;
 	}
 
 	//对应图块是门
@@ -216,30 +210,28 @@ CollisionType Hero::collisionCheck(Vec2 targetGLPosition)
 		{
 			sGlobal->gameMap->showInfo("No Key!", 500);
 		}
-		//...
-		//删除门
 		
-		return kDoor;
+		return COLLI_DOOR;
 	}
 	int index = targetTilePosition.x + targetTilePosition.y * sGlobal->gameMap->getMapSize().width;
 
-	//从Teleport字典中查询
-	Teleport* teleport = sGlobal->gameMap->teleportDict.at(index);
+	//对应图块是传送门（楼梯）
+	auto teleport = sGlobal->gameMap->teleportDict.at(index);
 	if (teleport != NULL)
 	{
 		teleTransport(teleport);
-		return kTeleport;
+		return COLLI_TELEPORT;
 	}
 
-	return kNone;
+	return COLLI_NONE;
 }
 
 void Hero::teleTransport(Teleport* teleport)
-{	// 获取目标层数与英雄位置，然后切换场景
+{	
+	// 获取目标层数与英雄位置，然后切换场景
 	sGlobal->currentLevel = teleport->targetID;
 	sGlobal->heroSpawnTileCoord = teleport->targetHeroPosition;
 	Director::getInstance()->replaceScene(TransitionFadeTR::create(0.5f, sGlobal -> test_start -> createScene()));
-	
 }
 
 void Hero::getItem(const int gid)
@@ -247,42 +239,42 @@ void Hero::getItem(const int gid)
 	CCLOG("%d", gid);
 	if (gid >= 1 && gid <= 3)
 	{
-		getKey(gid - 1);
+		getKey(ITEM_COLOR(gid - 1));
 	}
 	else if (gid == 27 || gid == 28)
 	{
-		getPotion(29 - gid);
+		getPotion(ITEM_COLOR(29 - gid));
 	}
 	else if (gid == 25 || gid == 26)
 	{
-		getGem(27 - gid);
+		getGem(ITEM_COLOR(27 - gid));
 	}
 	else if (gid >= 72 && gid <= 76)
 	{
-		getSword(gid - 72);
+		getSword(WEAPON_TYPE(gid - 72));
 	}
 	else if (gid >= 96 && gid <= 100)
 	{
-		getShield(gid - 96);
+		getShield(WEAPON_TYPE(gid - 96));
 	}
 }
 
-void Hero::getKey(const int color)
+void Hero::getKey(const ITEM_COLOR color)
 {
 	sGlobal->gameMap->showTip("获得钥匙");
 	this->key[color]++;
 }
 
-void Hero::getPotion(const int color)
+void Hero::getPotion(const ITEM_COLOR color)
 {
 	int addBlood = 0;
 	switch (color)
 	{
-		case ITEM_COLOR_RED:
-			addBlood = 50 * (floor / 10 + 1);
+		case RED:
+			addBlood = 50 * (sGlobal->currentLevel / 10 + 1);
 			break;
-		case ITEM_COLOR_BLUE:
-			addBlood = 200 * (floor / 10 + 1);
+		case BLUE:
+			addBlood = 200 * (sGlobal->currentLevel / 10 + 1);
 			break;
 	}
 	sGlobal->gameMap->showTip(("血量+" + Value(addBlood).asString()).data());
@@ -290,40 +282,40 @@ void Hero::getPotion(const int color)
 }
 
 //获得宝石
-void Hero::getGem(const int color)
+void Hero::getGem(const ITEM_COLOR color)
 {
 	switch (color)
 	{
-		case ITEM_COLOR_RED:
-			this->atk += floor / 10 + 1;
-			sGlobal->gameMap->showTip(("攻击+" + Value(floor / 10 + 1).asString()).data());
+		case RED:
+			this->atk += sGlobal->currentLevel / 10 + 1;
+			sGlobal->gameMap->showTip(("攻击+" + Value(sGlobal->currentLevel / 10 + 1).asString()).data());
 			break;
-		case ITEM_COLOR_BLUE:
-			this->def += floor / 10 + 1;
-			sGlobal->gameMap->showTip(("防御+" + Value(floor / 10 + 1).asString()).data());
+		case BLUE:
+			this->def += sGlobal->currentLevel / 10 + 1;
+			sGlobal->gameMap->showTip(("防御+" + Value(sGlobal->currentLevel / 10 + 1).asString()).data());
 			break;
 	}
 }
 
 //获得剑
-void Hero::getSword(const int type)
+void Hero::getSword(const WEAPON_TYPE type)
 {
 	int addAtk = 0;
 	switch (type)
 	{
-		case WEAPON_TYPE_IRON:
+		case IRON:
 			addAtk = 10;
 			sword = "铁剑";
 			break;
-		case WEAPON_TYPE_SLIVER:
+		case SLIVER:
 			addAtk = 20;
 			sword = "银剑";
 			break;
-		case WEAPON_TYPE_KNIGHT:
+		case KNIGHT:
 			addAtk = 40;
 			sword = "骑士剑";
 			break;
-		case WEAPON_TYPE_HOLY:
+		case HOLY:
 			addAtk = 50;
 			sword = "神圣剑";
 			break;
@@ -333,24 +325,24 @@ void Hero::getSword(const int type)
 }
 
 //获得盾
-void Hero::getShield(const int type)
+void Hero::getShield(const WEAPON_TYPE type)
 {
 	int addDef = 0;
 	switch (type)
 	{
-		case WEAPON_TYPE_IRON:
+		case IRON:
 			addDef = 10;
 			sword = "铁盾";
 			break;
-		case WEAPON_TYPE_SLIVER:
+		case SLIVER:
 			addDef = 20;
 			sword = "银盾";
 			break;
-		case WEAPON_TYPE_KNIGHT:
+		case KNIGHT:
 			addDef = 40;
 			sword = "骑士盾";
 			break;
-		case WEAPON_TYPE_HOLY:
+		case HOLY:
 			addDef = 50;
 			sword = "神圣盾";
 			break;

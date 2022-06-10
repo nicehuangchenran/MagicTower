@@ -1,6 +1,5 @@
 #include "Teleport.h"
 
-
 Teleport::Teleport(const ValueMap& dict, const int x, const int y)
 {
 	int rectX = dict.at("RecX").asInt();
@@ -10,7 +9,7 @@ Teleport::Teleport(const ValueMap& dict, const int x, const int y)
 	
 	targetID = dict.at("targetMap").asInt();  // 目标地图的层数
 	//log("%d", targetID);
-	targetHeroPosition = sGlobal -> gameMap -> positionForTileCoord(Point(dict.at("heroTileCoordX").asInt(),  // 目标地图英雄的起始坐标
+	targetHeroPosition = sGlobal->gameMap->positionForTileCoord(Point(dict.at("heroTileCoordX").asInt(),  // 目标地图英雄的起始坐标
 	dict.at("heroTileCoordY").asInt()));
 	targetHeroPosition.x += 160;
 
@@ -20,10 +19,6 @@ Teleport::Teleport(const ValueMap& dict, const int x, const int y)
 	teleport->setPosition(Vec2(telePosition));
 
 	sGlobal->test_start->addChild(teleport,1);
-
 }
 
-Teleport::~Teleport()
-{
-
-}
+Teleport::~Teleport() {}
