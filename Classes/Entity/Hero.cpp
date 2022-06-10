@@ -46,7 +46,7 @@ bool Hero::init(test_start* scene, Vec2 tilePosition)
 	atk = INIT_ATK;
 	def = INIT_DEF;
 	gold = INIT_GOLD;
-	key[ITEM_COLOR_YELLOW] = 0;
+	key[ITEM_COLOR_YELLOW] = 1;
 	key[ITEM_COLOR_BLUE] = 0;
 	key[ITEM_COLOR_RED] = 0;
 	sword = "无";
@@ -97,6 +97,8 @@ void Hero::move(EventKeyboard::KeyCode code)
 			faceDirection = DIRECTION_RIGHT;
 			moveDist = Point(OBJECT_SIZE, 0);
 			break;
+		default:
+			return;
 	}
 
 	//计算目标位置
@@ -248,7 +250,6 @@ void Hero::getItem(const int gid)
 
 void Hero::getKey(const int color)
 {
-	//文本标签有bug 暂时注释掉
 	sGlobal->gameMap->showTip("获得钥匙");
 	this->key[color]++;
 }
@@ -265,6 +266,7 @@ void Hero::getPotion(const int color)
 			addBlood = 200 * (floor / 10 + 1);
 			break;
 	}
+	sGlobal->gameMap->showTip(("血量+" + Value(addBlood).asString()).data());
 	this->blood += addBlood;
 }
 
@@ -275,9 +277,11 @@ void Hero::getGem(const int color)
 	{
 		case ITEM_COLOR_RED:
 			this->atk += floor / 10 + 1;
+			sGlobal->gameMap->showTip(("攻击+" + Value(floor / 10 + 1).asString()).data());
 			break;
 		case ITEM_COLOR_BLUE:
 			this->def += floor / 10 + 1;
+			sGlobal->gameMap->showTip(("防御+" + Value(floor / 10 + 1).asString()).data());
 			break;
 	}
 }
@@ -305,6 +309,7 @@ void Hero::getSword(const int type)
 			sword = "神圣剑";
 			break;
 	}
+	sGlobal->gameMap->showTip(("获得"+sword+"\n攻击+" + Value(addAtk).asString()).data());
 	this->atk += addAtk;
 }
 
@@ -331,6 +336,7 @@ void Hero::getShield(const int type)
 			sword = "神圣盾";
 			break;
 	}
+	sGlobal->gameMap->showTip(("获得" + shield + "\n防御+" + Value(addDef).asString()).data());
 	this->def += addDef;
 }
 
