@@ -7,6 +7,7 @@
 class test_start:public cocos2d::Scene
 {
 public:
+    test_start();
     GameMap* _tileMap;
     static cocos2d::Scene* createScene();
     virtual bool init();

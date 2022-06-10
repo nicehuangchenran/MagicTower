@@ -11,6 +11,8 @@ class GameLayer;
 class GameMap;
 class Hero;
 class ControlLayer;
+class Teleport;
+class test_start;
 
 class Global
 {
@@ -22,7 +24,7 @@ public:
 	void initEnemyMap();
 
 	//游戏场景
-	GameScene *gameScene;
+	test_start *test_start;
 
 	//游戏主图层
 	GameLayer *gameLayer;
@@ -37,7 +39,7 @@ public:
 	Hero *hero;
 
 	//目标地图的层数
-	int currentLevel;
+	int currentLevel = 1;
 
 	//勇士出现的起始位置
 	Vec2 heroSpawnTileCoord;

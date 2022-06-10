@@ -59,6 +59,7 @@ list(APPEND GAME_SOURCE
      Classes/Entity/Potion.cpp
      Classes/Entity/Hero.cpp
      Classes/Entity/GameMap.cpp
+     Classes/Entity/Teleport.cpp
      Classes/AppDelegate.cpp
      Classes/Global.cpp
      Classes/FightLayer.cpp
@@ -75,6 +76,7 @@ list(APPEND GAME_HEADER
      Classes/Entity/Potion.h
      Classes/Entity/Hero.h
      Classes/Entity/GameMap.h
+     Classes/Entity/Teleport.h
      Classes/AppDelegate.h
      Classes/Constants.h
      Classes/Global.h

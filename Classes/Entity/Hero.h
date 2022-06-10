@@ -34,7 +34,8 @@ public:
 	void getShield(const int type); //获得盾
 	void fightWithEnemy(const int enemyID, Vec2 targetTilePosition); //与怪物战斗
 	void walkAnimation(const int faceDirection); // 行走动画
-	void moveIsDone(Node* node, void* faceDirection); //将状态置为停止
+	void moveIsDone(Node* node); //将状态置为停止
+	void teleTransport(Teleport* teleport);
 	CollisionType collisionCheck(Vec2 targetGLPosition); // 判断碰撞类型
 	
 	int keyNum(const int color);
