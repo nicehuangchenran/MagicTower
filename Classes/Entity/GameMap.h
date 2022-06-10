@@ -26,7 +26,6 @@ public:
 	Point tileCoordForPosition(Point position);  // GL坐标 -> tile坐标
 	Point positionForTileCoord(Point tileCoord);  // tile坐标 -> GL坐标
 	void showTip(const char* tip);
-	void onShowTipDone(Node* pSender);
 	void deleteDoor(Vec2 position);
 	void showInfo(const char* info, int time);
 	Vector<Enemy*> enemyArray;

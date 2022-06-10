@@ -53,8 +53,21 @@ public:
 	bool isStopping; //是否处于静止状态（用于动画时禁止其他操作）
 	
 	test_start* scene; //当前所在场景
-	int floor; //当前所在层数
 	FightLayer* fightLayer; //战斗界面
+
+	Hero& operator=(const Hero& last)
+	{
+		blood = last.blood;
+		atk = last.atk;
+		def = last.def;
+		gold = last.gold;
+		key[ITEM_COLOR_YELLOW] = last.key[ITEM_COLOR_YELLOW];
+		key[ITEM_COLOR_BLUE] = last.key[ITEM_COLOR_BLUE];
+		key[ITEM_COLOR_RED] = last.key[ITEM_COLOR_RED];
+		sword = last.sword;
+		shield = last.shield;
+		return *this;
+	}
 
 	friend class FightLayer; //允许战斗时改变自己的属性
 	

@@ -1,39 +1,28 @@
 #include "Headers.h"
 #include "Scene/HelloWorldScene.h"
+
 Hero::Hero() {}
 
-Hero::~Hero()
-{
-	//delete fightLayer;
-}
+Hero::~Hero() {}
 
-//创建对象
 Hero* Hero::create(test_start* scene, Vec2 tilePosition)
 {
 	//new申请空间
 	Hero* heroPointer = new Hero;
 
 	//异常处理
-	
 	if (heroPointer && heroPointer->init(scene, tilePosition))
-	{/*
-		if (sGlobal->hero) //释放空间
-		{
-			delete sGlobal->hero;
-		}*/
+	{
 		sGlobal->hero = heroPointer;
+		heroPointer->autorelease();
 		return heroPointer;
 	}
-	
 	else
 	{
-		delete heroPointer;
 		return nullptr;
 	}
-	
 }
 
-//初始化对象
 bool Hero::init(test_start* scene, Vec2 tilePosition)
 {
 	//调用父类初始化函数
@@ -45,17 +34,23 @@ bool Hero::init(test_start* scene, Vec2 tilePosition)
 	//初始化状态数据
 	targetTilePosition = tilePosition;
 	targetGLPosition = sGlobal -> gameMap -> positionForTileCoord(tilePosition);
-	blood = INIT_BLOOD;
-	atk = INIT_ATK;
-	def = INIT_DEF;
-	gold = INIT_GOLD;
-	key[ITEM_COLOR_YELLOW] = 1;
-	key[ITEM_COLOR_BLUE] = 0;
-	key[ITEM_COLOR_RED] = 0;
-	sword = "无";
-	shield = "无";
 	isStopping = true;
-	floor = 1;
+	if (sGlobal->hero)
+	{
+		*this = *sGlobal->hero;
+	}
+	else
+	{
+		blood = INIT_BLOOD;
+		atk = INIT_ATK;
+		def = INIT_DEF;
+		gold = INIT_GOLD;
+		key[ITEM_COLOR_YELLOW] = 1;
+		key[ITEM_COLOR_BLUE] = 0;
+		key[ITEM_COLOR_RED] = 0;
+		sword = "无";
+		shield = "无";
+	}
 
 	//战斗界面
 	fightLayer = new FightLayer;
@@ -216,15 +211,13 @@ CollisionType Hero::collisionCheck(Vec2 targetGLPosition)
 		{
 			sGlobal->gameMap->showInfo("No Key!", 500);
 		}
-		//...
-		//删除门
 		
 		return kDoor;
 	}
 	int index = targetTilePosition.x + targetTilePosition.y * sGlobal->gameMap->getMapSize().width;
 
-	//从Teleport字典中查询
-	Teleport* teleport = sGlobal->gameMap->teleportDict.at(index);
+	//对应图块是传送门（楼梯）
+	auto teleport = sGlobal->gameMap->teleportDict.at(index);
 	if (teleport != NULL)
 	{
 		teleTransport(teleport);
@@ -235,11 +228,11 @@ CollisionType Hero::collisionCheck(Vec2 targetGLPosition)
 }
 
 void Hero::teleTransport(Teleport* teleport)
-{	// 获取目标层数与英雄位置，然后切换场景
+{	
+	// 获取目标层数与英雄位置，然后切换场景
 	sGlobal->currentLevel = teleport->targetID;
 	sGlobal->heroSpawnTileCoord = teleport->targetHeroPosition;
 	Director::getInstance()->replaceScene(TransitionFadeTR::create(0.5f, sGlobal -> test_start -> createScene()));
-	
 }
 
 void Hero::getItem(const int gid)
@@ -279,10 +272,10 @@ void Hero::getPotion(const int color)
 	switch (color)
 	{
 		case ITEM_COLOR_RED:
-			addBlood = 50 * (floor / 10 + 1);
+			addBlood = 50 * (sGlobal->currentLevel / 10 + 1);
 			break;
 		case ITEM_COLOR_BLUE:
-			addBlood = 200 * (floor / 10 + 1);
+			addBlood = 200 * (sGlobal->currentLevel / 10 + 1);
 			break;
 	}
 	sGlobal->gameMap->showTip(("血量+" + Value(addBlood).asString()).data());
@@ -295,12 +288,12 @@ void Hero::getGem(const int color)
 	switch (color)
 	{
 		case ITEM_COLOR_RED:
-			this->atk += floor / 10 + 1;
-			sGlobal->gameMap->showTip(("攻击+" + Value(floor / 10 + 1).asString()).data());
+			this->atk += sGlobal->currentLevel / 10 + 1;
+			sGlobal->gameMap->showTip(("攻击+" + Value(sGlobal->currentLevel / 10 + 1).asString()).data());
 			break;
 		case ITEM_COLOR_BLUE:
-			this->def += floor / 10 + 1;
-			sGlobal->gameMap->showTip(("防御+" + Value(floor / 10 + 1).asString()).data());
+			this->def += sGlobal->currentLevel / 10 + 1;
+			sGlobal->gameMap->showTip(("防御+" + Value(sGlobal->currentLevel / 10 + 1).asString()).data());
 			break;
 	}
 }

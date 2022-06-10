@@ -5,10 +5,7 @@ GameMap::GameMap()
 	sGlobal->gameMap = this;
 }
 
-GameMap::~GameMap()
-{
-
-}
+GameMap::~GameMap() {}
 
 GameMap* GameMap::create(const char* filePath)
 {
@@ -21,7 +18,6 @@ GameMap* GameMap::create(const char* filePath)
     }
     else
     {
-        //delete gameMapP;
         return nullptr;
     }
 }
@@ -50,7 +46,7 @@ void GameMap::initEnemy()
             int gid = enemyLayer->getTileGIDAt(Point(x, y));
             if (gid != 0)
             {
-                Enemy* enemy = new Enemy();
+                auto enemy = new Enemy();
 
 
                 enemy->graphPosition = Point(x, y);
@@ -81,20 +77,19 @@ void GameMap::initObject()
         // 如果对象种类是npc，创建对象并加入npcDict中
         if (type == "npc") 
         {
-            NPC* npc = new NPC(dict, x, y);
+            auto npc = new NPC(dict, x, y);
             //npcDict.insert(index, npc);
         }
       
         // 如果对象种类是teleport，创建对象并加入teleportDict中
         if (type == "teleport")
         {
-            Teleport* tele = new Teleport(dict, x, y);
+            auto tele = new Teleport(dict, x, y);
             teleportDict.insert(index, tele);
         }
     }
 }
 
-// GL坐标->tile坐标
 Point GameMap::tileCoordForPosition(Point position)
 {
     int x = position.x / this->getTileSize().width;
@@ -102,7 +97,6 @@ Point GameMap::tileCoordForPosition(Point position)
     return Point(x, y);
 }
 
-// tile坐标 -> GL坐标
 Point GameMap::positionForTileCoord(Point tileCoord)
 {
     Point pos = Point((tileCoord.x * this->getTileSize().width), ((this->getMapSize().height - tileCoord.y - 1) * this->getTileSize().height));
@@ -128,12 +122,6 @@ void GameMap::showTip(const char* tip)
         NULL);
 
     tipLabel->runAction(action);
-}
-
-void GameMap::onShowTipDone(Node* pSender) 
-{
-    //删掉文本标签
-    this->removeChild(this->getChildByTag(kZTip));
 }
 
 void GameMap::showInfo(const char* info, int time)

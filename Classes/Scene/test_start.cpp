@@ -17,7 +17,6 @@ test_start::test_start()
 
 Scene* test_start::createScene()
 {
-    
     return test_start::create();
 }
 
@@ -49,7 +48,7 @@ bool test_start::init()
     auto tileMapSize = Size(_tileMap->getMapSize().width * tileSize.width, _tileMap->getMapSize().height * tileSize.height);
     
     //添加英雄
-    auto hero = Hero::create(this, Vec2(0, 0));
+    auto hero = Hero::create(this, Vec2(sGlobal->heroSpawnTileCoord));
     sGlobal->hero->setPosition(Vec2(sGlobal -> heroSpawnTileCoord));
     addChild(sGlobal->hero, 0);
 
@@ -99,7 +98,7 @@ void test_start::initHeroProperties() {
     mnyNum = LabelTTF::create(StringUtils::format("%d", sGlobal->hero->mnyNum()), "fonts/Sonti.ttc", 16);
     mnyNum->setPosition(100, 253);
     addChild(mnyNum);
-    floorNum= LabelTTF::create(StringUtils::format("%d", sGlobal->hero->floor), "fonts/Sonti.ttc", 16);
+    floorNum= LabelTTF::create(StringUtils::format("%d", sGlobal->currentLevel), "fonts/Sonti.ttc", 16);
     floorNum->setPosition(104, 371);
     addChild(floorNum);
     swordName= LabelTTF::create(StringUtils::format("%s", sGlobal->hero->swordName().data()), "fonts/Sonti.ttc", 16);
@@ -120,7 +119,7 @@ void test_start::flushHeroProperties()
     atkNum->setString(StringUtils::format("%d", sGlobal->hero->atkNum()));
     defNum->setString(StringUtils::format("%d", sGlobal->hero->defNum()));
     mnyNum->setString(StringUtils::format("%d", sGlobal->hero->mnyNum()));
-    floorNum->setString(StringUtils::format("%d", sGlobal->hero->floor));
+    floorNum->setString(StringUtils::format("%d", sGlobal->currentLevel));
     swordName->setString(StringUtils::format("%s", sGlobal->hero->swordName().data()));
     shieldName->setString(StringUtils::format("%s", sGlobal->hero->shieldName().data()));
 }
