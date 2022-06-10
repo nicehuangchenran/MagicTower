@@ -38,7 +38,7 @@ void FightLayer::initDisplay(const Hero* const hero, const Enemy* const enemy)
 	this->addChild(enemyLabel);
 }
 
-void FightLayer::fight(Scene* scene, Hero* hero, Enemy* enemy, Vec2 targetTilePosition)
+void FightLayer::fight(test_start* scene, Hero* hero, Enemy* enemy, Vec2 targetTilePosition)
 {
 	this->schedule([=](float dlt)
 		{
@@ -57,7 +57,10 @@ void FightLayer::fight(Scene* scene, Hero* hero, Enemy* enemy, Vec2 targetTilePo
 				this->unschedule("fight");
 
 				//状态恢复
-				hero->isStopping = 1;
+				hero->isStopping = true;
+
+				//更新信息显示
+				scene->flushHeroProperties();
 
 				if (hero->blood) //战胜
 				{

@@ -5,7 +5,10 @@
 
 USING_NS_CC;
 
-class GameMap :public TMXTiledMap {
+class NPC;
+
+class GameMap :public TMXTiledMap 
+{
 	// 为了方便调用不同层，使用cocos宏定义
 	CC_SYNTHESIZE(TMXLayer*, floorLayer, FloorLayer);
 	CC_SYNTHESIZE(TMXLayer*, wallLayer, WallLayer);
@@ -20,11 +23,10 @@ public:
 	void initEnemy();
 	void initObject();
 	Point tileCoordForPosition(Point position);
-	void showTip(const char* tip, Point startPosition);
+	void showTip(const char* tip);
 	void onShowTipDone(Node* pSender);
 	void deleteDoor(Vec2 position);
 	void showInfo(const char* info, int time);
-	Vector<Enemy*> enemyArray;
 	//Map<int, Teleport*> teleportDict; // 传送门类待定义
 	Map<int, NPC*> npcDict;  // 有bug，暂且搁置
 };
