@@ -2,7 +2,7 @@
 
 GameMap::GameMap()
 {
-    if (sGlobal->gameMap) //释放空间
+    if (sGlobal->gameMap) //�ͷſռ�
     {
         delete sGlobal->gameMap;
     }
@@ -39,7 +39,6 @@ void GameMap::mapInit()
 
 void GameMap::initEnemy()
 {
-	
 	enemyLayer = this->getLayer("enemy");
 
 	Size s = enemyLayer->getLayerSize();
@@ -60,28 +59,13 @@ void GameMap::initEnemy()
 				
 				enemy->startGID = gid;
 
-				//这一步有bug，暂且搁置
+				//��һ����bug�����Ҹ���
 				//enemyArray.pushBack(enemy);
 			}
 		}
-	}	
-}
+	}
 
-void GameMap::initObject() {
-    TMXObjectGroup* group = this->objectGroupNamed("object");
-    const ValueVector& objects = group->getObjects();
-    for (ValueVector::const_iterator it = objects.begin(); it != objects.end(); it++) {
-        const ValueMap& dict = (*it).asValueMap();
-        int x = dict.at("x").asInt();
-        int y = dict.at("y").asInt();
-        Point tileCoord = tileCoordForPosition(Point(x, y));
-        int index = tileCoord.x + tileCoord.y * this->getMapSize().width;
-        std::string type = dict.at("type").asString();
-        if (type == "npc") {
-            NPC* npc = new NPC(dict, x, y);
-            npcDict.insert(index, npc);
-        }
-    }
+	
 }
 
 Point GameMap::tileCoordForPosition(Point position)
@@ -92,14 +76,14 @@ Point GameMap::tileCoordForPosition(Point position)
 }
 
 void GameMap::showTip(const char* tip, Point startPosition) {
-    //新建一个文本标签
+    //�½�һ���ı���ǩ
     LabelTTF* tipLabel = LabelTTF::create(tip, "Arial", 20);
 
     tipLabel->setPosition(startPosition + Point(16, 16));
 
     this->addChild(tipLabel, kZTip, kZTip);
 
-    //定义动画效果
+    //���嶯��Ч��
     Action* action = Sequence::create(
         MoveBy::create(0.5f, Point(0, 32)),
         DelayTime::create(0.5f), FadeOut::create(0.2f),
@@ -110,16 +94,16 @@ void GameMap::showTip(const char* tip, Point startPosition) {
 }
 
 void GameMap::onShowTipDone(Node* pSender) {
-    //删掉文本标签
+    //ɾ���ı���ǩ
     this->getChildByTag(kZTip)->removeFromParentAndCleanup(true);
 }
 
 void GameMap::showInfo(const char* info, int time) {
     auto label = Label::createWithTTF(info, "fonts/Marker Felt.ttf", 36);
-    label->setPosition(100, 200); //设置标签位置
-    label->enableShadow(Color4B::GREEN, Size(10, 10)); //设置阴影效果
-    label->enableOutline(Color4B::RED, 3); //设置边框效果
-    this->addChild(label, 0); //加入到场景中
+    label->setPosition(100, 200); //���ñ�ǩλ��
+    label->enableShadow(Color4B::GREEN, Size(10, 10)); //������ӰЧ��
+    label->enableOutline(Color4B::RED, 3); //���ñ߿�Ч��
+    this->addChild(label, 0); //���뵽������
     Sleep(time);
     this->removeChild(label);
 }

@@ -5,19 +5,19 @@ Hero::Hero() {
 	isDoorOpening = false;
 }
 
-Hero::~Hero() 
+Hero::~Hero()
 {
 	delete fightLayer;
 }
 
 //创建对象
-Hero* Hero::create(Vec2 tilePosition)
+Hero* Hero::create(Scene* scene, Vec2 tilePosition)
 {
 	//new申请空间
 	static Hero* heroPointer = new Hero;
 
 	//异常处理
-	if (heroPointer && heroPointer->init(tilePosition))
+	if (heroPointer && heroPointer->init(scene, tilePosition))
 	{
 		if (sGlobal->hero) //释放空间
 		{
@@ -34,7 +34,7 @@ Hero* Hero::create(Vec2 tilePosition)
 }
 
 //初始化对象
-bool Hero::init(Vec2 tilePosition)
+bool Hero::init(Scene* scene, Vec2 tilePosition)
 {
 	//调用父类初始化函数
 	if (!Node::init()) { return false; }
@@ -52,6 +52,9 @@ bool Hero::init(Vec2 tilePosition)
 
 	//战斗界面
 	fightLayer = new FightLayer;
+
+	//绑定场景
+	this->scene = scene;
 
 	//设置精灵
 	image = Sprite::create("img/1.png", Rect(0, OBJECT_SIZE * 10 + 1, OBJECT_SIZE, OBJECT_SIZE));//创建精灵
@@ -153,12 +156,12 @@ CollisionType Hero::collisionCheck(Vec2 targetGLPosition)
 	// 对应图块是地图内的墙
 	targetTileGID = sGlobal->gameMap->getWallLayer()->getTileGIDAt(targetTilePosition);
 	if (targetTileGID)	return kWall;
+
 	// 对应图块是怪物
-	
 	targetTileGID = sGlobal->gameMap->getEnemyLayer()->getTileGIDAt(targetTilePosition);
 	if (targetTileGID) 
 	{ 
-		// fight() 开始战斗
+		this->fightWithEnemy(targetTileGID, targetTilePosition);
 		return kEnemy; 
 	}
 	
@@ -292,7 +295,7 @@ void Hero::getShield(const int type)
 	this->def += addDef;
 }
 
-void Hero::fightWithEnemy(Scene* scene, const int enemyID)
+void Hero::fightWithEnemy(const int enemyID, Vec2 targetTilePosition)
 {
 	//禁用其他动作
 	this->isStopping = 0;
@@ -305,13 +308,20 @@ void Hero::fightWithEnemy(Scene* scene, const int enemyID)
 	*enemy = sGlobal->enemyMap[enemyID];
 
 	//初始化显示
-	scene->addChild(fightLayer);//fightLayer不能作为hero的child
+	scene->addChild(fightLayer); //fightLayer不能作为hero的child
 	fightLayer->initDisplay(this, enemy);
 
 	//进行回合制战斗
-	fightLayer->fight(scene, this, enemy);
-}
 
+	fightLayer->fight(scene, this, enemy, targetTilePosition);
+}
+std::string Hero::getInfo()
+{
+	return Value(blood).asString() + "\n"
+		+ Value(atk).asString() + "\n"
+		+ Value(def).asString() + "\n"
+		+ Value(gold).asString();
+}
 int Hero::bldNum() {
 	return blood;
 }

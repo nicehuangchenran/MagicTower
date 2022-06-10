@@ -11,7 +11,7 @@ public:
 	FightLayer();
 	~FightLayer();
 	void initDisplay(const Hero* hero, const Enemy* enemy); //初始显示
-	void fight(Scene* scene, Hero* hero, Enemy* enemy); //开始战斗过程
+	void fight(Scene* scene, Hero* hero, Enemy* enemy, Vec2 targetTilePosition); //开始战斗过程
 
 protected:
 	std::string heroInfo; //英雄信息字符串
