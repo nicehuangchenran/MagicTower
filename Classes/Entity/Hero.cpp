@@ -46,7 +46,7 @@ bool Hero::init(Vec2 tilePosition)
 	key[ITEM_COLOR_YELLOW] = 0;
 	key[ITEM_COLOR_BLUE] = 0;
 	key[ITEM_COLOR_RED] = 0;
-
+	isStopping = true;
 	//战斗界面
 	fightLayer = new FightLayer;
 
@@ -62,6 +62,9 @@ bool Hero::init(Vec2 tilePosition)
 //移动一格
 void Hero::move(EventKeyboard::KeyCode code)
 {
+	// 如果上一个move函数还在执行，则不继续执行
+	if (!isStopping)	return;
+
 	//确定移动的距离
 	Point moveDist;
 	switch (code)
@@ -88,12 +91,12 @@ void Hero::move(EventKeyboard::KeyCode code)
 	targetGLPosition = this->getPosition() + moveDist;
 	targetGLPosition.x -= 160;  // 将GL坐标系原点设为(160,0)，待用函数封装
 	//测试坐标
-	//log("%d, %d", sGlobal->gameMap->getMapSize().width, sGlobal->gameMap->getMapSize().height);
+	log("%f, %f", sGlobal->gameMap->getMapSize().width, sGlobal->gameMap->getMapSize().height);
 	
 	//碰撞检测
 	
 	CollisionType colli = collisionCheck(targetGLPosition);
-
+	
 	if (colli == kWall || colli == kEnemy || colli == kDoor || colli == kNPC)
 	{
 		// 脸部方向改变，绘制新图
@@ -107,11 +110,21 @@ void Hero::move(EventKeyboard::KeyCode code)
 
 	// 脸部方向改变，绘制新图
 	this->image->setTextureRect(Rect(0, OBJECT_SIZE * faceDirection + 1, OBJECT_SIZE, OBJECT_SIZE));
+	
+	Action* action = Sequence::create(
+		MoveBy::create(0.20f, moveDist),
+		CallFuncN::create(CC_CALLBACK_1(Hero::moveIsDone, this, (void*)faceDirection)),
+		NULL);
+		// 移动到新位置
+	this->runAction(action);
 
-	// 移动到新位置
-	this->runAction(MoveBy::create(0.2f, moveDist));
+	isStopping = false;
 }
 
+void Hero::moveIsDone(Node* node, void* faceDirection)
+{
+	isStopping = true;
+}
 
 void Hero::walkAnimation(int faceDirection)
 {
@@ -139,7 +152,7 @@ CollisionType Hero::collisionCheck(Vec2 targetGLPosition)
 {
 	targetTilePosition = sGlobal -> gameMap -> tileCoordForPosition(targetGLPosition);
 	// 地图边界
-	
+	log("%f, %f", targetTilePosition.x, targetTilePosition.y);
 	if (targetTilePosition.x < 0 || targetTilePosition.y < 0 ||
 		targetTilePosition.x > sGlobal->gameMap->getMapSize().width - 1 ||
 		targetTilePosition.y > sGlobal->gameMap->getMapSize().height - 1)
@@ -266,7 +279,7 @@ void Hero::getShield(const int type)
 void Hero::fightWithEnemy(Scene* scene, const int enemyID)
 {
 	//禁用其他动作
-	this->isStopping = 0;
+	//->isStopping = 0;
 
 	//检查怪物ID是否正确
 	if (enemyID < 1 || enemyID > ENEMY_NUM) { return; }

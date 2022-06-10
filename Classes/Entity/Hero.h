@@ -19,6 +19,7 @@ public:
 	void getShield(const int type); //获得盾
 	void fightWithEnemy(Scene* scene, const int enemyID); //与怪物战斗
 	void walkAnimation(int faceDirection);  // 行走动画
+	void moveIsDone(Node* node, void* faceDirection);
 	CollisionType collisionCheck(Vec2 targetGLPosition);  // 判断碰撞类型
 	bool isStopping; //是否处于静止状态（用于动画时禁止其他操作）
 
