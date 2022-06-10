@@ -64,3 +64,4 @@ protected:
 	int gold; //金币
 	int key[5]; //拥有钥匙数
 };
+#endif
