@@ -1,6 +1,9 @@
 #include "Headers.h"
 
-Hero::Hero() {}
+Hero::Hero() {
+	isStopping = true;
+	isDoorOpening = false;
+}
 
 Hero::~Hero()
 {
@@ -43,9 +46,9 @@ bool Hero::init(Scene* scene, Vec2 tilePosition)
 	atk = INIT_ATK;
 	def = INIT_DEF;
 	gold = INIT_GOLD;
-	key[ITEM_COLOR_YELLOW] = 0;
-	key[ITEM_COLOR_BLUE] = 0;
-	key[ITEM_COLOR_RED] = 0;
+	key[ITEM_COLOR_YELLOW + 1] = 10;
+	key[ITEM_COLOR_BLUE + 1] = 0;
+	key[ITEM_COLOR_RED + 1] = 0;
 	isStopping = true;
 	//战斗界面
 	fightLayer = new FightLayer;
@@ -155,7 +158,7 @@ CollisionType Hero::collisionCheck(Vec2 targetGLPosition)
 {
 	targetTilePosition = sGlobal -> gameMap -> tileCoordForPosition(targetGLPosition);
 	// 地图边界
-	log("%f, %f", targetTilePosition.x, targetTilePosition.y);
+	
 	if (targetTilePosition.x < 0 || targetTilePosition.y < 0 ||
 		targetTilePosition.x > sGlobal->gameMap->getMapSize().width - 1 ||
 		targetTilePosition.y > sGlobal->gameMap->getMapSize().height - 1)
@@ -166,8 +169,8 @@ CollisionType Hero::collisionCheck(Vec2 targetGLPosition)
 	// 对应图块是地图内的墙
 	targetTileGID = sGlobal->gameMap->getWallLayer()->getTileGIDAt(targetTilePosition);
 	if (targetTileGID)	return kWall;
-
 	// 对应图块是怪物
+
 	targetTileGID = sGlobal->gameMap->getEnemyLayer()->getTileGIDAt(targetTilePosition);
 	if (targetTileGID) 
 	{ 
@@ -178,18 +181,26 @@ CollisionType Hero::collisionCheck(Vec2 targetGLPosition)
 	targetTileGID = sGlobal->gameMap->getItemLayer()->getTileGIDAt(targetTilePosition);
 	if (targetTileGID)
 	{
-		getKey(ITEM_COLOR_YELLOW);  // 得到道具（判断颜色）
+		getItem(targetTileGID);  // 得到道具（判断颜色）
 		sGlobal->gameMap->getItemLayer()->removeTileAt(targetTilePosition);  // 删除道具
-		return kEnemy;
+		return kItem;
 	}
 	// 对应图块是门
 	targetTileGID = sGlobal->gameMap->getDoorLayer()->getTileGIDAt(targetTilePosition);
 	if (targetTileGID)
 	{
-		// 门检测，减钥匙
+		if (key[(targetTileGID - 96) / 24]) {
+			key[(targetTileGID - 96) / 24]--;
+			
+			//sGlobal->gameMap->getDoorLayer()->removeTileAt(targetTilePosition);
+			openDoor(targetTileGID);
+		}
+		else {
+			//sGlobal->gameMap->showInfo("没有钥匙", 200);
+		}
 		// ...
 		// 删除门
-		sGlobal->gameMap->getDoorLayer()->removeTileAt(targetTilePosition);
+		
 		return kDoor;
 	}
 
@@ -197,9 +208,27 @@ CollisionType Hero::collisionCheck(Vec2 targetGLPosition)
 	return kNone;
 }
 
+void Hero::getItem(int gid) {
+	CCLOG("%d", gid);
+	if (gid < 0)
+		return;
+	if (gid <= 4)
+		getKey(gid);
+	else if (gid == 27 || gid == 28)
+		getPotion(29 - gid);
+	else if (gid == 25 || gid == 26)
+		getGem(27 - gid);
+	else if (gid >= 72 && gid <= 76)
+		getSword(gid - 72);
+	else if (gid >= 96 && gid <= 100)
+		getShield(gid - 96);
+}
+
 //获得钥匙
 void Hero::getKey(const int color)
 {
+	//文本标签有bug 暂时注释掉
+	//sGlobal->gameMap->showTip("获得钥匙", Point::ANCHOR_MIDDLE);
 	this->key[color]++;
 }
 
@@ -282,7 +311,7 @@ void Hero::getShield(const int type)
 void Hero::fightWithEnemy(const int enemyID, Vec2 targetTilePosition)
 {
 	//禁用其他动作
-	//->isStopping = 0;
+	//isStopping = 0;
 
 	//检查怪物ID是否正确
 	if (enemyID < 1 || enemyID > ENEMY_NUM) { return; }
@@ -296,12 +325,63 @@ void Hero::fightWithEnemy(const int enemyID, Vec2 targetTilePosition)
 	fightLayer->initDisplay(this, enemy);
 
 	//进行回合制战斗
+
 	fightLayer->fight(scene, this, enemy, targetTilePosition);
 }
 std::string Hero::getInfo()
 {
-	return Value(blood).asString() + "\n" 
-		 + Value(atk).asString() + "\n" 
-		 + Value(def).asString() + "\n" 
-		 + Value(gold).asString();
+	return Value(blood).asString() + "\n"
+		+ Value(atk).asString() + "\n"
+		+ Value(def).asString() + "\n"
+		+ Value(gold).asString();
+}
+int Hero::bldNum() {
+	return blood;
+}
+
+int Hero::atkNum() {
+	return atk;
+}
+
+int Hero::defNum() {
+	return def;
+}
+
+int Hero::mnyNum() {
+	return gold;
+}
+
+int Hero::keyNum(int col) {
+	return key[col];
+}
+
+//打开门
+void Hero::openDoor(int gid) {
+	//如果门正在被开启，则返回
+	if (isDoorOpening)
+		return;
+	//保存正在被开启的门的初始GID
+	targetDoorGID = gid;
+	isDoorOpening = true;
+
+	//定时器更新门动画
+	schedule(schedule_selector(Hero::updateOpenDoorAnimation), 0.1f);
+}
+
+//更新开门动画
+void Hero::updateOpenDoorAnimation(float time)
+{
+	//计算动画下一帧的图块ID，TileMap的图块编号方式是横向递增1，所以每列相同的位置的图块ID相差了每行图块的个数
+	int nextGID = sGlobal->gameMap->getDoorLayer()->getTileGIDAt(targetTilePosition) + 1;
+
+	//如果超过了第四帧动画，就将当前位置的图块删除，并取消定时器
+	if (nextGID - targetDoorGID >= 4)
+	{
+		sGlobal->gameMap->getDoorLayer()->removeTileAt(targetTilePosition);
+		unschedule(schedule_selector(Hero::updateOpenDoorAnimation));
+		isDoorOpening = false;
+	}
+	else
+		//更新动画至下一帧
+		sGlobal->gameMap->getDoorLayer()->setTileGID(nextGID, targetTilePosition);
 }

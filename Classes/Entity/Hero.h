@@ -11,12 +11,20 @@ class FightLayer;
 
 class Hero :public Node {
 public:
+	enum Color {
+		YELLOW = 0,
+		BLUE,
+		RED,
+		ULTRA,
+	};
 	int faceDirection;
 	Hero();
 	~Hero();
 	static Hero* create(Scene* scene, Vec2 position); //创建对象
 	bool init(Scene* scene, Vec2 position); //初始化对象
 	void move(EventKeyboard::KeyCode code); //移动一格
+
+	void getItem(int gid);
 	void getKey(const int color); //获得钥匙
 	void getPotion(const int color); //获得药水
 	void getGem(const int color); //获得宝石
@@ -26,12 +34,22 @@ public:
 	void walkAnimation(int faceDirection);  // 行走动画
 	void moveIsDone(Node* node, void* faceDirection);
 	CollisionType collisionCheck(Vec2 targetGLPosition);  // 判断碰撞类型
-	std::string getInfo();
+	
+	int keyNum(int col);
+	int bldNum();
+	int atkNum();
+	int defNum();
+	int mnyNum();
 
+	void openDoor(int gid);
+	void updateOpenDoorAnimation(float time); //开门动画
+	int targetDoorGID;
+	std::string getInfo();
 	bool isStopping; //是否处于静止状态（用于动画时禁止其他操作）
+	
 	Scene* scene; //当前所在场景
 	FightLayer* fightLayer; //战斗界面
-
+	bool isDoorOpening;
 	friend class FightLayer;
 	
 protected:
@@ -44,7 +62,5 @@ protected:
 	int def; //防御力
 	int blood; //血量
 	int gold; //金币
-	int key[3]; //拥有钥匙数
+	int key[5]; //拥有钥匙数
 };
-
-#endif // !_HERO_H_

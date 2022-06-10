@@ -10,6 +10,9 @@ public:
     GameMap* _tileMap;
     static cocos2d::Scene* createScene();
     virtual bool init();
+    void initHeroProperties();
+    void flushHeroProperties();
+    LabelTTF* keyNum[4], * bldNum, * atkNum, * defNum, * mnyNum;
     cocos2d::Sprite* gameUI;
     cocos2d::Label* weaponLabel;
     cocos2d::Label* heroLabel;

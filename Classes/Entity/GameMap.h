@@ -6,7 +6,7 @@
 USING_NS_CC;
 
 class GameMap :public TMXTiledMap {
-	// ÎªÁË·½±ãµ÷ÓÃ²»Í¬²ã£¬Ê¹ÓÃcocosºê¶¨Òå
+	// ä¸ºäº†æ–¹ä¾¿è°ƒç”¨ä¸åŒå±‚ï¼Œä½¿ç”¨cocoså®å®šä¹‰
 	CC_SYNTHESIZE(TMXLayer*, floorLayer, FloorLayer);
 	CC_SYNTHESIZE(TMXLayer*, wallLayer, WallLayer);
 	CC_SYNTHESIZE(TMXLayer*, enemyLayer, EnemyLayer);
@@ -20,9 +20,13 @@ public:
 	void initEnemy();
 	void initObject();
 	Point tileCoordForPosition(Point position);
+	void showTip(const char* tip, Point startPosition);
+	void onShowTipDone(Node* pSender);
+	void deleteDoor(Vec2 position);
+	void showInfo(const char* info, int time);
 	Vector<Enemy*> enemyArray;
-	//Map<int, Teleport*> teleportDict; // ´«ËÍÃÅÀà´ı¶¨Òå
-	//Map<int, NPC*> npcDict;  // ÓĞbug£¬ÔİÇÒ¸éÖÃ
+	//Map<int, Teleport*> teleportDict; // ä¼ é€é—¨ç±»å¾…å®šä¹‰
+	Map<int, NPC*> npcDict;  // æœ‰bugï¼Œæš‚ä¸”æç½®
 };
 
 #endif // !_GAME_MAP_H_
