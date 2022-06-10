@@ -7,6 +7,9 @@ const int OBJECT_SIZE = 32;
 //怪物种类总数
 const int ENEMY_NUM = 16;
 
+//GID最大值
+const int GID_MAX = 360;
+
 //怪物攻击类型
 const int ENEMY_TYPE_NORMAL = 0; //物攻类怪物
 const int ENEMY_TYPE_CRITICAL = 1; //暴击类怪物
