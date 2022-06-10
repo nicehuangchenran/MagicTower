@@ -49,6 +49,11 @@ bool test_start::init()
 
     listenerkey->onKeyPressed = ([=](EventKeyboard::KeyCode code, Event* event)
         {
+            pauseOrContinue(code);
+            if (Director::getInstance()->isPaused())
+            {
+                return;
+            }
             sGlobal->hero->move(code);
             flushHeroProperties();
         });
@@ -108,4 +113,25 @@ void test_start::flushHeroProperties()
     floorNum->setString(StringUtils::format("%d", sGlobal->hero->floor));
     swordName->setString(StringUtils::format("%s", sGlobal->hero->swordName().data()));
     shieldName->setString(StringUtils::format("%s", sGlobal->hero->shieldName().data()));
+}
+
+void test_start::pauseOrContinue(EventKeyboard::KeyCode code)
+{
+    if (code == EventKeyboard::KeyCode::KEY_P)
+    {
+        if (Director::getInstance()->isPaused())
+        {
+            Director::getInstance()->resume();
+            removeChild(pauseWindow);
+        }
+        else
+        {
+            pauseWindow = Label::createWithTTF("Game Paused...\nPress \"P\" to Continue", "fonts/Marker Felt.ttf", 36);
+            pauseWindow->setPosition(Director::getInstance()->getVisibleSize() / 2);
+            pauseWindow->enableShadow(Color4B(166, 166, 166, 166), Size(5, 5)); //设置阴影效果
+            pauseWindow->enableOutline(Color4B::RED, 5); //设置边框效果
+            addChild(pauseWindow);
+            Director::getInstance()->pause();
+        }
+    }
 }

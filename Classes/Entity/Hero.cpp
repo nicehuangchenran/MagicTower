@@ -11,7 +11,7 @@ Hero::~Hero()
 Hero* Hero::create(test_start* scene, Vec2 tilePosition)
 {
 	//new申请空间
-	static Hero* heroPointer = new Hero;
+	Hero* heroPointer = new Hero;
 
 	//异常处理
 	if (heroPointer && heroPointer->init(scene, tilePosition))
