@@ -2,11 +2,12 @@
 
 GameMap::GameMap()
 {
-    if (sGlobal->gameMap) //释放空间
-    {
-        delete sGlobal->gameMap;
-    }
 	sGlobal->gameMap = this;
+}
+
+GameMap::~GameMap()
+{
+
 }
 
 GameMap* GameMap::create(const char* filePath)
@@ -14,12 +15,13 @@ GameMap* GameMap::create(const char* filePath)
     GameMap* gameMapP = new GameMap();
     if (gameMapP->initWithTMXFile(filePath))
     {
+        gameMapP->autorelease();
         gameMapP->mapInit();
         return gameMapP;
     }
     else
     {
-        delete gameMapP;
+        //delete gameMapP;
         return nullptr;
     }
 }
@@ -34,7 +36,7 @@ void GameMap::mapInit()
     doorLayer = this->getLayer("door");
 
     initEnemy();
-    //initObject();
+    initObject();
 }
 
 void GameMap::initEnemy()
@@ -60,8 +62,8 @@ void GameMap::initEnemy()
 
                 enemy->startGID = gid;
 
-                //这一步有bug，暂且搁置
-                //enemyArray.pushBack(enemy);
+                //将怪物加入怪物数组
+                enemyArray.pushBack(enemy);
             }
         }
     }
@@ -77,18 +79,33 @@ void GameMap::initObject() {
         Point tileCoord = tileCoordForPosition(Point(x, y));
         int index = tileCoord.x + tileCoord.y * this->getMapSize().width;
         std::string type = dict.at("type").asString();
-        if (type == "npc") {
+        // 如果对象种类是npc，创建对象并加入npcDict中
+        if (type == "npc") 
+        {
             NPC* npc = new NPC(dict, x, y);
-            npcDict.insert(index, npc);
+            //npcDict.insert(index, npc);
+        }
+        // 如果对象种类是teleport，创建对象并加入teleportDict中
+        if (type == "teleport")
+        {
+            Teleport* tele = new Teleport(dict, x, y);
+            teleportDict.insert(index, tele);
         }
     }
 }
 
+// GL坐标->tile坐标
 Point GameMap::tileCoordForPosition(Point position)
 {
     int x = position.x / this->getTileSize().width;
     int y = (((this->getMapSize().height - 1) * this->getTileSize().height) - position.y) / this->getTileSize().height;
     return Point(x, y);
+}
+// tile坐标 -> GL坐标
+Point GameMap::positionForTileCoord(Point tileCoord)
+{
+    Point pos = Point((tileCoord.x * this->getTileSize().width), ((this->getMapSize().height - tileCoord.y - 1) * this->getTileSize().height));
+    return pos;
 }
 
 void GameMap::showTip(const char* tip, Point startPosition) {

@@ -1,5 +1,5 @@
 #include "Headers.h"
-
+#include "Scene/HelloWorldScene.h"
 Hero::Hero() {
 	isStopping = true;
 	isDoorOpening = false;
@@ -7,30 +7,33 @@ Hero::Hero() {
 
 Hero::~Hero()
 {
-	delete fightLayer;
+	//delete fightLayer;
 }
 
 //创建对象
 Hero* Hero::create(Scene* scene, Vec2 tilePosition)
 {
 	//new申请空间
-	static Hero* heroPointer = new Hero;
+	Hero* heroPointer = new Hero;
 
 	//异常处理
+	
 	if (heroPointer && heroPointer->init(scene, tilePosition))
-	{
+	{/*
 		if (sGlobal->hero) //释放空间
 		{
 			delete sGlobal->hero;
-		}
+		}*/
 		sGlobal->hero = heroPointer;
 		return heroPointer;
 	}
+	
 	else
 	{
 		delete heroPointer;
 		return nullptr;
 	}
+	
 }
 
 //初始化对象
@@ -41,7 +44,7 @@ bool Hero::init(Scene* scene, Vec2 tilePosition)
 
 	//初始化状态数据
 	targetTilePosition = tilePosition;
-	targetGLPosition = tilePosition * OBJECT_SIZE;
+	targetGLPosition = sGlobal -> gameMap -> positionForTileCoord(tilePosition);
 	blood = INIT_BLOOD;
 	atk = INIT_ATK;
 	def = INIT_DEF;
@@ -97,7 +100,7 @@ void Hero::move(EventKeyboard::KeyCode code)
 	targetGLPosition = this->getPosition() + moveDist;
 	targetGLPosition.x -= 160;  // 将GL坐标系原点设为(160,0)，待用函数封装
 	//测试坐标
-	log("%f, %f", sGlobal->gameMap->getMapSize().width, sGlobal->gameMap->getMapSize().height);
+	//log("%f, %f", sGlobal->gameMap->getMapSize().width, sGlobal->gameMap->getMapSize().height);
 	
 	//碰撞检测
 	
@@ -119,7 +122,7 @@ void Hero::move(EventKeyboard::KeyCode code)
 	
 	Action* action = Sequence::create(
 		MoveBy::create(0.20f, moveDist),
-		CallFuncN::create(CC_CALLBACK_1(Hero::moveIsDone, this, (void*)faceDirection)),
+		CallFuncN::create(CC_CALLBACK_1(Hero::moveIsDone, this)),
 		NULL);
 		// 移动到新位置
 	this->runAction(action);
@@ -127,7 +130,7 @@ void Hero::move(EventKeyboard::KeyCode code)
 	isStopping = false;
 }
 
-void Hero::moveIsDone(Node* node, void* faceDirection)
+void Hero::moveIsDone(Node* node)
 {
 	isStopping = true;
 }
@@ -203,11 +206,26 @@ CollisionType Hero::collisionCheck(Vec2 targetGLPosition)
 		
 		return kDoor;
 	}
+	int index = targetTilePosition.x + targetTilePosition.y * sGlobal->gameMap->getMapSize().width;
 
+	//从Teleport字典中查询
+	Teleport* teleport = sGlobal->gameMap->teleportDict.at(index);
+	if (teleport != NULL)
+	{
+		teleTransport(teleport);
+		return kTeleport;
+	}
 
 	return kNone;
 }
 
+void Hero::teleTransport(Teleport* teleport)
+{	// 获取目标层数与英雄位置，然后切换场景
+	sGlobal->currentLevel = teleport->targetID;
+	sGlobal->heroSpawnTileCoord = teleport->targetHeroPosition;
+	Director::getInstance()->replaceScene(TransitionFadeTR::create(0.5f, sGlobal -> test_start -> createScene()));
+	
+}
 void Hero::getItem(int gid) {
 	CCLOG("%d", gid);
 	if (gid < 0)

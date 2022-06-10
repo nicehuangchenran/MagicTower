@@ -15,18 +15,20 @@ class GameMap :public TMXTiledMap {
 
 public:
 	GameMap();
+	~GameMap();
 	static GameMap* create(const char* filePath);
 	void mapInit();
 	void initEnemy();
 	void initObject();
-	Point tileCoordForPosition(Point position);
+	Point tileCoordForPosition(Point position);  // GL坐标 -> tile坐标
+	Point positionForTileCoord(Point tileCoord);  // tile坐标 -> GL坐标
 	void showTip(const char* tip, Point startPosition);
 	void onShowTipDone(Node* pSender);
 	void deleteDoor(Vec2 position);
 	void showInfo(const char* info, int time);
 	Vector<Enemy*> enemyArray;
-	//Map<int, Teleport*> teleportDict; // 传送门类待定义
-	Map<int, NPC*> npcDict;  // 有bug，暂且搁置
+	Map<int, Teleport*> teleportDict; // 传送门类
+	//Map<int, NPC*> npcDict;  // 有bug，暂且搁置
 };
 
 #endif // !_GAME_MAP_H_

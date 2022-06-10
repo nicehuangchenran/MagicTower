@@ -10,8 +10,14 @@
 
 USING_NS_CC;
 
+test_start::test_start()
+{
+    sGlobal->test_start = this;
+}
+
 Scene* test_start::createScene()
 {
+    
     return test_start::create();
 }
 
@@ -31,16 +37,20 @@ bool test_start::init()
     addChild(gameUI);
 
     //添加地图
-    _tileMap = GameMap::create("1.tmx");
+    char mapID[20];
+    sprintf(mapID, "%d.tmx", sGlobal->currentLevel);
+    log("%s", mapID);
+    _tileMap = GameMap::create(mapID);
+    
     _tileMap -> setAnchorPoint(Vec2(0.5,0.5));
     _tileMap -> setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height / 2));
     addChild(_tileMap, 0, 1);
     auto tileSize = _tileMap->getTileSize();
     auto tileMapSize = Size(_tileMap->getMapSize().width * tileSize.width, _tileMap->getMapSize().height * tileSize.height);
-
+    
     //添加英雄
     auto hero = Hero::create(this, Vec2(0, 0));
-    sGlobal->hero->setPosition(Vec2(origin.x + OBJECT_SIZE * 10, origin.y));
+    sGlobal->hero->setPosition(Vec2(sGlobal -> heroSpawnTileCoord));
     addChild(sGlobal->hero, 0);
 
     initHeroProperties();
