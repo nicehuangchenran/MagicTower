@@ -43,19 +43,6 @@ bool test_start::init()
     sGlobal->hero->setPosition(Vec2(origin.x + OBJECT_SIZE * 10, origin.y));
     addChild(sGlobal->hero, 0);
 
-    //英雄信息
-    heroLabel = Label::create(hero->getInfo(), "Arial", 25);
-    heroLabel->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
-    heroLabel->setPosition(90, 295);
-    addChild(heroLabel);
-    schedule([=](float dlt)
-        {
-            heroLabel->setString(hero->getInfo());
-            if (0)
-            {
-                unschedule("infoDisplay");
-            }
-        },0.1f,"infoDisplay");
     initHeroProperties();
     auto listenerkey = EventListenerKeyboard::create();
 

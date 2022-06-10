@@ -295,10 +295,10 @@ void Hero::getShield(const int type)
 	this->def += addDef;
 }
 
-void Hero::fightWithEnemy(Scene* scene, const int enemyID, Vec2 targetTilePosition)
+void Hero::fightWithEnemy(const int enemyID, Vec2 targetTilePosition)
 {
 	//禁用其他动作
-	this->isStopping = 0;
+	isStopping = 0;
 
 	//检查怪物ID是否正确
 	if (enemyID < 1 || enemyID > ENEMY_NUM) { return; }

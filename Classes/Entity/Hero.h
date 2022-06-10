@@ -30,7 +30,7 @@ public:
 	void getGem(const int color); //获得宝石
 	void getSword(const int type); //获得剑
 	void getShield(const int type); //获得盾
-	void fightWithEnemy(Scene* scene, const int enemyID); //与怪物战斗
+	void fightWithEnemy(const int enemyID, Vec2 targetTilePosition); //与怪物战斗
 	void walkAnimation(int faceDirection);  // 行走动画
 	CollisionType collisionCheck(Vec2 targetGLPosition);  // 判断碰撞类型
 	
