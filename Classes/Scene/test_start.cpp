@@ -59,12 +59,14 @@ bool test_start::init()
 
     auto listenerkey = EventListenerKeyboard::create();
 
+
     listenerkey->onKeyPressed = [=](EventKeyboard::KeyCode code, Event* event)
         {
             sGlobal->hero->move(code);
         };
-    auto dispatcher = Director::getInstance()->getEventDispatcher();
 
+    auto dispatcher = Director::getInstance()->getEventDispatcher();
+    
     dispatcher->addEventListenerWithSceneGraphPriority(listenerkey, this);
     return true;
 }

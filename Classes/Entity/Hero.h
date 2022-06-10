@@ -24,6 +24,7 @@ public:
 	void getShield(const int type); //获得盾
 	void fightWithEnemy(const int enemyID, Vec2 targetTilePosition); //与怪物战斗
 	void walkAnimation(int faceDirection);  // 行走动画
+	void moveIsDone(Node* node, void* faceDirection);
 	CollisionType collisionCheck(Vec2 targetGLPosition);  // 判断碰撞类型
 	std::string getInfo();
 
