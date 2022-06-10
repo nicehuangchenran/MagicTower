@@ -7,14 +7,13 @@ Hero::~Hero() {}
 
 Hero* Hero::create(test_start* scene, Vec2 tilePosition)
 {
-	//new申请空间
 	Hero* heroPointer = new Hero;
 
 	//异常处理
 	if (heroPointer && heroPointer->init(scene, tilePosition))
 	{
-		sGlobal->hero = heroPointer;
 		heroPointer->autorelease();
+		sGlobal->hero = heroPointer;
 		return heroPointer;
 	}
 	else
@@ -45,9 +44,9 @@ bool Hero::init(test_start* scene, Vec2 tilePosition)
 		atk = INIT_ATK;
 		def = INIT_DEF;
 		gold = INIT_GOLD;
-		key[ITEM_COLOR_YELLOW] = 1;
-		key[ITEM_COLOR_BLUE] = 0;
-		key[ITEM_COLOR_RED] = 0;
+		key[YELLOW] = 1;
+		key[BLUE] = 0;
+		key[RED] = 0;
 		sword = "无";
 		shield = "无";
 	}
@@ -80,19 +79,19 @@ void Hero::move(EventKeyboard::KeyCode code)
 	switch (code)
 	{
 		case EventKeyboard::KeyCode::KEY_UP_ARROW:
-			faceDirection = DIRECTION_UP;
+			faceDirection = UP;
 			moveDist = Point(0, OBJECT_SIZE);
 			break;
 		case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
-			faceDirection = DIRECTION_DOWN;
+			faceDirection = DOWN;
 			moveDist = Point(0, -OBJECT_SIZE);
 			break;
 		case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
-			faceDirection = DIRECTION_LEFT;
+			faceDirection = LEFT;
 			moveDist = Point(-OBJECT_SIZE, 0);
 			break;
 		case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
-			faceDirection = DIRECTION_RIGHT;
+			faceDirection = RIGHT;
 			moveDist = Point(OBJECT_SIZE, 0);
 			break;
 		default:
@@ -107,8 +106,8 @@ void Hero::move(EventKeyboard::KeyCode code)
 	//log("%f, %f", sGlobal->gameMap->getMapSize().width, sGlobal->gameMap->getMapSize().height);
 	
 	//碰撞检测
-	CollisionType colli = collisionCheck(targetGLPosition);
-	if (colli == kWall || colli == kEnemy || colli == kDoor || colli == kNPC)
+	COLLISION_TYPE colli = collisionCheck(targetGLPosition);
+	if (colli == COLLI_WALL || colli == COLLI_ENEMY || colli == COLLI_DOOR || colli == COLLI_NPC)
 	{
 		//脸部方向改变，绘制新图
 		this->image->setTextureRect(Rect(0, OBJECT_SIZE * faceDirection + 1, OBJECT_SIZE, OBJECT_SIZE));
@@ -157,7 +156,7 @@ void Hero::walkAnimation(int faceDirection)
 	image->runAction(Repeat::create(Animate::create(animation), 1));
 }
 
-CollisionType Hero::collisionCheck(Vec2 targetGLPosition)
+COLLISION_TYPE Hero::collisionCheck(Vec2 targetGLPosition)
 {
 	targetTilePosition = sGlobal -> gameMap -> tileCoordForPosition(targetGLPosition);
 	//地图边界
@@ -167,14 +166,14 @@ CollisionType Hero::collisionCheck(Vec2 targetGLPosition)
 		targetTilePosition.x > sGlobal->gameMap->getMapSize().width - 1 ||
 		targetTilePosition.y > sGlobal->gameMap->getMapSize().height - 1)
 	{
-		return kWall;
+		return COLLI_WALL;
 	}
 
 	//对应图块是地图内的墙
 	targetTileGID = sGlobal->gameMap->getWallLayer()->getTileGIDAt(targetTilePosition);
 	if (targetTileGID)
 	{
-		return kWall;
+		return COLLI_WALL;
 	}
 	
 	//对应图块是怪物
@@ -182,7 +181,7 @@ CollisionType Hero::collisionCheck(Vec2 targetGLPosition)
 	if (targetTileGID)
 	{ 
 		this->fightWithEnemy(targetTileGID, targetTilePosition);
-		return kEnemy; 
+		return COLLI_ENEMY; 
 	}
 	
 	//对应图块是道具
@@ -195,7 +194,7 @@ CollisionType Hero::collisionCheck(Vec2 targetGLPosition)
 		//删除道具
 		sGlobal->gameMap->getItemLayer()->removeTileAt(targetTilePosition);  
 
-		return kItem;
+		return COLLI_ITEM;
 	}
 
 	//对应图块是门
@@ -212,7 +211,7 @@ CollisionType Hero::collisionCheck(Vec2 targetGLPosition)
 			sGlobal->gameMap->showInfo("No Key!", 500);
 		}
 		
-		return kDoor;
+		return COLLI_DOOR;
 	}
 	int index = targetTilePosition.x + targetTilePosition.y * sGlobal->gameMap->getMapSize().width;
 
@@ -221,10 +220,10 @@ CollisionType Hero::collisionCheck(Vec2 targetGLPosition)
 	if (teleport != NULL)
 	{
 		teleTransport(teleport);
-		return kTeleport;
+		return COLLI_TELEPORT;
 	}
 
-	return kNone;
+	return COLLI_NONE;
 }
 
 void Hero::teleTransport(Teleport* teleport)
@@ -240,41 +239,41 @@ void Hero::getItem(const int gid)
 	CCLOG("%d", gid);
 	if (gid >= 1 && gid <= 3)
 	{
-		getKey(gid - 1);
+		getKey(ITEM_COLOR(gid - 1));
 	}
 	else if (gid == 27 || gid == 28)
 	{
-		getPotion(29 - gid);
+		getPotion(ITEM_COLOR(29 - gid));
 	}
 	else if (gid == 25 || gid == 26)
 	{
-		getGem(27 - gid);
+		getGem(ITEM_COLOR(27 - gid));
 	}
 	else if (gid >= 72 && gid <= 76)
 	{
-		getSword(gid - 72);
+		getSword(WEAPON_TYPE(gid - 72));
 	}
 	else if (gid >= 96 && gid <= 100)
 	{
-		getShield(gid - 96);
+		getShield(WEAPON_TYPE(gid - 96));
 	}
 }
 
-void Hero::getKey(const int color)
+void Hero::getKey(const ITEM_COLOR color)
 {
 	sGlobal->gameMap->showTip("获得钥匙");
 	this->key[color]++;
 }
 
-void Hero::getPotion(const int color)
+void Hero::getPotion(const ITEM_COLOR color)
 {
 	int addBlood = 0;
 	switch (color)
 	{
-		case ITEM_COLOR_RED:
+		case RED:
 			addBlood = 50 * (sGlobal->currentLevel / 10 + 1);
 			break;
-		case ITEM_COLOR_BLUE:
+		case BLUE:
 			addBlood = 200 * (sGlobal->currentLevel / 10 + 1);
 			break;
 	}
@@ -283,15 +282,15 @@ void Hero::getPotion(const int color)
 }
 
 //获得宝石
-void Hero::getGem(const int color)
+void Hero::getGem(const ITEM_COLOR color)
 {
 	switch (color)
 	{
-		case ITEM_COLOR_RED:
+		case RED:
 			this->atk += sGlobal->currentLevel / 10 + 1;
 			sGlobal->gameMap->showTip(("攻击+" + Value(sGlobal->currentLevel / 10 + 1).asString()).data());
 			break;
-		case ITEM_COLOR_BLUE:
+		case BLUE:
 			this->def += sGlobal->currentLevel / 10 + 1;
 			sGlobal->gameMap->showTip(("防御+" + Value(sGlobal->currentLevel / 10 + 1).asString()).data());
 			break;
@@ -299,24 +298,24 @@ void Hero::getGem(const int color)
 }
 
 //获得剑
-void Hero::getSword(const int type)
+void Hero::getSword(const WEAPON_TYPE type)
 {
 	int addAtk = 0;
 	switch (type)
 	{
-		case WEAPON_TYPE_IRON:
+		case IRON:
 			addAtk = 10;
 			sword = "铁剑";
 			break;
-		case WEAPON_TYPE_SLIVER:
+		case SLIVER:
 			addAtk = 20;
 			sword = "银剑";
 			break;
-		case WEAPON_TYPE_KNIGHT:
+		case KNIGHT:
 			addAtk = 40;
 			sword = "骑士剑";
 			break;
-		case WEAPON_TYPE_HOLY:
+		case HOLY:
 			addAtk = 50;
 			sword = "神圣剑";
 			break;
@@ -326,24 +325,24 @@ void Hero::getSword(const int type)
 }
 
 //获得盾
-void Hero::getShield(const int type)
+void Hero::getShield(const WEAPON_TYPE type)
 {
 	int addDef = 0;
 	switch (type)
 	{
-		case WEAPON_TYPE_IRON:
+		case IRON:
 			addDef = 10;
 			sword = "铁盾";
 			break;
-		case WEAPON_TYPE_SLIVER:
+		case SLIVER:
 			addDef = 20;
 			sword = "银盾";
 			break;
-		case WEAPON_TYPE_KNIGHT:
+		case KNIGHT:
 			addDef = 40;
 			sword = "骑士盾";
 			break;
-		case WEAPON_TYPE_HOLY:
+		case HOLY:
 			addDef = 50;
 			sword = "神圣盾";
 			break;

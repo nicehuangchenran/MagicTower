@@ -13,12 +13,6 @@ class test_start;
 
 class Hero :public Node {
 public:
-	enum Color {
-		YELLOW = 0,
-		BLUE,
-		RED,
-		ULTRA,
-	};
 	int faceDirection;
 	Hero();
 	~Hero();
@@ -27,16 +21,16 @@ public:
 	void move(EventKeyboard::KeyCode code); //移动一格
 
 	void getItem(const int gid);
-	void getKey(const int color); //获得钥匙
-	void getPotion(const int color); //获得药水
-	void getGem(const int color); //获得宝石
-	void getSword(const int type); //获得剑
-	void getShield(const int type); //获得盾
+	void getKey(const ITEM_COLOR color); //获得钥匙
+	void getPotion(const ITEM_COLOR color); //获得药水
+	void getGem(const ITEM_COLOR color); //获得宝石
+	void getSword(const WEAPON_TYPE type); //获得剑
+	void getShield(const WEAPON_TYPE type); //获得盾
 	void fightWithEnemy(const int enemyID, Vec2 targetTilePosition); //与怪物战斗
 	void walkAnimation(const int faceDirection); // 行走动画
 	void moveIsDone(Node* node); //将状态置为停止
 	void teleTransport(Teleport* teleport);
-	CollisionType collisionCheck(Vec2 targetGLPosition); // 判断碰撞类型
+	COLLISION_TYPE collisionCheck(Vec2 targetGLPosition); // 判断碰撞类型
 	
 	int keyNum(const int color);
 	int bldNum();
@@ -61,9 +55,9 @@ public:
 		atk = last.atk;
 		def = last.def;
 		gold = last.gold;
-		key[ITEM_COLOR_YELLOW] = last.key[ITEM_COLOR_YELLOW];
-		key[ITEM_COLOR_BLUE] = last.key[ITEM_COLOR_BLUE];
-		key[ITEM_COLOR_RED] = last.key[ITEM_COLOR_RED];
+		key[YELLOW] = last.key[YELLOW];
+		key[BLUE] = last.key[BLUE];
+		key[RED] = last.key[RED];
 		sword = last.sword;
 		shield = last.shield;
 		return *this;

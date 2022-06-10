@@ -48,7 +48,6 @@ void GameMap::initEnemy()
             {
                 auto enemy = new Enemy();
 
-
                 enemy->graphPosition = Point(x, y);
 
 
@@ -108,7 +107,7 @@ void GameMap::showTip(const char* tip)
     //添加一个文本标签
     auto tipLabel = LabelTTF::create(tip, "Arial", 20);
     tipLabel->setPosition(16, 16); //设置位置
-    sGlobal->hero->addChild(tipLabel, kZTip);
+    sGlobal->hero->addChild(tipLabel);
 
     //定义动画效果
     Action* action = Sequence::create(

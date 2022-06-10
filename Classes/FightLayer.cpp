@@ -87,15 +87,15 @@ void FightLayer::fight(test_start* scene, Hero* hero, Enemy* enemy, Vec2 targetT
 					int loseBlood = 0;
 					switch (enemy->type)
 					{
-						case ENEMY_TYPE_NORMAL:
+						case NORMAL:
 							loseBlood = enemy->atk - hero->def;
 							if (loseBlood < 0) loseBlood = 0;
 							break;
-						case ENEMY_TYPE_CRITICAL:
+						case CRITICAL:
 							loseBlood = enemy->atk * (1 + (rand() % 2) * 0.5) - hero->def;
 							if (loseBlood < 0) loseBlood = 0;
 							break;
-						case ENEMY_TYPE_BOSS:
+						case BOSS:
 							loseBlood = enemy->atk;
 							break;
 					}
