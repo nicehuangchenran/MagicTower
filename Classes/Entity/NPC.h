@@ -5,7 +5,7 @@
 
 USING_NS_CC;
 
-class NPC {
+class NPC:public Ref {
 public:
 	NPC(const ValueMap& dict, const int& x, const int& y);
 	~NPC();
