@@ -32,6 +32,7 @@ public:
 	void getShield(const int type); //获得盾
 	void fightWithEnemy(const int enemyID, Vec2 targetTilePosition); //与怪物战斗
 	void walkAnimation(int faceDirection);  // 行走动画
+	void moveIsDone(Node* node, void* faceDirection);
 	CollisionType collisionCheck(Vec2 targetGLPosition);  // 判断碰撞类型
 	
 	int keyNum(int col);
@@ -45,6 +46,7 @@ public:
 	int targetDoorGID;
 	std::string getInfo();
 	bool isStopping; //是否处于静止状态（用于动画时禁止其他操作）
+	
 	Scene* scene; //当前所在场景
 	FightLayer* fightLayer; //战斗界面
 	bool isDoorOpening;
@@ -62,5 +64,3 @@ protected:
 	int gold; //金币
 	int key[5]; //拥有钥匙数
 };
-
-#endif // !_HERO_H_
