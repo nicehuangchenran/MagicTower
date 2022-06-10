@@ -2,7 +2,7 @@
 
 GameMap::GameMap()
 {
-    if (sGlobal->gameMap) //�ͷſռ�
+    if (sGlobal->gameMap) //释放空间
     {
         delete sGlobal->gameMap;
     }
@@ -39,33 +39,49 @@ void GameMap::mapInit()
 
 void GameMap::initEnemy()
 {
-	enemyLayer = this->getLayer("enemy");
 
-	Size s = enemyLayer->getLayerSize();
+    enemyLayer = this->getLayer("enemy");
 
-	
-	for (int x = 0; x < s.width; x++)
-	{
-		for (int y = 0; y < s.height; y++)
-		{
-			int gid = enemyLayer->getTileGIDAt(Point(x, y));
-			if (gid != 0)
-			{
-				Enemy* enemy = new Enemy();
+    Size s = enemyLayer->getLayerSize();
 
-				
-				enemy->graphPosition = Point(x, y);
 
-				
-				enemy->startGID = gid;
+    for (int x = 0; x < s.width; x++)
+    {
+        for (int y = 0; y < s.height; y++)
+        {
+            int gid = enemyLayer->getTileGIDAt(Point(x, y));
+            if (gid != 0)
+            {
+                Enemy* enemy = new Enemy();
 
-				//��һ����bug�����Ҹ���
-				//enemyArray.pushBack(enemy);
-			}
-		}
-	}
 
-	
+                enemy->graphPosition = Point(x, y);
+
+
+                enemy->startGID = gid;
+
+                //这一步有bug，暂且搁置
+                //enemyArray.pushBack(enemy);
+            }
+        }
+    }
+}
+
+void GameMap::initObject() {
+    TMXObjectGroup* group = this->objectGroupNamed("object");
+    const ValueVector& objects = group->getObjects();
+    for (ValueVector::const_iterator it = objects.begin(); it != objects.end(); it++) {
+        const ValueMap& dict = (*it).asValueMap();
+        int x = dict.at("x").asInt();
+        int y = dict.at("y").asInt();
+        Point tileCoord = tileCoordForPosition(Point(x, y));
+        int index = tileCoord.x + tileCoord.y * this->getMapSize().width;
+        std::string type = dict.at("type").asString();
+        if (type == "npc") {
+            NPC* npc = new NPC(dict, x, y);
+            npcDict.insert(index, npc);
+        }
+    }
 }
 
 Point GameMap::tileCoordForPosition(Point position)
@@ -76,14 +92,14 @@ Point GameMap::tileCoordForPosition(Point position)
 }
 
 void GameMap::showTip(const char* tip, Point startPosition) {
-    //�½�һ���ı���ǩ
+    //新建一个文本标签
     LabelTTF* tipLabel = LabelTTF::create(tip, "Arial", 20);
 
     tipLabel->setPosition(startPosition + Point(16, 16));
 
     this->addChild(tipLabel, kZTip, kZTip);
 
-    //���嶯��Ч��
+    //定义动画效果
     Action* action = Sequence::create(
         MoveBy::create(0.5f, Point(0, 32)),
         DelayTime::create(0.5f), FadeOut::create(0.2f),
@@ -94,16 +110,16 @@ void GameMap::showTip(const char* tip, Point startPosition) {
 }
 
 void GameMap::onShowTipDone(Node* pSender) {
-    //ɾ���ı���ǩ
+    //删掉文本标签
     this->getChildByTag(kZTip)->removeFromParentAndCleanup(true);
 }
 
 void GameMap::showInfo(const char* info, int time) {
     auto label = Label::createWithTTF(info, "fonts/Marker Felt.ttf", 36);
-    label->setPosition(100, 200); //���ñ�ǩλ��
-    label->enableShadow(Color4B::GREEN, Size(10, 10)); //������ӰЧ��
-    label->enableOutline(Color4B::RED, 3); //���ñ߿�Ч��
-    this->addChild(label, 0); //���뵽������
+    label->setPosition(100, 200); //设置标签位置
+    label->enableShadow(Color4B::GREEN, Size(10, 10)); //设置阴影效果
+    label->enableOutline(Color4B::RED, 3); //设置边框效果
+    this->addChild(label, 0); //加入到场景中
     Sleep(time);
     this->removeChild(label);
 }

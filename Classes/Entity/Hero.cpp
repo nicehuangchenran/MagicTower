@@ -156,8 +156,8 @@ CollisionType Hero::collisionCheck(Vec2 targetGLPosition)
 	// 对应图块是地图内的墙
 	targetTileGID = sGlobal->gameMap->getWallLayer()->getTileGIDAt(targetTilePosition);
 	if (targetTileGID)	return kWall;
-
 	// 对应图块是怪物
+
 	targetTileGID = sGlobal->gameMap->getEnemyLayer()->getTileGIDAt(targetTilePosition);
 	if (targetTileGID) 
 	{ 
@@ -295,7 +295,7 @@ void Hero::getShield(const int type)
 	this->def += addDef;
 }
 
-void Hero::fightWithEnemy(const int enemyID, Vec2 targetTilePosition)
+void Hero::fightWithEnemy(Scene* scene, const int enemyID, Vec2 targetTilePosition)
 {
 	//禁用其他动作
 	this->isStopping = 0;
