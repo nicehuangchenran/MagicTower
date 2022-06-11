@@ -133,7 +133,7 @@ void FightLayer::fight(test_start* scene, Hero* hero, Enemy* enemy, Vec2 targetT
 
 				whoseTurn ^= 1; //回合交换
 			}
-		}, 0.7f, "fight");
+		}, 0.5f, "fight");
 }
 
 void FightLayer::showLoseBlood(const int loseBlood, const ENEMY_TYPE type, const bool critical, const bool whoseTurn)

@@ -249,13 +249,13 @@ void Hero::getItem(const int gid)
 	{
 		getGem(ITEM_COLOR(27 - gid));
 	}
-	else if (gid >= 72 && gid <= 76)
+	else if (gid >= 73 && gid <= 76)
 	{
-		getSword(WEAPON_TYPE(gid - 72));
+		getSword(WEAPON_TYPE(gid - 73));
 	}
-	else if (gid >= 96 && gid <= 100)
+	else if (gid >= 97 && gid <= 100)
 	{
-		getShield(WEAPON_TYPE(gid - 96));
+		getShield(WEAPON_TYPE(gid - 97));
 	}
 }
 
