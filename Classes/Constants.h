@@ -14,8 +14,8 @@ const int GID_MAX = 360;
 enum ENEMY_TYPE
 {
 	NORMAL = 0, //物攻类怪物
-	CRITICAL = 1, //暴击类怪物
-	BOSS = 2 //真伤类怪物
+	TRUEDAMAGE = 1, //真伤类怪物
+	CRITICAL = 2 //暴击类怪物
 };
 
 //道具颜色
