@@ -38,23 +38,33 @@ void GameMap::initEnemy()
     enemyLayer = this->getLayer("enemy");
   
     Size s = enemyLayer->getLayerSize();
-  
+
+    //添加怪物动画
     for (int x = 0; x < s.width; x++)
     {
         for (int y = 0; y < s.height; y++)
         {
             int gid = enemyLayer->getTileGIDAt(Point(x, y));
-            if (gid != 0)
+            if (gid)
             {
-                auto enemy = new Enemy();
-
-                enemy->graphPosition = Point(x, y);
-
-
-                enemy->startGID = gid;
-
-                //将怪物加入怪物数组
-                enemyArray.pushBack(enemy);
+                schedule([=](float dlt)
+                    {
+                        int gid = enemyLayer->getTileGIDAt(Point(x, y));
+                        if (gid)
+                        {
+                            gid++;
+                            if (gid % 4 == 1)
+                            {
+                                gid -= 4;
+                            }
+                            enemyLayer->setTileGID(gid, Point(x, y));
+                        }
+                        else
+                        {
+                            unschedule("enemyAnimationAt" + Value(x).asString() + ',' + Value(y).asString());
+                        }
+                    }
+                , 0.2f, "enemyAnimationAt" + Value(x).asString() + ',' + Value(y).asString());
             }
         }
     }
