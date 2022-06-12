@@ -28,9 +28,11 @@ public:
 	void showTip(const char* tip);
 	void deleteDoor(Vec2 position);
 	void showInfo(const char* info, int time);
+
+
 	Vector<Enemy*> enemyArray;
 	Map<int, Teleport*> teleportDict; // 传送门类
-	//Map<int, NPC*> npcDict;  // 有bug，暂且搁置
+	Map<int, NPC*> npcDict;  // 有bug，暂且搁置
 };
 
 #endif // !_GAME_MAP_H_

@@ -215,6 +215,14 @@ COLLISION_TYPE Hero::collisionCheck(Vec2 targetGLPosition)
 	}
 	int index = targetTilePosition.x + targetTilePosition.y * sGlobal->gameMap->getMapSize().width;
 
+	//对应图块是NPC
+	auto npc = sGlobal->gameMap->npcDict.at(index);
+	if (npc != NULL)
+	{
+		npcTalk(npc->getNPCID());
+		return COLLI_NPC;
+	}
+
 	//对应图块是传送门（楼梯）
 	auto teleport = sGlobal->gameMap->teleportDict.at(index);
 	if (teleport != NULL)
@@ -224,6 +232,31 @@ COLLISION_TYPE Hero::collisionCheck(Vec2 targetGLPosition)
 	}
 
 	return COLLI_NONE;
+}
+
+
+void Hero::npcTalk(const int npcID)
+{
+	switch (npcID) {
+		case 1:
+			sGlobal->gameMap->showTip("勇士\n欢迎来到魔塔\n");
+			break;
+		case 2:
+			sGlobal->gameMap->showTip("感谢你救我出来\n，这500元请收下");
+			break;
+		case 3:
+			sGlobal->gameMap->showTip("告诉你\n这个塔有12层");
+			break;
+		case 4:
+			sGlobal->gameMap->showTip("下面的路要小心");
+			break;
+		case 5:
+			sGlobal->gameMap->showTip("好久没有在这一层看到人了");
+			break;
+		case 6:
+			sGlobal->gameMap->showTip("加油，我的勇士");
+			break;
+	}
 }
 
 void Hero::teleTransport(Teleport* teleport)
