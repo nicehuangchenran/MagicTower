@@ -24,6 +24,8 @@
 
 #include "AppDelegate.h"
 #include "Scene/HelloWorldScene.h"
+#include "SimpleAudioEngine.h"
+using namespace CocosDenshion;
 // #define USE_AUDIO_ENGINE 1
 
 #if USE_AUDIO_ENGINE
@@ -106,6 +108,19 @@ bool AppDelegate::applicationDidFinishLaunching() {
 //    }
 
     register_all_packages();
+    SimpleAudioEngine::getInstance()->preloadBackgroundMusic("backgroundMusic.wav");
+    SimpleAudioEngine::getInstance()->preloadEffect("button_click.wav");
+    SimpleAudioEngine::getInstance()->preloadEffect("gameEffect/EnemyAttack0.wav");
+    SimpleAudioEngine::getInstance()->preloadEffect("gameEffect/EnemyAttack1.mp3");
+    SimpleAudioEngine::getInstance()->preloadEffect("gameEffect/EnemyDead.wav");
+    SimpleAudioEngine::getInstance()->preloadEffect("gameEffect/getBlood.mp3");
+    SimpleAudioEngine::getInstance()->preloadEffect("gameEffect/getItem.mp3");
+    SimpleAudioEngine::getInstance()->preloadEffect("gameEffect/HeroAttack0.mp3");
+    SimpleAudioEngine::getInstance()->preloadEffect("gameEffect/openDoor.mp3");
+    SimpleAudioEngine::getInstance()->preloadEffect("gameEffect/HeroDead.wav");
+
+
+
 
     // create a scene. it's an autorelease object
     auto scene = HelloWorld::createScene();

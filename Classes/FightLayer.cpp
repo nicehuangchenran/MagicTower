@@ -45,6 +45,7 @@ void FightLayer::fight(test_start* scene, Hero* hero, Enemy* enemy, Vec2 targetT
 			//当英雄血量或怪物血量为0时结束战斗
 			if (hero->blood == 0 || enemy->blood == 0)
 			{
+		
 				//关闭界面
 				this->removeChild(heroSprite);
 				this->removeChild(enemySprite);
@@ -64,6 +65,9 @@ void FightLayer::fight(test_start* scene, Hero* hero, Enemy* enemy, Vec2 targetT
 
 				if (hero->blood) //战胜
 				{
+					//如果音效开启，则播放音效
+					if (Setting::isEffect)	SimpleAudioEngine::getInstance()->playEffect("gameEffect/EnemyDead.wav");
+
 					//获得金币
 					hero->gold += enemy->gold;
 
@@ -72,6 +76,8 @@ void FightLayer::fight(test_start* scene, Hero* hero, Enemy* enemy, Vec2 targetT
 				}
 				else //战败，游戏结束
 				{
+					//如果音效开启，则播放音效
+					if (Setting::isEffect)	SimpleAudioEngine::getInstance()->playEffect("gameEffect/HeroDead.wav");
 
 				}
 
@@ -83,6 +89,9 @@ void FightLayer::fight(test_start* scene, Hero* hero, Enemy* enemy, Vec2 targetT
 				//计算血量
 				if (whoseTurn) //怪物的回合
 				{
+					//如果音效开启，则播放音效
+					if (Setting::isEffect)	SimpleAudioEngine::getInstance()->playEffect("gameEffect/EnemyAttack0.wav");
+
 					//根据怪物类型计算伤害
 					int loseBlood = 0;
 					switch (enemy->type)
@@ -106,6 +115,9 @@ void FightLayer::fight(test_start* scene, Hero* hero, Enemy* enemy, Vec2 targetT
 				}
 				else //英雄的回合
 				{
+					//如果音效开启，则播放音效
+					if (Setting::isEffect)	SimpleAudioEngine::getInstance()->playEffect("gameEffect/HeroAttack0.mp3");
+
 					//计算伤害
 					int loseBlood = hero->atk - enemy->def;
 					if (loseBlood < 0) loseBlood = 0;

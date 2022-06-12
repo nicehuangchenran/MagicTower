@@ -102,10 +102,10 @@ bool HelloWorld::init()
     this->addChild(menu);
 
     //添加背景音乐
-    SimpleAudioEngine::getInstance()->preloadBackgroundMusic("backgroundMusic.wav");
+    
     SimpleAudioEngine::getInstance()->playBackgroundMusic("backgroundMusic.wav", true);
     SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(0.5f);
-
+    
     return true;
 }
 

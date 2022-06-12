@@ -6,6 +6,10 @@
 #include <fstream>
 #include <map>
 
+#include "SimpleAudioEngine.h"
+using namespace CocosDenshion;
+
+#include "Scene/SettingScene.h"
 #include "Global.h"
 #include "Constants.h"
 #include "FightLayer.h"
