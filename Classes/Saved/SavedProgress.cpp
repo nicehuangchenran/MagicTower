@@ -51,7 +51,7 @@ void SavedProgress::saveGame()
 	}
 }
 
-void SavedProgress::saveLevel(const test_start* scene)
+void SavedProgress::saveLevel(const GameScene* scene)
 {
 	sGlobal->levels[sGlobal->currentLevel - 1] = scene->_tileMap;
 }

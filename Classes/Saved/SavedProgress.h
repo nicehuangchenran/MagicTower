@@ -36,7 +36,7 @@ public:
 	//保存已到达过的全部关卡
 	void saveGame();
 	//保存单个关卡
-	void saveLevel(const test_start* scene);
+	void saveLevel(const GameScene* scene);
 	
 	map<Point, int>* saveObjects(const GameMap* map, const string& type);
 

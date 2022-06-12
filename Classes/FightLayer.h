@@ -11,7 +11,7 @@ public:
 	FightLayer();
 	~FightLayer();
 	void initDisplay(const Hero* hero, const Enemy* enemy); //初始显示
-	void fight(test_start* scene, Hero* hero, Enemy* enemy, Vec2 targetTilePosition); //开始战斗过程
+	void fight(GameScene* scene, Hero* hero, Enemy* enemy, Vec2 targetTilePosition); //开始战斗过程
 	void showLoseBlood(const int loseBlood, const ENEMY_TYPE type, const bool critical, const bool whoseTurn);
 
 protected:
