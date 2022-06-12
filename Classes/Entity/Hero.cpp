@@ -1,6 +1,9 @@
 #include "Headers.h"
 #include "Scene/HelloWorldScene.h"
 
+USING_NS_CC;
+using namespace CocosDenshion;
+
 Hero::Hero() {}
 
 Hero::~Hero() {}
@@ -247,6 +250,9 @@ COLLISION_TYPE Hero::collisionCheck(Vec2 targetGLPosition)
 		return COLLI_TELEPORT;
 	}
 
+	//对应图块是商店
+	
+
 	return COLLI_NONE;
 }
 
@@ -255,10 +261,11 @@ void Hero::talkWithNPC(NPC* npc)
 {
 	switch (npc->getNPCID()) {
 		case 1:
-			sGlobal->gameMap->showTip("勇士\n欢迎来到魔塔\n");
+			sGlobal->gameMap->showTip("请在左侧选择是否开启无敌");
+			sGlobal->gameMap->chooseInvincible();
 			break;
 		case 2:
-			sGlobal->gameMap->showTip(gift ? "感谢你救我出来" : "感谢你救我出来\n这500元请收下");
+			sGlobal->gameMap->showTip("感谢你救我出来\n这500元请收下");
 			getGift();
 			break;
 		case 3:
@@ -268,13 +275,15 @@ void Hero::talkWithNPC(NPC* npc)
 			sGlobal->gameMap->showTip("下面的路要小心");
 			break;
 		case 5:
-			sGlobal->gameMap->showTip("好久没有在这一层看到人了");
+			sGlobal->gameMap->showTip("你是第一个走到这层的勇士");
 			break;
 		case 6:
 			sGlobal->gameMap->showTip("加油，我的勇士");
 			break;
 	}
 }
+
+
 
 void Hero::teleTransport(Teleport* teleport)
 {	
@@ -447,7 +456,7 @@ void Hero::fightWithEnemy(const int enemyID, Vec2 targetTilePosition)
 	fightLayer->fight(scene, this, enemy, targetTilePosition);
 }
 
-int Hero::bldNum()
+int Hero::bldNum() 
 {
 	return blood;
 }
