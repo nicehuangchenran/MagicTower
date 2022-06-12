@@ -236,8 +236,8 @@ void Hero::teleTransport(Teleport* teleport)
 
 void Hero::getItem(const int gid)
 {
-	CCLOG("%d", gid);
-	if (gid >= 1 && gid <= 3)
+	//CCLOG("%d", gid);
+		if (gid >= 1 && gid <= 3)
 	{
 		getKey(ITEM_COLOR(gid - 1));
 	}
@@ -257,16 +257,23 @@ void Hero::getItem(const int gid)
 	{
 		getShield(WEAPON_TYPE(gid - 97));
 	}
+
 }
 
 void Hero::getKey(const ITEM_COLOR color)
 {
+	//如果音效开启，则播放音效
+	if (Setting::isEffect)	SimpleAudioEngine::getInstance()->playEffect("gameEffect/getItem.mp3");
+
 	sGlobal->gameMap->showTip("获得钥匙");
 	this->key[color]++;
 }
 
 void Hero::getPotion(const ITEM_COLOR color)
 {
+	//如果音效开启，则播放音效
+	if (Setting::isEffect)	SimpleAudioEngine::getInstance()->playEffect("gameEffect/getBlood.mp3");
+
 	int addBlood = 0;
 	switch (color)
 	{
@@ -284,6 +291,9 @@ void Hero::getPotion(const ITEM_COLOR color)
 //获得宝石
 void Hero::getGem(const ITEM_COLOR color)
 {
+	//如果音效开启，则播放音效
+	if (Setting::isEffect)	SimpleAudioEngine::getInstance()->playEffect("gameEffect/getItem.mp3");
+
 	switch (color)
 	{
 		case RED:
@@ -300,6 +310,9 @@ void Hero::getGem(const ITEM_COLOR color)
 //获得剑
 void Hero::getSword(const WEAPON_TYPE type)
 {
+	//如果音效开启，则播放音效
+	if (Setting::isEffect)	SimpleAudioEngine::getInstance()->playEffect("gameEffect/getItem.mp3");
+
 	int addAtk = 0;
 	switch (type)
 	{
@@ -327,6 +340,9 @@ void Hero::getSword(const WEAPON_TYPE type)
 //获得盾
 void Hero::getShield(const WEAPON_TYPE type)
 {
+	//如果音效开启，则播放音效
+	if (Setting::isEffect)	SimpleAudioEngine::getInstance()->playEffect("gameEffect/getItem.mp3");
+
 	int addDef = 0;
 	switch (type)
 	{
@@ -411,6 +427,9 @@ std::string Hero::shieldName()
 
 void Hero::openDoor(const int gid, const int color)
 {
+	//如果音效开启，则播放音效
+	if (Setting::isEffect)	SimpleAudioEngine::getInstance()->playEffect("gameEffect/openDoor.mp3");
+
 	//禁止其他动作
 	isStopping = false;
 

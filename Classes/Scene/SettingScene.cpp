@@ -91,6 +91,7 @@ void Setting::onChangedSlider(Ref* PSender, cocos2d::ui::Slider::EventType type)
         auto slider = dynamic_cast<cocos2d::ui::Slider*>(PSender);
         float percent = slider->getPercent() / 100.0f;
         SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(percent);
+        
     }
 }
 
