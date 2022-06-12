@@ -39,15 +39,22 @@ bool GameScene::init()
     char mapID[20];
     sprintf(mapID, "%d.tmx", sGlobal->currentLevel);
     log("%s", mapID);
-    if (sGlobal->curMaxLevel > sGlobal->currentLevel) {
+    if (sGlobal->curMaxLevel >= sGlobal->currentLevel) 
+    {
         _tileMap = sGlobal->levels[sGlobal->currentLevel - 1];
         sGlobal->gameMap = _tileMap;
         _tileMap->setParent(nullptr);
         _tileMap->initObject();
-        
     }
     else
+    {
         _tileMap = GameMap::create(mapID);
+    }
+
+    if (sGlobal->currentLevel > sGlobal->curMaxLevel)
+    {
+        sGlobal->curMaxLevel = sGlobal->currentLevel; //更新最高层数
+    }
     
     _tileMap -> setAnchorPoint(Vec2(0.5,0.5));
     _tileMap -> setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height / 2));
@@ -89,8 +96,8 @@ bool GameScene::init()
     return true;
 }
 
-void GameScene::initHeroProperties() {
-
+void GameScene::initHeroProperties() 
+{
     //初始化钥匙图案
     for (auto i : { 0,1,2 })
     {

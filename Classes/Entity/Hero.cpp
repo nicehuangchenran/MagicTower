@@ -290,8 +290,6 @@ void Hero::teleTransport(Teleport* teleport)
 
 	// 获取目标层数与英雄位置，然后切换场景
 	sGlobal->currentLevel = teleport->targetID;
-	if (sGlobal->currentLevel > sGlobal->curMaxLevel)
-		sGlobal->curMaxLevel = sGlobal->currentLevel; //更新最高层数
 	sGlobal->heroSpawnTileCoord = teleport->targetHeroPosition;
 	Director::getInstance()->pushScene(TransitionFadeTR::create(0.5f, sGlobal -> GameScene -> createScene()));
 

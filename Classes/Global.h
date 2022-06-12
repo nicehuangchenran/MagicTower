@@ -43,7 +43,7 @@ public:
 	int currentLevel;
 
 	//目前最高层数
-	int curMaxLevel = 1;
+	int curMaxLevel;
 
 	//勇士出现的起始位置
 	Vec2 heroSpawnTileCoord;
