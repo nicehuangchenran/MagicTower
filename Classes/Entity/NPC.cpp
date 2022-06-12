@@ -19,7 +19,7 @@ NPC::NPC(const ValueMap& dict, const int& x, const int& y)
 	npcSprite->runAction(action);
 }
 
-
+NPC::~NPC() {}
 
 Animation* NPC::npcAnimation(const ValueMap& dict)
 {
@@ -37,11 +37,7 @@ Animation* NPC::npcAnimation(const ValueMap& dict)
 	return animation;
 }
 
-
-NPC::~NPC() {
-
-}
-
-int NPC::getNPCID() {
+int NPC::getNPCID() 
+{
 	return npcID;
 }

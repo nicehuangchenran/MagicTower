@@ -12,6 +12,7 @@ public:
 	~NPC();
 	int getNPCID();
 	Animation* npcAnimation(const ValueMap& dict);
+
 protected:
 	Sprite* npcSprite;
 	int npcID;

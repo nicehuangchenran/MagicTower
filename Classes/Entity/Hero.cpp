@@ -5,6 +5,21 @@ Hero::Hero() {}
 
 Hero::~Hero() {}
 
+Hero& Hero::operator=(const Hero& last)
+{
+	blood = last.blood;
+	atk = last.atk;
+	def = last.def;
+	gold = last.gold;
+	key[YELLOW] = last.key[YELLOW];
+	key[BLUE] = last.key[BLUE];
+	key[RED] = last.key[RED];
+	sword = last.sword;
+	shield = last.shield;
+	gift = last.gift;
+	return *this;
+}
+
 Hero* Hero::create(test_start* scene, Vec2 tilePosition)
 {
 	Hero* heroPointer = new Hero;
@@ -49,6 +64,7 @@ bool Hero::init(test_start* scene, Vec2 tilePosition)
 		key[RED] = 0;
 		sword = "无";
 		shield = "无";
+		gift = false;
 	}
 
 	//战斗界面
@@ -219,7 +235,7 @@ COLLISION_TYPE Hero::collisionCheck(Vec2 targetGLPosition)
 	auto npc = sGlobal->gameMap->npcDict.at(index);
 	if (npc != NULL)
 	{
-		npcTalk(npc->getNPCID());
+		talkWithNPC(npc);
 		return COLLI_NPC;
 	}
 
@@ -235,14 +251,15 @@ COLLISION_TYPE Hero::collisionCheck(Vec2 targetGLPosition)
 }
 
 
-void Hero::npcTalk(const int npcID)
+void Hero::talkWithNPC(NPC* npc)
 {
-	switch (npcID) {
+	switch (npc->getNPCID()) {
 		case 1:
 			sGlobal->gameMap->showTip("勇士\n欢迎来到魔塔\n");
 			break;
 		case 2:
-			sGlobal->gameMap->showTip("感谢你救我出来\n，这500元请收下");
+			sGlobal->gameMap->showTip(gift ? "感谢你救我出来" : "感谢你救我出来\n这500元请收下");
+			getGift();
 			break;
 		case 3:
 			sGlobal->gameMap->showTip("告诉你\n这个塔有12层");
@@ -340,7 +357,6 @@ void Hero::getGem(const ITEM_COLOR color)
 	}
 }
 
-//获得剑
 void Hero::getSword(const WEAPON_TYPE type)
 {
 	//如果音效开启，则播放音效
@@ -370,7 +386,6 @@ void Hero::getSword(const WEAPON_TYPE type)
 	this->atk += addAtk;
 }
 
-//获得盾
 void Hero::getShield(const WEAPON_TYPE type)
 {
 	//如果音效开启，则播放音效
@@ -398,6 +413,15 @@ void Hero::getShield(const WEAPON_TYPE type)
 	}
 	sGlobal->gameMap->showTip(("获得" + shield + "\n防御+" + Value(addDef).asString()).data());
 	this->def += addDef;
+}
+
+void Hero::getGift()
+{
+	if (!gift)
+	{
+		gold += 500;
+		gift = true;
+	}
 }
 
 void Hero::fightWithEnemy(const int enemyID, Vec2 targetTilePosition)
