@@ -11,7 +11,7 @@ const int ENEMY_NUM = 16;
 const int GID_MAX = 360;
 
 //关卡总数
-const int LEVEL_NUM = 11;
+const int LEVEL_NUM = 12;
 
 //怪物攻击类型
 enum ENEMY_TYPE

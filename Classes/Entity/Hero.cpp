@@ -59,7 +59,12 @@ bool Hero::init(test_start* scene, Vec2 tilePosition)
 	this->initWithFile("img/1.png", Rect(0, OBJECT_SIZE * 10 + 1, OBJECT_SIZE, OBJECT_SIZE));
 	this->setAnchorPoint(Vec2::ZERO);
 	this->setPosition(targetGLPosition);
-	if (sGlobal->hero) {
+
+	//战斗界面
+	fightLayer = new FightLayer;
+
+	if (sGlobal->hero) 
+	{
 		*this = *sGlobal->hero;
 		return true;
 	}
@@ -68,17 +73,11 @@ bool Hero::init(test_start* scene, Vec2 tilePosition)
 	atk = INIT_ATK;
 	def = INIT_DEF;
 	gold = INIT_GOLD;
-	key[ITEM_COLOR_YELLOW] = 1;
-	key[ITEM_COLOR_BLUE] = 0;
-	key[ITEM_COLOR_RED] = 0;
+	key[YELLOW] = 1;
+	key[BLUE] = 0;
+	key[RED] = 0;
 	sword = "无";
 	shield = "无";
-	
-	floor = 1;
-
-
-	//战斗界面
-	fightLayer = new FightLayer;
 
 	return true;
 }
@@ -124,7 +123,6 @@ void Hero::move(EventKeyboard::KeyCode code)
 	//log("%f, %f", sGlobal->gameMap->getMapSize().width, sGlobal->gameMap->getMapSize().height);
 	
 	//碰撞检测
-
 	COLLISION_TYPE colli = collisionCheck(targetGLPosition);
 	if (colli == COLLI_WALL || colli == COLLI_ENEMY || colli == COLLI_DOOR || colli == COLLI_NPC)
 
@@ -133,6 +131,7 @@ void Hero::move(EventKeyboard::KeyCode code)
 		this->setTextureRect(Rect(0, OBJECT_SIZE * faceDirection + 1, OBJECT_SIZE, OBJECT_SIZE));
 		return;
 	}
+
 	//行走动画
 	walkAnimation(faceDirection);
 
@@ -147,7 +146,6 @@ void Hero::move(EventKeyboard::KeyCode code)
 	this->runAction(action);
 
 	isStopping = false;
-
 }
 
 void Hero::moveIsDone(Node* node)

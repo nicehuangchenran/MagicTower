@@ -35,10 +35,8 @@ public:
 	void closeInvincible(Ref* pSender);
 	bool chooseWindow = 0; //无敌选择界面是否开启
 
-	Vector<Enemy*> enemyArray;
-	Map<int, Teleport*> teleportDict; // 传送门类
-
-	//Map<int, NPC*> npcDict;  // 有bug，暂且搁置
+	Map<int, Teleport*> teleportDict;
+	Map<int, NPC*> npcDict;
 
 	GameMap(const GameMap&map);
 
