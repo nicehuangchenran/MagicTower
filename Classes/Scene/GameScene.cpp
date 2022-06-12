@@ -7,8 +7,11 @@
 
 #include "GameScene.h"
 #include "Headers.h"
+#include "Scene/HelloWorldScene.h"
 
 USING_NS_CC;
+
+class HelloWorld;
 
 GameScene::GameScene()
 {
@@ -82,6 +85,12 @@ bool GameScene::init()
 
     listenerkey->onKeyPressed = ([=](EventKeyboard::KeyCode code, Event* event)
         {
+            if (code == EventKeyboard::KeyCode::KEY_B)
+            {
+                sGlobal->paused = true;
+                Director::getInstance()->pushScene(HelloWorld::createScene());
+                return;
+            }
             pauseOrContinue(code);
             if (Director::getInstance()->isPaused())
             {

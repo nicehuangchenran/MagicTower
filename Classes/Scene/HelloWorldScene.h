@@ -21,6 +21,7 @@ public:
     void menuCloseCallback(cocos2d::Ref* PSender); //退出游戏
     void menuItemIntro(Ref* PSender); //游戏说明
     void menuItemStart(Ref* PSender); //开始游戏
+    void menuItemContinue(Ref* PSender); //继续游戏
     CREATE_FUNC(HelloWorld);
 };
 
