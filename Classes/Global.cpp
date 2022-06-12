@@ -12,7 +12,7 @@ Global::Global() :
 void Global::initEnemyMap()
 {
 	std::ifstream in;
-	in.open("..\\Resources\\EnemyInfo.txt", std::ios::in);
+	in.open("Resources\\EnemyInfo.txt", std::ios::in);
 	if (!in.is_open()) 
 	{ 
 		return; 

@@ -129,8 +129,11 @@ void HelloWorld::menuItemIntro(Ref *PSender)
 
 void HelloWorld::menuItemStart(Ref* PSender)
 {
-    if (Setting::isEffect)  SimpleAudioEngine::getInstance()->playEffect("button_click.wav");
-    Director::getInstance()->pushScene(TransitionFadeTR::create(1.0f, GameScene::createScene()));
+    if (sGlobal->paused == false)
+    {
+        if (Setting::isEffect)  SimpleAudioEngine::getInstance()->playEffect("button_click.wav");
+        Director::getInstance()->pushScene(TransitionFadeTR::create(1.0f, GameScene::createScene()));
+    }
 }
 
 void HelloWorld::menuItemContinue(Ref* Psender)
