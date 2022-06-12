@@ -49,13 +49,6 @@ void SavedProgress::saveGame() {
 }
 
 void SavedProgress::saveLevel(const test_start* scene) {
-	//此处需补全由levelNum到对应GameMap的转换
-	//savedLevel* level = new savedLevel;
-	//level->records[0] = saveObjects(map, "enemy");
-	//*level.records[1] = saveObjects(map, "npc");
-	//*level.records[2] = saveObjects(map, "door");
-	//*level.records[3] = saveObjects(map, "item");
-
 	sGlobal->levels[sGlobal->currentLevel - 1] = scene->_tileMap;
 }
 

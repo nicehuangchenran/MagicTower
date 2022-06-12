@@ -72,6 +72,7 @@ public:
 		sword = last.sword;
 		shield = last.shield;
 		fightLayer = last.fightLayer;
+		faceDirection = last.faceDirection;
 		return *this;
 	}
 

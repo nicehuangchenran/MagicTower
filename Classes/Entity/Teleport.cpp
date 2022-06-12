@@ -19,8 +19,8 @@ Teleport::Teleport(const ValueMap& dict, const int x, const int y)
 	teleport->setAnchorPoint(Vec2::ZERO);
 	teleport->setPosition(Vec2(telePosition));
 
-	sGlobal->test_start->addChild(teleport,1);
-
+	//sGlobal->test_start->addChild(teleport,1);
+	sGlobal->test_start->addChild(teleport, 1, "tel");
 }
 
 Teleport::~Teleport()

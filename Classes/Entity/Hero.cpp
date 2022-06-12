@@ -46,10 +46,20 @@ bool Hero::init(test_start* scene, Vec2 tilePosition)
 	targetTilePosition = tilePosition;
 	targetGLPosition = sGlobal -> gameMap -> positionForTileCoord(tilePosition);
 	isStopping = true;
+
+	//设置精灵
+	image = Sprite::create("img/1.png", Rect(0, OBJECT_SIZE * 10 + 1, OBJECT_SIZE, OBJECT_SIZE));//创建精灵
+	image->setAnchorPoint(Point::ZERO);//设置锚点为左下角
+	this->addChild(image);//绑定精灵
+
+	//绑定场景
+	this->scene = scene;
+
 	if (sGlobal->hero) {
 		*this = *sGlobal->hero;
 		return true;
 	}
+
 	blood = INIT_BLOOD;
 	atk = INIT_ATK;
 	def = INIT_DEF;
@@ -64,14 +74,6 @@ bool Hero::init(test_start* scene, Vec2 tilePosition)
 
 	//战斗界面
 	fightLayer = new FightLayer;
-
-	//绑定场景
-	this->scene = scene;
-
-	//设置精灵
-	image = Sprite::create("img/1.png", Rect(0, OBJECT_SIZE * 10 + 1, OBJECT_SIZE, OBJECT_SIZE));//创建精灵
-	image->setAnchorPoint(Point::ZERO);//设置锚点为左下角
-	this->addChild(image);//绑定精灵
 
 	return true;
 }
@@ -140,12 +142,6 @@ void Hero::move(EventKeyboard::KeyCode code)
 
 	isStopping = false;
 
-	if (colli == kTeleport) {
-		//this->setPosition(this->getPosition() - moveDist);
-		faceDirection = DIRECTION_DOWN;
-		this->image->setTextureRect(Rect(0, OBJECT_SIZE * faceDirection + 1, OBJECT_SIZE, OBJECT_SIZE));
-	}
-	CCLOG("x = %d y = %d", this->getPosition().x, this->getPosition().y);
 }
 
 void Hero::moveIsDone(Node* node)
