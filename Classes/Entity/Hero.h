@@ -3,13 +3,12 @@
 
 #include "cocos2d.h"
 #include "Constants.h"
-#include "FightLayer.h"
-#include "Scene/test_start.h"
 
 USING_NS_CC;
 
 class FightLayer;
 class test_start;
+class NPC;
 
 class Hero :public Node {
 public:
@@ -26,8 +25,9 @@ public:
 	void getGem(const ITEM_COLOR color); //获得宝石
 	void getSword(const WEAPON_TYPE type); //获得剑
 	void getShield(const WEAPON_TYPE type); //获得盾
+	void getGift(); //获得NPC给的钱
 	void fightWithEnemy(const int enemyID, Vec2 targetTilePosition); //与怪物战斗
-	void npcTalk(const int npcID);
+	void talkWithNPC(NPC* npc); //与npc对话
 	void walkAnimation(const int faceDirection); // 行走动画
 	void moveIsDone(Node* node); //将状态置为停止
 	void teleTransport(Teleport* teleport);
@@ -50,19 +50,7 @@ public:
 	test_start* scene; //当前所在场景
 	FightLayer* fightLayer; //战斗界面
 
-	Hero& operator=(const Hero& last)
-	{
-		blood = last.blood;
-		atk = last.atk;
-		def = last.def;
-		gold = last.gold;
-		key[YELLOW] = last.key[YELLOW];
-		key[BLUE] = last.key[BLUE];
-		key[RED] = last.key[RED];
-		sword = last.sword;
-		shield = last.shield;
-		return *this;
-	}
+	Hero& operator=(const Hero& last);
 
 	friend class FightLayer; //允许战斗时改变自己的属性
 	
@@ -79,5 +67,6 @@ protected:
 	int key[4]; //拥有钥匙数
 	std::string sword;
 	std::string shield;
+	bool gift;
 };
 #endif
