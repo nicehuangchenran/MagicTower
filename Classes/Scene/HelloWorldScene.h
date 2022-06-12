@@ -1,10 +1,3 @@
-//
-//  MyHelloWorldScene.h
-//  MagicTower
-//
-//  Created by 焦骜 on 2022/5/16.
-//
-
 #ifndef _HELLO_WORLD_SCENE_H_
 #define _HELLO_WORLD_SCENE_H_
 
@@ -24,6 +17,5 @@ public:
     void menuItemContinue(Ref* PSender); //继续游戏
     CREATE_FUNC(HelloWorld);
 };
-
 
 #endif // !_HELLO_WORLD_SCENE_H_

@@ -1,10 +1,3 @@
-//
-//  GameScene.cpp
-//  MagicTower_utf_8
-//
-//  Created by 焦骜 on 2022/6/5.
-//
-
 #include "GameScene.h"
 #include "Headers.h"
 #include "Scene/HelloWorldScene.h"
@@ -64,21 +57,13 @@ bool GameScene::init()
     addChild(_tileMap, 0, 1);
     auto tileSize = _tileMap->getTileSize();
     auto tileMapSize = Size(_tileMap->getMapSize().width * tileSize.width, _tileMap->getMapSize().height * tileSize.height);
-    //this->reorderChild(this->getChildByName("tel"), 2);
-    //添加英雄
 
-    //if (sGlobal->hero)    this->removeChild(sGlobal->hero);
+    //添加英雄
     auto hero = Hero::create(this, Vec2(sGlobal->heroSpawnTileCoord));
     
     sGlobal->hero->setPosition(Vec2(sGlobal->heroSpawnTileCoord));
     addChild(hero, 0,"hero");
 
-
-    /*
-    if (hero->getParent())
-        hero->setParent(nullptr);
-    
-    */
     initHeroProperties();
 
     auto listenerkey = EventListenerKeyboard::create();

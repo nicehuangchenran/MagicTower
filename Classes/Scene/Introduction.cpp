@@ -1,10 +1,3 @@
-//
-//  Introduction.cpp
-//  MagicTower_utf_8
-//
-//  Created by 焦骜 on 2022/6/5.
-//
-
 #include "Introduction.h"
 #include "SettingScene.h"
 #include "HelloWorldScene.h"

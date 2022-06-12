@@ -8,7 +8,6 @@ Teleport::Teleport(const ValueMap& dict, const int x, const int y)
 	telePosition = Point(x+160, y);  // 传送门的位置，这里160是因为GameScene是Scene场景而不是Layer
 	
 	targetID = dict.at("targetMap").asInt();  // 目标地图的层数
-	//log("%d", targetID);
 	targetHeroPosition = sGlobal->gameMap->positionForTileCoord(Point(dict.at("heroTileCoordX").asInt(),  // 目标地图英雄的起始坐标
 	dict.at("heroTileCoordY").asInt()));
 	targetHeroPosition.x += 160;
@@ -18,8 +17,6 @@ Teleport::Teleport(const ValueMap& dict, const int x, const int y)
 	teleport->setAnchorPoint(Vec2::ZERO);
 	teleport->setPosition(Vec2(telePosition));
 
-
-	//sGlobal->gameScene->addChild(teleport,1);
 	sGlobal->gameScene->addChild(teleport, 2, "tel");
 }
 

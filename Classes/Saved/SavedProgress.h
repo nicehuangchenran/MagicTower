@@ -7,17 +7,6 @@ USING_NS_CC;
 using std::string;
 using std::map;
 
-/*class SavedProgress :public CCUserDefault {
-public:
-	SavedProgress(void);
-	void saveLevel(const int& levelNum);
-	void saveEnemies();
-
-protected:
-	std::string stringFromDict(const ValueMap& dict);
-	GameMap* map;
-};*/
-
 class pos :public Node 
 {
 public:
@@ -45,10 +34,6 @@ public:
 
 	map<Point, int>* getObjects(const int& levelNum, const string& type);
 
-
-//protected:
-	//所有关卡的怪物信息、NPC信息、门信息和道具信息
-	//vector < vector<objectInfo> > enemyRecord, npcRecord, doorRecord, itemRecord;
 	Map<int, GameMap>* levels;
 };
 

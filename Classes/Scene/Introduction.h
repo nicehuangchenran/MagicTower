@@ -1,10 +1,3 @@
-//
-//  Introduction.h
-//  MagicTower_utf_8
-//
-//  Created by 焦骜 on 2022/6/5.
-//
-
 #ifndef _INTRODUCTION_H_
 #define _INTRODUCTION_H_
 

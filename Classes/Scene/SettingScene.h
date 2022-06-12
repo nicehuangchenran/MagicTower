@@ -1,10 +1,3 @@
-//
-//  SettingScene.h
-//  MagicTower
-//
-//  Created by 焦骜 on 2022/6/1.
-//
-
 #ifndef _SETTING_SCENE_H_
 #define _SETTING_SCENE_H_
 
