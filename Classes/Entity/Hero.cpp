@@ -405,19 +405,19 @@ void Hero::getShield(const WEAPON_TYPE type)
 	{
 		case IRON:
 			addDef = 10;
-			sword = "铁盾";
+			shield = "铁盾";
 			break;
 		case SLIVER:
 			addDef = 20;
-			sword = "银盾";
+			shield = "银盾";
 			break;
 		case KNIGHT:
 			addDef = 40;
-			sword = "骑士盾";
+			shield = "骑士盾";
 			break;
 		case HOLY:
 			addDef = 50;
-			sword = "神圣盾";
+			shield = "神圣盾";
 			break;
 	}
 	sGlobal->gameMap->showTip(("获得" + shield + "\n防御+" + Value(addDef).asString()).data());
