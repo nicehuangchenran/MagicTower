@@ -96,6 +96,12 @@ void GameMap::initObject()
             auto tele = new Teleport(dict, x, y);
             teleportDict.insert(index, tele);
         }
+
+        // 如果对象种类是store，在地图上创建store图块
+        if (type == "store")
+        {
+            ;
+        }
     }
 }
 
@@ -149,4 +155,40 @@ void GameMap::showInfo(const char* info, int time)
             unschedule("tip");
         }
     , time / 1000.0f, "tip");
+}
+
+void GameMap::chooseInvincible()
+{
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    MenuItemFont::setFontName("fonts/arial.ttf");
+    MenuItemFont::setFontSize(20);
+    auto item1 = MenuItemFont::create("开启无敌", CC_CALLBACK_1(GameMap::openInvincible, this));
+    auto item2 = MenuItemFont::create("关闭无敌", CC_CALLBACK_1(GameMap::closeInvincible, this));
+
+    //添加菜单
+    auto menu = Menu::create(item1,item2, NULL);
+    menu->alignItemsVertically();
+    menu->setPosition(Vec2(-2 * OBJECT_SIZE-10, 4*OBJECT_SIZE));
+    sGlobal->gameMap->addChild(menu);
+
+}
+
+void GameMap::openInvincible(Ref* pSender)
+{
+    sGlobal->hero->atk = 999;
+    sGlobal->hero->def = 999;
+    sGlobal->hero->blood = 9999;
+    sGlobal->hero->gold = 9999;
+    for (int i = 0; i < 4; i++)
+        sGlobal->hero->key[i] = 100;
+}
+
+void GameMap::closeInvincible(Ref* pSender)
+{
+    sGlobal->hero->atk = INIT_ATK;
+    sGlobal->hero->def = INIT_DEF;
+    sGlobal->hero->blood = INIT_BLOOD;
+    sGlobal->hero->gold = INIT_GOLD;
+    for (int i = 0; i < 4; i++)
+        sGlobal->hero->key[i] = 0;
 }

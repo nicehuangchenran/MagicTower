@@ -9,6 +9,7 @@ USING_NS_CC;
 class FightLayer;
 class test_start;
 class NPC;
+class GameMap;
 
 class Hero :public Node {
 public:
@@ -28,6 +29,11 @@ public:
 	void getGift(); //获得NPC给的钱
 	void fightWithEnemy(const int enemyID, Vec2 targetTilePosition); //与怪物战斗
 	void talkWithNPC(NPC* npc); //与npc对话
+
+	//选择无敌模式
+	void chooseInvincible();
+	void ifInvincible(Ref* pSender);
+
 	void walkAnimation(const int faceDirection); // 行走动画
 	void moveIsDone(Node* node); //将状态置为停止
 	void teleTransport(Teleport* teleport);
@@ -53,6 +59,7 @@ public:
 	Hero& operator=(const Hero& last);
 
 	friend class FightLayer; //允许战斗时改变自己的属性
+	friend class GameMap;  //允许开启无敌
 	
 protected:
 	Sprite* image; //勇士形象图片

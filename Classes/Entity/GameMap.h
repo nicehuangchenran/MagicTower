@@ -29,6 +29,10 @@ public:
 	void deleteDoor(Vec2 position);
 	void showInfo(const char* info, int time);
 
+	//无敌控制
+	void chooseInvincible(); 
+	void openInvincible(Ref* );
+	void closeInvincible(Ref*);
 
 	Vector<Enemy*> enemyArray;
 	Map<int, Teleport*> teleportDict; // 传送门类
