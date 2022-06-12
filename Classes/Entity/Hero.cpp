@@ -248,8 +248,12 @@ COLLISION_TYPE Hero::collisionCheck(Vec2 targetGLPosition)
 		return COLLI_TELEPORT;
 	}
 
-	//对应图块是商店
-
+    //对应图块是商店
+	if (sGlobal->gameMap->hasStore && index == STORE_INDEX)
+	{
+		sGlobal->gameMap->initStore();
+		return COLLI_NPC;
+	}
 	return COLLI_NONE;
 }
 

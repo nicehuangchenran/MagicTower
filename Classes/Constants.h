@@ -13,6 +13,9 @@ const int GID_MAX = 360;
 //关卡总数
 const int LEVEL_NUM = 12;
 
+//商店位置index
+const int STORE_INDEX = 19;
+
 //怪物攻击类型
 enum ENEMY_TYPE
 {
