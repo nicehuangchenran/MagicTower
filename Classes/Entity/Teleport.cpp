@@ -5,20 +5,22 @@ Teleport::Teleport(const ValueMap& dict, const int x, const int y)
 	int rectX = dict.at("RecX").asInt();
 	int rectY = dict.at("RecY").asInt();
 
-	telePosition = Point(x+160, y);  // ´«ËÍÃÅµÄÎ»ÖÃ£¬ÕâÀï160ÊÇÒòÎªtest_startÊÇScene³¡¾°¶ø²»ÊÇLayer
+	telePosition = Point(x+160, y);  // ä¼ é€é—¨çš„ä½ç½®ï¼Œè¿™é‡Œ160æ˜¯å› ä¸ºtest_startæ˜¯Sceneåœºæ™¯è€Œä¸æ˜¯Layer
 	
-	targetID = dict.at("targetMap").asInt();  // Ä¿±êµØÍ¼µÄ²ãÊý
+	targetID = dict.at("targetMap").asInt();  // ç›®æ ‡åœ°å›¾çš„å±‚æ•°
 	//log("%d", targetID);
-	targetHeroPosition = sGlobal->gameMap->positionForTileCoord(Point(dict.at("heroTileCoordX").asInt(),  // Ä¿±êµØÍ¼Ó¢ÐÛµÄÆðÊ¼×ø±ê
+	targetHeroPosition = sGlobal->gameMap->positionForTileCoord(Point(dict.at("heroTileCoordX").asInt(),  // ç›®æ ‡åœ°å›¾è‹±é›„çš„èµ·å§‹åæ ‡
 	dict.at("heroTileCoordY").asInt()));
 	targetHeroPosition.x += 160;
 
 	auto teleport = Sprite::create("img/1.png", 
-		Rect(rectX * OBJECT_SIZE, rectY*OBJECT_SIZE, OBJECT_SIZE, OBJECT_SIZE) );  // ´´½¨´«ËÍÃÅ¾«Áé
+		Rect(rectX * OBJECT_SIZE, rectY*OBJECT_SIZE, OBJECT_SIZE, OBJECT_SIZE) );  // åˆ›å»ºä¼ é€é—¨ç²¾çµ
 	teleport->setAnchorPoint(Vec2::ZERO);
 	teleport->setPosition(Vec2(telePosition));
 
-	sGlobal->test_start->addChild(teleport,1);
+
+	//sGlobal->test_start->addChild(teleport,1);
+	sGlobal->test_start->addChild(teleport, 2, "tel");
 }
 
 Teleport::~Teleport() {}

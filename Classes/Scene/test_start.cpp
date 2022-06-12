@@ -28,8 +28,8 @@ bool test_start::init()
     }
     
     auto visibleSize = Director::getInstance()->getVisibleSize();
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
-    
+    Vec2 origin = Director::getInstance()->getVisibleOrigin(); 
+
     //添加UI界面
     gameUI = Sprite::create("img/2.png");
     gameUI->setPosition(visibleSize / 2);
@@ -39,19 +39,36 @@ bool test_start::init()
     char mapID[20];
     sprintf(mapID, "%d.tmx", sGlobal->currentLevel);
     log("%s", mapID);
-    _tileMap = GameMap::create(mapID);
+    if (sGlobal->curMaxLevel > sGlobal->currentLevel) {
+        _tileMap = sGlobal->levels[sGlobal->currentLevel - 1];
+        sGlobal->gameMap = _tileMap;
+        _tileMap->setParent(nullptr);
+        _tileMap->initObject();
+        
+    }
+    else
+        _tileMap = GameMap::create(mapID);
     
     _tileMap -> setAnchorPoint(Vec2(0.5,0.5));
     _tileMap -> setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height / 2));
     addChild(_tileMap, 0, 1);
     auto tileSize = _tileMap->getTileSize();
     auto tileMapSize = Size(_tileMap->getMapSize().width * tileSize.width, _tileMap->getMapSize().height * tileSize.height);
-    
+    //this->reorderChild(this->getChildByName("tel"), 2);
     //添加英雄
-    auto hero = Hero::create(this, Vec2(sGlobal->heroSpawnTileCoord));
-    sGlobal->hero->setPosition(Vec2(sGlobal -> heroSpawnTileCoord));
-    addChild(sGlobal->hero, 0);
 
+    //if (sGlobal->hero)    this->removeChild(sGlobal->hero);
+    auto hero = Hero::create(this, Vec2(sGlobal->heroSpawnTileCoord));
+    
+    sGlobal->hero->setPosition(Vec2(sGlobal->heroSpawnTileCoord));
+    addChild(hero, 0,"hero");
+
+
+    /*
+    if (hero->getParent())
+        hero->setParent(nullptr);
+    
+    */
     initHeroProperties();
 
     auto listenerkey = EventListenerKeyboard::create();

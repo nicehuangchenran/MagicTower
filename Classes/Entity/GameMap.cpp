@@ -22,6 +22,8 @@ GameMap* GameMap::create(const char* filePath)
     }
 }
 
+
+
 void GameMap::mapInit()
 {
     floorLayer = this->getLayer("floor");
@@ -31,6 +33,9 @@ void GameMap::mapInit()
 
     initEnemy();
     initObject();
+
+    /*if (sGlobal->curMaxLevel > sGlobal->currentLevel)
+        loadSaved();*/
 }
 
 void GameMap::initEnemy()
@@ -132,7 +137,7 @@ void GameMap::showTip(const char* tip)
         FadeOut::create(0.3f),
         [=]() 
         {
-            sGlobal->hero->removeChild(tipLabel);
+            sGlobal->hero->removeChild(tipLabel,true);
         },
         nullptr);
 
@@ -151,11 +156,13 @@ void GameMap::showInfo(const char* info, int time)
     schedule([=](float dlt)
         {
             sGlobal->hero->isStopping = true;
-            sGlobal->hero->removeChild(label);
+            sGlobal->hero->removeChild(label,true);
             unschedule("tip");
         }
     , time / 1000.0f, "tip");
 }
+
+
 
 void GameMap::chooseInvincible()
 {
@@ -196,3 +203,4 @@ void GameMap::closeInvincible(Ref* pSender)
     sGlobal->gameMap->removeChildByName("chooseWindow");
     chooseWindow = false;
 }
+

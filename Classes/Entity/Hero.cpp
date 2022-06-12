@@ -52,34 +52,33 @@ bool Hero::init(test_start* scene, Vec2 tilePosition)
 	targetTilePosition = tilePosition;
 	targetGLPosition = sGlobal -> gameMap -> positionForTileCoord(tilePosition);
 	isStopping = true;
-	if (sGlobal->hero)
-	{
-		*this = *sGlobal->hero;
-	}
-	else
-	{
-		blood = INIT_BLOOD;
-		atk = INIT_ATK;
-		def = INIT_DEF;
-		gold = INIT_GOLD;
-		key[YELLOW] = 1;
-		key[BLUE] = 0;
-		key[RED] = 0;
-		sword = "无";
-		shield = "无";
-		gift = false;
-	}
 
-	//战斗界面
-	fightLayer = new FightLayer;
 
 	//绑定场景
 	this->scene = scene;
+	this->initWithFile("img/1.png", Rect(0, OBJECT_SIZE * 10 + 1, OBJECT_SIZE, OBJECT_SIZE));
+	this->setAnchorPoint(Vec2::ZERO);
+	this->setPosition(targetGLPosition);
+	if (sGlobal->hero) {
+		*this = *sGlobal->hero;
+		return true;
+	}
 
-	//设置精灵
-	image = Sprite::create("img/1.png", Rect(0, OBJECT_SIZE * 10 + 1, OBJECT_SIZE, OBJECT_SIZE));//创建精灵
-	image->setAnchorPoint(Point::ZERO);//设置锚点为左下角
-	this->addChild(image);//绑定精灵
+	blood = INIT_BLOOD;
+	atk = INIT_ATK;
+	def = INIT_DEF;
+	gold = INIT_GOLD;
+	key[ITEM_COLOR_YELLOW] = 1;
+	key[ITEM_COLOR_BLUE] = 0;
+	key[ITEM_COLOR_RED] = 0;
+	sword = "无";
+	shield = "无";
+	
+	floor = 1;
+
+
+	//战斗界面
+	fightLayer = new FightLayer;
 
 	return true;
 }
@@ -125,19 +124,20 @@ void Hero::move(EventKeyboard::KeyCode code)
 	//log("%f, %f", sGlobal->gameMap->getMapSize().width, sGlobal->gameMap->getMapSize().height);
 	
 	//碰撞检测
+
 	COLLISION_TYPE colli = collisionCheck(targetGLPosition);
 	if (colli == COLLI_WALL || colli == COLLI_ENEMY || colli == COLLI_DOOR || colli == COLLI_NPC)
+
 	{
 		//脸部方向改变，绘制新图
-		this->image->setTextureRect(Rect(0, OBJECT_SIZE * faceDirection + 1, OBJECT_SIZE, OBJECT_SIZE));
+		this->setTextureRect(Rect(0, OBJECT_SIZE * faceDirection + 1, OBJECT_SIZE, OBJECT_SIZE));
 		return;
 	}
-	
 	//行走动画
 	walkAnimation(faceDirection);
 
 	//脸部方向改变，绘制新图
-	this->image->setTextureRect(Rect(0, OBJECT_SIZE * faceDirection + 1, OBJECT_SIZE, OBJECT_SIZE));
+	this->setTextureRect(Rect(0, OBJECT_SIZE * faceDirection + 1, OBJECT_SIZE, OBJECT_SIZE));
 
 	//移动到新位置
 	Action* action = Sequence::create(
@@ -147,6 +147,7 @@ void Hero::move(EventKeyboard::KeyCode code)
 	this->runAction(action);
 
 	isStopping = false;
+
 }
 
 void Hero::moveIsDone(Node* node)
@@ -172,7 +173,7 @@ void Hero::walkAnimation(int faceDirection)
 	animFrames.pushBack(frame2);
 	animFrames.pushBack(frame3);
 	auto animation = Animation::createWithSpriteFrames(animFrames, 0.05f);
-	image->runAction(Repeat::create(Animate::create(animation), 1));
+	this->runAction(Repeat::create(Animate::create(animation), 1));
 }
 
 COLLISION_TYPE Hero::collisionCheck(Vec2 targetGLPosition)
@@ -287,10 +288,17 @@ void Hero::talkWithNPC(NPC* npc)
 
 void Hero::teleTransport(Teleport* teleport)
 {	
+
+	sGlobal->saved->saveLevel(sGlobal->test_start);
+	this->setParent(nullptr);
+
 	// 获取目标层数与英雄位置，然后切换场景
 	sGlobal->currentLevel = teleport->targetID;
+	if (sGlobal->currentLevel > sGlobal->curMaxLevel)
+		sGlobal->curMaxLevel = sGlobal->currentLevel; //更新最高层数
 	sGlobal->heroSpawnTileCoord = teleport->targetHeroPosition;
-	Director::getInstance()->replaceScene(TransitionFadeTR::create(0.5f, sGlobal -> test_start -> createScene()));
+	Director::getInstance()->pushScene(TransitionFadeTR::create(0.5f, sGlobal -> test_start -> createScene()));
+
 }
 
 void Hero::getItem(const int gid)
