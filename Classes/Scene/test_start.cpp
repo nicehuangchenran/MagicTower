@@ -17,7 +17,6 @@ test_start::test_start()
 
 Scene* test_start::createScene()
 {
-    
     return test_start::create();
 }
 
@@ -57,11 +56,13 @@ bool test_start::init()
     auto tileMapSize = Size(_tileMap->getMapSize().width * tileSize.width, _tileMap->getMapSize().height * tileSize.height);
     //this->reorderChild(this->getChildByName("tel"), 2);
     //添加英雄
+
     //if (sGlobal->hero)    this->removeChild(sGlobal->hero);
     auto hero = Hero::create(this, Vec2(sGlobal->heroSpawnTileCoord));
     
     sGlobal->hero->setPosition(Vec2(sGlobal->heroSpawnTileCoord));
     addChild(hero, 0,"hero");
+
 
     /*
     if (hero->getParent())
@@ -91,7 +92,7 @@ bool test_start::init()
 void test_start::initHeroProperties() {
 
     //初始化钥匙图案
-    for (int i = 0; i < 3; i++)
+    for (auto i : { 0,1,2 })
     {
         auto keyImg = Sprite::create("img/1.png", Rect(i * 32, 0, 32, 32));
         keyImg->setPosition(610, 256 - i * 26);
@@ -114,7 +115,7 @@ void test_start::initHeroProperties() {
     mnyNum = LabelTTF::create(StringUtils::format("%d", sGlobal->hero->mnyNum()), "fonts/Sonti.ttc", 16);
     mnyNum->setPosition(100, 253);
     addChild(mnyNum);
-    floorNum= LabelTTF::create(StringUtils::format("%d", sGlobal->hero->floor), "fonts/Sonti.ttc", 16);
+    floorNum= LabelTTF::create(StringUtils::format("%d", sGlobal->currentLevel), "fonts/Sonti.ttc", 16);
     floorNum->setPosition(104, 371);
     addChild(floorNum);
     swordName= LabelTTF::create(StringUtils::format("%s", sGlobal->hero->swordName().data()), "fonts/Sonti.ttc", 16);
@@ -127,7 +128,7 @@ void test_start::initHeroProperties() {
 
 void test_start::flushHeroProperties()
 {
-    for (int i = 0; i < 3; i++)
+    for (auto i : { 0,1,2 })
     {
         keyNum[i]->setString(StringUtils::format("%d", sGlobal->hero->keyNum(i)));
     }

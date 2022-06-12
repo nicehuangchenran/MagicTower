@@ -26,14 +26,22 @@ public:
 	Point tileCoordForPosition(Point position);  // GL坐标 -> tile坐标
 	Point positionForTileCoord(Point tileCoord);  // tile坐标 -> GL坐标
 	void showTip(const char* tip);
-	void onShowTipDone(Node* pSender);
 	void deleteDoor(Vec2 position);
 	void showInfo(const char* info, int time);
+
+	//无敌控制
+	void chooseInvincible(); 
+	void openInvincible(Ref* pSender);
+	void closeInvincible(Ref* pSender);
+	bool chooseWindow = 0; //无敌选择界面是否开启
+
 	Vector<Enemy*> enemyArray;
 	Map<int, Teleport*> teleportDict; // 传送门类
+
 	//Map<int, NPC*> npcDict;  // 有bug，暂且搁置
 
 	GameMap(const GameMap&map);
+
 };
 
 #endif // !_GAME_MAP_H_

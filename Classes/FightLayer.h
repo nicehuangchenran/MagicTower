@@ -12,6 +12,7 @@ public:
 	~FightLayer();
 	void initDisplay(const Hero* hero, const Enemy* enemy); //初始显示
 	void fight(test_start* scene, Hero* hero, Enemy* enemy, Vec2 targetTilePosition); //开始战斗过程
+	void showLoseBlood(const int loseBlood, const ENEMY_TYPE type, const bool critical, const bool whoseTurn);
 
 protected:
 	std::string heroInfo; //英雄信息字符串
@@ -21,7 +22,7 @@ protected:
 	Sprite* fightWindow; //战斗窗口
 	Sprite* heroSprite; //英雄图标
 	Sprite* enemySprite; //怪物图标
-	bool whoseTurn = 0; //0表示英雄的回合，1表示怪物的回合
+	bool whoseTurn; //0表示英雄的回合，1表示怪物的回合
 
 };
 

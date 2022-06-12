@@ -10,7 +10,9 @@ class NPC:public Ref
 public:
 	NPC(const ValueMap& dict, const int& x, const int& y);
 	~NPC();
-	void meetWithHero();
+	int getNPCID();
+	Animation* npcAnimation(const ValueMap& dict);
+
 protected:
 	Sprite* npcSprite;
 	int npcID;

@@ -78,7 +78,7 @@ bool Setting::init()
     okMenuItem->setPosition(Vec2(visibleSize.width / 2, 50));
 
     //将开关和完成加入菜单
-    Menu* menu = Menu::create(toggleSoundMenuitem, okMenuItem, nullptr);
+    auto menu = Menu::create(toggleSoundMenuitem, okMenuItem, nullptr);
     menu->setPosition(Vec2::ZERO);
     addChild(menu);
     return true;
@@ -91,6 +91,7 @@ void Setting::onChangedSlider(Ref* PSender, cocos2d::ui::Slider::EventType type)
         auto slider = dynamic_cast<cocos2d::ui::Slider*>(PSender);
         float percent = slider->getPercent() / 100.0f;
         SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(percent);
+        
     }
 }
 

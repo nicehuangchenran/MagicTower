@@ -24,7 +24,7 @@ void Global::initEnemyMap()
 		   >> info.atk
 		   >> info.def
 		   >> info.gold
-		   >> info.type
+		   >> (int&)(info.type)
 		   >> info.graphPosition.x
 		   >> info.graphPosition.y;
 		for (int j = lef; j <= rig; ++j)

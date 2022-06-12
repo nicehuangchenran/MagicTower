@@ -41,7 +41,7 @@ public:
 	Hero *hero;
 
 	//目标地图的层数
-	int currentLevel = 1;
+	int currentLevel;
 
 	//目前最高层数
 	int curMaxLevel = 1;

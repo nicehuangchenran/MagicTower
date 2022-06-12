@@ -11,9 +11,9 @@ public:
     GameMap* _tileMap;
     static cocos2d::Scene* createScene();
     virtual bool init();
-    void initHeroProperties(); //³õÊ¼»¯Ó¢ĞÛĞÅÏ¢ÏÔÊ¾
-    void flushHeroProperties(); //¸üĞÂÓ¢ĞÛĞÅÏ¢ÏÔÊ¾
-    void pauseOrContinue(EventKeyboard::KeyCode code); //ÔİÍ£
+    void initHeroProperties(); //åˆå§‹åŒ–è‹±é›„ä¿¡æ¯æ˜¾ç¤º
+    void flushHeroProperties(); //æ›´æ–°è‹±é›„ä¿¡æ¯æ˜¾ç¤º
+    void pauseOrContinue(EventKeyboard::KeyCode code); //æš‚åœ
 
     LabelTTF* keyNum[4], * bldNum, * atkNum, * defNum, * mnyNum, *floorNum, *swordName, *shieldName;
     cocos2d::Sprite* gameUI;

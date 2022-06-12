@@ -3,22 +3,16 @@
 
 #include "cocos2d.h"
 #include "Constants.h"
-#include "FightLayer.h"
-#include "Scene/test_start.h"
 
 USING_NS_CC;
 
 class FightLayer;
 class test_start;
+class NPC;
+class GameMap;
 
 class Hero :public Sprite {
 public:
-	enum Color {
-		YELLOW = 0,
-		BLUE,
-		RED,
-		ULTRA,
-	};
 	int faceDirection;
 	Hero();
 	~Hero();
@@ -27,16 +21,19 @@ public:
 	void move(EventKeyboard::KeyCode code); //移动一格
 
 	void getItem(const int gid);
-	void getKey(const int color); //获得钥匙
-	void getPotion(const int color); //获得药水
-	void getGem(const int color); //获得宝石
-	void getSword(const int type); //获得剑
-	void getShield(const int type); //获得盾
+	void getKey(const ITEM_COLOR color); //获得钥匙
+	void getPotion(const ITEM_COLOR color); //获得药水
+	void getGem(const ITEM_COLOR color); //获得宝石
+	void getSword(const WEAPON_TYPE type); //获得剑
+	void getShield(const WEAPON_TYPE type); //获得盾
+	void getGift(); //获得NPC给的钱
 	void fightWithEnemy(const int enemyID, Vec2 targetTilePosition); //与怪物战斗
+	void talkWithNPC(NPC* npc); //与npc对话
+
 	void walkAnimation(const int faceDirection); // 行走动画
 	void moveIsDone(Node* node); //将状态置为停止
 	void teleTransport(Teleport* teleport);
-	CollisionType collisionCheck(Vec2 targetGLPosition); // 判断碰撞类型
+	COLLISION_TYPE collisionCheck(Vec2 targetGLPosition); // 判断碰撞类型
 	
 	int keyNum(const int color);
 	int bldNum();
@@ -53,10 +50,12 @@ public:
 	bool isStopping; //是否处于静止状态（用于动画时禁止其他操作）
 	
 	test_start* scene; //当前所在场景
-	int floor; //当前所在层数
 	FightLayer* fightLayer; //战斗界面
 
+	Hero& operator=(const Hero& last);
+
 	friend class FightLayer; //允许战斗时改变自己的属性
+	friend class GameMap;  //允许开启无敌
 	
 	Hero& operator=(const Hero& last)
 	{
@@ -89,5 +88,6 @@ protected:
 	int key[4]; //拥有钥匙数
 	std::string sword;
 	std::string shield;
+	bool gift;
 };
 #endif

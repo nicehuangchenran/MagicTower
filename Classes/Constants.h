@@ -14,83 +14,63 @@ const int GID_MAX = 360;
 const int LEVEL_NUM = 11;
 
 //怪物攻击类型
-const int ENEMY_TYPE_NORMAL = 0; //物攻类怪物
-const int ENEMY_TYPE_CRITICAL = 1; //暴击类怪物
-const int ENEMY_TYPE_BOSS = 2; //真伤类怪物
+enum ENEMY_TYPE
+{
+	NORMAL = 0, //物攻类怪物
+	TRUEDAMAGE = 1, //真伤类怪物
+	CRITICAL = 2 //暴击类怪物
+};
 
 //道具颜色
-const int ITEM_COLOR_YELLOW = 0; //黄色道具
-const int ITEM_COLOR_BLUE = 1; //蓝色道具
-const int ITEM_COLOR_RED = 2; //红色道具
+enum ITEM_COLOR
+{
+	YELLOW = 0,
+	BLUE = 1,
+	RED = 2,
+	ULTRA = 3
+};
 
 //剑盾种类
-const int WEAPON_TYPE_IRON = 0; //铁剑盾
-const int WEAPON_TYPE_SLIVER = 1; //银剑盾
-const int WEAPON_TYPE_KNIGHT = 2; //骑士剑盾
-const int WEAPON_TYPE_HOLY = 3; //神圣剑盾
+enum WEAPON_TYPE
+{
+	IRON = 0, //铁剑盾
+	SLIVER = 1, //银剑盾
+	KNIGHT = 2, //骑士剑盾
+	HOLY = 3, //神圣剑盾
+};
 
 //移动方向
-const int DIRECTION_UP = 13; //向上
-const int DIRECTION_DOWN = 10; //向下
-const int DIRECTION_LEFT = 11; //向左
-const int DIRECTION_RIGHT = 12; //向右
+enum DIRECTION
+{
+	UP = 13, //向上
+	DOWN = 10, //向下
+	LEFT = 11, //向左
+	RIGHT = 12, //向右
+};
+
+//传送门种类
+enum TELEPORT
+{
+	UPSTAIR = 0, //上楼
+	DOWNSTAIR = 1, //下楼
+};
+
+//碰撞类型
+enum COLLISION_TYPE
+{
+	COLLI_NONE = 1,
+	COLLI_WALL = 2,
+	COLLI_ENEMY = 3,
+	COLLI_ITEM = 4,
+	COLLI_DOOR = 5,
+	COLLI_NPC = 6,
+	COLLI_TELEPORT = 7,
+};
 
 //英雄初始数值
 const int INIT_BLOOD = 400; //血量
-const int INIT_ATK = 10; //攻击
+const int INIT_ATK = 100; //攻击
 const int INIT_DEF = 10; //防御
 const int INIT_GOLD = 100; //金币
-
-//传送门种类
-const int UP_TELEPORT = 0; //上楼
-const int DOWN_TELEPORT = 1; //下楼
-
-/*
-typedef enum
-{
-	kDown = 0,
-	kLeft = 1,
-	kRight = 2,
-	kUp = 3,
-	kNormal,
-} HeroDirection;
-*/
-
-typedef enum
-{
-	kNone = 1,
-	kWall,
-	kEnemy,
-	kItem,
-	kDoor,
-	kNPC,
-	kTeleport,
-} CollisionType;
-
-typedef enum
-{
-	aDown = 0,
-	aLeft,
-	aRight,
-	aUp,
-	aFight,
-} AnimationKey;
-
-enum
-{
-	kZMap = 0,
-	kZNPC,
-	kZTeleport,
-	kZHero,
-	kZTip,
-};//GameLayer中各部分的显示zOrder及tag
-
-enum
-{
-	kGameLayer = 0,
-	kControlLayer,
-	kFadeLayer,
-};
-
 
 #endif // !_CONSTANTS_H_
