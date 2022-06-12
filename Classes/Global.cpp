@@ -45,6 +45,7 @@ void Global::gameOver(const char* msg)
 	label->setColor(Color3B::RED);
 	label->setPosition(Director::getInstance()->getVisibleSize() / 2);
 	gameScene->addChild(label);
+	sGlobal->hero->isStopping = false;
 
 	gameScene->schedule(
 		[=](float dlt)
