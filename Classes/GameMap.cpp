@@ -171,7 +171,7 @@ void GameMap::openInvincible(Ref* pSender)
     {
         sGlobal->hero->key[i] = 100;
     }
-    sGlobal->GameScene->flushHeroProperties();
+    sGlobal->gameScene->flushHeroProperties();
     sGlobal->gameMap->removeChildByName("chooseWindow");
     chooseWindow = false;
 }

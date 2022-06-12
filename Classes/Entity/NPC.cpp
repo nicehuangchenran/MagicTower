@@ -13,7 +13,7 @@ NPC::NPC(const ValueMap& dict, const int& x, const int& y)
 	npcSprite = Sprite::create(imagePath, rect);
 	npcSprite->setAnchorPoint(Point::ZERO);
 	npcSprite->setPosition(position);
-	sGlobal->GameScene->addChild(npcSprite, 1);
+	sGlobal->gameScene->addChild(npcSprite, 1);
 
 	Animate* action = Animate::create(npcAnimation(dict));
 	npcSprite->runAction(action);
