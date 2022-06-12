@@ -270,7 +270,7 @@ void Hero::teleTransport(Teleport* teleport)
 void Hero::getItem(const int gid)
 {
 	//CCLOG("%d", gid);
-		if (gid >= 1 && gid <= 3)
+	if (gid >= 1 && gid <= 3)
 	{
 		getKey(ITEM_COLOR(gid - 1));
 	}
@@ -282,11 +282,11 @@ void Hero::getItem(const int gid)
 	{
 		getGem(ITEM_COLOR(27 - gid));
 	}
-	else if (gid >= 72 && gid <= 76)
+	else if (gid >= 73 && gid <= 76)
 	{
 		getSword(WEAPON_TYPE(gid - 72));
 	}
-	else if (gid >= 96 && gid <= 100)
+	else if (gid >= 97 && gid <= 100)
 	{
 		getShield(WEAPON_TYPE(gid - 96));
 	}

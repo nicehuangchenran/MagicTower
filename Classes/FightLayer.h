@@ -22,7 +22,7 @@ protected:
 	Sprite* fightWindow; //战斗窗口
 	Sprite* heroSprite; //英雄图标
 	Sprite* enemySprite; //怪物图标
-	bool whoseTurn = 0; //0表示英雄的回合，1表示怪物的回合
+	bool whoseTurn; //0表示英雄的回合，1表示怪物的回合
 
 };
 

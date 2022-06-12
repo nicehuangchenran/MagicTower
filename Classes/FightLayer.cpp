@@ -40,6 +40,7 @@ void FightLayer::initDisplay(const Hero* const hero, const Enemy* const enemy)
 
 void FightLayer::fight(test_start* scene, Hero* hero, Enemy* enemy, Vec2 targetTilePosition)
 {
+	whoseTurn = 0; //默认英雄先攻击
 	this->schedule([=](float dlt)
 		{
 			//当英雄血量或怪物血量为0时结束战斗
@@ -145,7 +146,7 @@ void FightLayer::fight(test_start* scene, Hero* hero, Enemy* enemy, Vec2 targetT
 
 				whoseTurn ^= 1; //回合交换
 			}
-		}, 0.7f, "fight");
+		}, 0.5f, "fight");
 }
 
 void FightLayer::showLoseBlood(const int loseBlood, const ENEMY_TYPE type, const bool critical, const bool whoseTurn)
