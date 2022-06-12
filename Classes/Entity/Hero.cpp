@@ -25,7 +25,7 @@ Hero& Hero::operator=(const Hero& last)
 
 Hero* Hero::create(test_start* scene, Vec2 tilePosition)
 {
-	Hero* heroPointer = new Hero;
+	auto heroPointer = new Hero;
 
 	//异常处理
 	if (heroPointer && heroPointer->init(scene, tilePosition))
@@ -143,7 +143,7 @@ void Hero::move(EventKeyboard::KeyCode code)
 	Action* action = Sequence::create(
 		MoveBy::create(0.20f, moveDist),
 		CallFuncN::create(CC_CALLBACK_1(Hero::moveIsDone, this)),
-		NULL);
+		nullptr);
 	this->runAction(action);
 
 	isStopping = false;
@@ -236,7 +236,7 @@ COLLISION_TYPE Hero::collisionCheck(Vec2 targetGLPosition)
 
 	//对应图块是NPC
 	auto npc = sGlobal->gameMap->npcDict.at(index);
-	if (npc != NULL)
+	if (npc != nullptr)
 	{
 		talkWithNPC(npc);
 		return COLLI_NPC;
@@ -244,7 +244,7 @@ COLLISION_TYPE Hero::collisionCheck(Vec2 targetGLPosition)
 
 	//对应图块是传送门（楼梯）
 	auto teleport = sGlobal->gameMap->teleportDict.at(index);
-	if (teleport != NULL)
+	if (teleport != nullptr)
 	{
 		teleTransport(teleport);
 		return COLLI_TELEPORT;
@@ -391,7 +391,7 @@ void Hero::getSword(const WEAPON_TYPE type)
 			sword = "神圣剑";
 			break;
 	}
-	sGlobal->gameMap->showTip(("获得"+sword+"\n攻击+" + Value(addAtk).asString()).data());
+	sGlobal->gameMap->showTip(("获得" + sword + "\n攻击+" + Value(addAtk).asString()).data());
 	this->atk += addAtk;
 }
 

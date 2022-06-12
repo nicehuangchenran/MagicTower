@@ -23,11 +23,11 @@ NPC::~NPC() {}
 
 Animation* NPC::npcAnimation(const ValueMap& dict)
 {
-	const int kFrameNum = 4;
-	SpriteFrame* frame = NULL;
+	SpriteFrame* frame = nullptr;
 	Vector<SpriteFrame*> frameVec;
 	int x1 = dict.at("RecX").asInt(), y1 = dict.at("RecY").asInt();
-	for (int i = 0; i < kFrameNum; i++) {
+	for (auto i : { 0,1,2,3 })
+	{
 		frame = SpriteFrame::create(StringUtils::format("img/1.png"), Rect((x1+i) * OBJECT_SIZE , y1 * OBJECT_SIZE, OBJECT_SIZE, OBJECT_SIZE));
 		frameVec.pushBack(frame);
 	}

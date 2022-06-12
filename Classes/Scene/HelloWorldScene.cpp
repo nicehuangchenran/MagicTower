@@ -96,7 +96,7 @@ bool HelloWorld::init()
     auto item5 = MenuItemFont::create("退出游戏", CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
 
     //添加菜单
-    auto menu = Menu::create(item1, item2, item3, item4, item5, NULL);
+    auto menu = Menu::create(item1, item2, item3, item4, item5, nullptr);
     menu->alignItemsVertically();
     menu->setPosition(Point(origin.x + visibleSize.width / 2, 110));
     this->addChild(menu);

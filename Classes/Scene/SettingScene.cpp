@@ -78,7 +78,7 @@ bool Setting::init()
     okMenuItem->setPosition(Vec2(visibleSize.width / 2, 50));
 
     //将开关和完成加入菜单
-    Menu* menu = Menu::create(toggleSoundMenuitem, okMenuItem, nullptr);
+    auto menu = Menu::create(toggleSoundMenuitem, okMenuItem, nullptr);
     menu->setPosition(Vec2::ZERO);
     addChild(menu);
     return true;
