@@ -53,7 +53,6 @@ bool Hero::init(GameScene* scene, Vec2 tilePosition)
 	targetGLPosition = sGlobal -> gameMap -> positionForTileCoord(tilePosition);
 	isStopping = true;
 
-
 	//绑定场景
 	this->scene = scene;
 	this->initWithFile("img/1.png", Rect(0, OBJECT_SIZE * 10 + 1, OBJECT_SIZE, OBJECT_SIZE));
@@ -241,7 +240,7 @@ COLLISION_TYPE Hero::collisionCheck(Vec2 targetGLPosition)
 		return COLLI_NPC;
 	}
 
-	//对应图块是传送门（楼梯）
+	//对应图块是传送门
 	auto teleport = sGlobal->gameMap->teleportDict.at(index);
 	if (teleport != nullptr)
 	{
@@ -250,15 +249,14 @@ COLLISION_TYPE Hero::collisionCheck(Vec2 targetGLPosition)
 	}
 
 	//对应图块是商店
-	
 
 	return COLLI_NONE;
 }
 
-
 void Hero::talkWithNPC(NPC* npc)
 {
-	switch (npc->getNPCID()) {
+	switch (npc->getNPCID()) 
+	{
 		case 1:
 			sGlobal->gameMap->showTip("请在左侧选择是否开启无敌");
 			sGlobal->gameMap->chooseInvincible();
@@ -285,13 +283,13 @@ void Hero::talkWithNPC(NPC* npc)
 void Hero::teleTransport(Teleport* teleport)
 {	
 
-	sGlobal->saved->saveLevel(sGlobal->GameScene);
+	sGlobal->saved->saveLevel(sGlobal->gameScene);
 	this->setParent(nullptr);
 
 	// 获取目标层数与英雄位置，然后切换场景
 	sGlobal->currentLevel = teleport->targetID;
 	sGlobal->heroSpawnTileCoord = teleport->targetHeroPosition;
-	Director::getInstance()->pushScene(TransitionFadeTR::create(0.5f, sGlobal -> GameScene -> createScene()));
+	Director::getInstance()->pushScene(TransitionFadeTR::create(0.5f, sGlobal -> gameScene -> createScene()));
 
 }
 
@@ -318,7 +316,6 @@ void Hero::getItem(const int gid)
 	{
 		getShield(WEAPON_TYPE(gid - 96));
 	}
-
 }
 
 void Hero::getKey(const ITEM_COLOR color)

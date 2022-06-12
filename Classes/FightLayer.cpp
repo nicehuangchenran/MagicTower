@@ -46,7 +46,6 @@ void FightLayer::fight(GameScene* scene, Hero* hero, Enemy* enemy, Vec2 targetTi
 			//当英雄血量或怪物血量为0时结束战斗
 			if (hero->blood == 0 || enemy->blood == 0)
 			{
-		
 				//关闭界面
 				this->removeChild(heroSprite);
 				this->removeChild(enemySprite);
@@ -74,12 +73,17 @@ void FightLayer::fight(GameScene* scene, Hero* hero, Enemy* enemy, Vec2 targetTi
 
 					//怪物图片消失
 					sGlobal->gameMap->getEnemyLayer()->removeTileAt(targetTilePosition);
+
+					if (enemy->name == "JuniorGuard") //打败boss
+					{
+						sGlobal->gameOver();
+					}
 				}
 				else //战败，游戏结束
 				{
 					//如果音效开启，则播放音效
 					if (Setting::isEffect)	SimpleAudioEngine::getInstance()->playEffect("gameEffect/HeroDead.wav");
-
+					sGlobal->gameOver();
 				}
 
 				//释放空间

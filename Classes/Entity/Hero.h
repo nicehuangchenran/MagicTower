@@ -11,7 +11,8 @@ class GameScene;
 class NPC;
 class GameMap;
 
-class Hero :public Sprite {
+class Hero :public Sprite 
+{
 public:
 	int faceDirection;
 	Hero();

@@ -6,11 +6,8 @@
 
 using namespace cocos2d;
 
-class GameScene;
-class GameLayer;
 class GameMap;
 class Hero;
-class ControlLayer;
 class Teleport;
 class GameScene;
 class SavedProgress;
@@ -24,19 +21,16 @@ public:
 	//初始化怪物信息映射
 	void initEnemyMap();
 
+	//游戏结束
+	void gameOver();
+
 	//游戏场景
-	GameScene *GameScene;
-
-	//游戏主图层
-	GameLayer *gameLayer;
-
-	//控制层
-	ControlLayer *controlLayer;
+	GameScene *gameScene;
 
 	//游戏地图
 	GameMap *gameMap;
 
-	//勇士
+	//英雄
 	Hero *hero;
 
 	//目标地图的层数

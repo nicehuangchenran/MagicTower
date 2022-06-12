@@ -18,18 +18,21 @@ protected:
 	GameMap* map;
 };*/
 
-class pos :public Node {
+class pos :public Node 
+{
 public:
 	Vec2 pnt;
 };
 
-struct savedLevel {
+struct savedLevel 
+{
 	//GID->tileCoord
 public:
 	map<Point, int>* records[4];
 };
 
-class SavedProgress:public Ref {
+class SavedProgress:public Ref 
+{
 public:
 	SavedProgress(void);
 

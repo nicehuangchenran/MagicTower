@@ -12,7 +12,7 @@ USING_NS_CC;
 
 GameScene::GameScene()
 {
-    sGlobal->GameScene = this;
+    sGlobal->gameScene = this;
 }
 
 Scene* GameScene::createScene()

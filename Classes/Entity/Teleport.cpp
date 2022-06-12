@@ -19,8 +19,8 @@ Teleport::Teleport(const ValueMap& dict, const int x, const int y)
 	teleport->setPosition(Vec2(telePosition));
 
 
-	//sGlobal->GameScene->addChild(teleport,1);
-	sGlobal->GameScene->addChild(teleport, 2, "tel");
+	//sGlobal->gameScene->addChild(teleport,1);
+	sGlobal->gameScene->addChild(teleport, 2, "tel");
 }
 
 Teleport::~Teleport() {}

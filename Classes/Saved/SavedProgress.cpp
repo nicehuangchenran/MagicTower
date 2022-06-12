@@ -56,7 +56,8 @@ void SavedProgress::saveLevel(const GameScene* scene)
 	sGlobal->levels[sGlobal->currentLevel - 1] = scene->_tileMap;
 }
 
-map<Point, int>* SavedProgress::saveObjects(const GameMap* map, const string& type) {
+map<Point, int>* SavedProgress::saveObjects(const GameMap* map, const string& type) 
+{
 	auto info = new std::map<Point, int>;
 	//TMXObjectGroup* group = map->objectGroupNamed("enemy");
 	/*const ValueVector& objects = group->getObjects();

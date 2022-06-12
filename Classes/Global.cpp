@@ -3,7 +3,7 @@
 Global* sGlobal = new Global;
 
 Global::Global() :
-	GameScene(nullptr), gameLayer(nullptr), controlLayer(nullptr), gameMap(nullptr), hero(nullptr), saved(nullptr),
+	gameScene(nullptr), gameMap(nullptr), hero(nullptr), saved(nullptr),
 	currentLevel(1), curMaxLevel(0), heroSpawnTileCoord(Point{ OBJECT_SIZE*10, OBJECT_SIZE })
 {
 	initEnemyMap();
@@ -13,7 +13,10 @@ void Global::initEnemyMap()
 {
 	std::ifstream in;
 	in.open("..\\Resources\\EnemyInfo.txt", std::ios::in);
-	if (!in.is_open()) { return; }
+	if (!in.is_open()) 
+	{ 
+		return; 
+	}
 	int lef, rig;
 	for (int i = 1; i <= ENEMY_NUM; ++i)
 	{
@@ -33,4 +36,29 @@ void Global::initEnemyMap()
 		}
 	}
 	in.close();
+}
+
+void Global::gameOver()
+{
+	auto label = LabelTTF::create("Game Over!", "Arial", 72);
+	label->enableShadow(Size(5,5), 0.5f, 0.5f);
+	label->setColor(Color3B::RED);
+	label->setPosition(Director::getInstance()->getVisibleSize() / 2);
+	gameScene->addChild(label);
+
+	gameScene->schedule(
+		[=](float dlt)
+		{
+			gameScene->removeChild(label);
+			gameScene->unschedule("gameOver");
+
+			//Êý¾Ý»Ö¸´
+			hero = nullptr;
+			currentLevel = 1;
+			curMaxLevel = 0;
+			heroSpawnTileCoord = Point{ OBJECT_SIZE * 10, OBJECT_SIZE };
+
+			Director::getInstance()->popToRootScene();
+		},
+		2.5f,"gameOver");
 }
