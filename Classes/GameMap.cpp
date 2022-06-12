@@ -99,11 +99,24 @@ void GameMap::initObject()
             auto tele = new Teleport(dict, x, y);
             teleportDict.insert(index, tele);
         }
-
-        // 如果对象种类是store，在地图上创建store图块
+      
+        // 如果对象种类是store，标记本层有store位置（index）
+        hasStore = false;
         if (type == "store")
         {
-            ;
+            hasStore = true;
+            storeObject = dict;
+            buyLayerOpen = false;
+            //初始化商店图像
+            string imagePath = "img/1.png";
+            int x = storeObject.at("tileCoordX").asInt(), y = storeObject.at("tileCoordY").asInt();
+            int x1 = storeObject.at("RecX").asInt(), y1 = storeObject.at("RecY").asInt();
+            auto rect = Rect(x1 * OBJECT_SIZE, y1 * OBJECT_SIZE, OBJECT_SIZE, OBJECT_SIZE);
+            Point position = Point(x * OBJECT_SIZE + 160, y * OBJECT_SIZE);
+            auto storeSprite = Sprite::create(imagePath, rect);
+            storeSprite->setAnchorPoint(Point::ZERO);
+            storeSprite->setPosition(position);
+            sGlobal->gameScene->addChild(storeSprite, 8);
         }
     }
 }
@@ -182,3 +195,69 @@ void GameMap::closeInvincible(Ref* pSender)
     chooseWindow = false;
 }
 
+//商店系统
+void GameMap::initStore()
+{
+    if (buyLayerOpen)
+    {
+        return;
+    }
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+
+    //初始化购买页面
+    Sprite* buySprite = Sprite::create("img/6.png");
+
+    Label* label = Label::create("商店", "fonts/arial.ttf", 20);
+
+    MenuItemFont::setFontName("fonts/arial.ttf");
+    MenuItemFont::setFontSize(20);
+    auto item1 = MenuItemFont::create("100元提高5点攻击", CC_CALLBACK_1(GameMap::buyAtt, this));
+    auto item2 = MenuItemFont::create("100元提高5点防御", CC_CALLBACK_1(GameMap::buyDef, this));
+    auto item3 = MenuItemFont::create("100元获得200点血量", CC_CALLBACK_1(GameMap::buyBlood, this));
+    auto item4 = MenuItemFont::create("退出", CC_CALLBACK_1(GameMap::buyExit, this));
+    auto menu = Menu::create(item1, item2, item3,item4, NULL);
+    menu->alignItemsVertically();
+
+    auto layer = Layer::create();
+    buySprite->setPosition(Vec2(visibleSize.width / 2 - 4 * OBJECT_SIZE, visibleSize.height / 2));
+    buySprite->setAnchorPoint(Vec2(0.5, 0.5));
+    layer->addChild(buySprite);
+    menu->setPosition(Vec2(visibleSize.width / 2 - 4 * OBJECT_SIZE, visibleSize.height / 2));
+    layer->addChild(menu);
+
+    sGlobal->gameMap->addChild(layer, 10, "buyLayer");
+    buyLayerOpen = true;
+}
+
+void GameMap::buyAtt(Ref*)
+{
+    sGlobal->hero->atk = 5 + sGlobal->hero->atk;
+    sGlobal->hero->gold = sGlobal->hero->gold - 100;
+    sGlobal->gameScene->flushHeroProperties();
+    sGlobal->gameMap->removeChildByName("buyLayer");
+    buyLayerOpen = false;
+}
+
+void GameMap::buyDef(Ref*)
+{
+    sGlobal->hero->def = sGlobal->hero->def + 5;
+    sGlobal->hero->gold = sGlobal->hero->gold - 100;
+    sGlobal->gameScene->flushHeroProperties();
+    sGlobal->gameMap->removeChildByName("buyLayer");
+    buyLayerOpen = false;
+}
+
+void GameMap::buyBlood(Ref*)
+{
+    sGlobal->hero->blood = sGlobal->hero->blood + 200;
+    sGlobal->hero->gold = sGlobal->hero->gold - 100;
+    sGlobal->gameScene->flushHeroProperties();
+    sGlobal->gameMap->removeChildByName("buyLayer");
+    buyLayerOpen = false;
+}
+
+void GameMap::buyExit(Ref*)
+{
+    sGlobal->gameMap->removeChildByName("buyLayer");
+    buyLayerOpen = false;
+}

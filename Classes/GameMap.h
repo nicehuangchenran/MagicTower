@@ -34,6 +34,16 @@ public:
 	void closeInvincible(Ref* pSender);
 	bool chooseWindow = 0; //无敌选择界面是否开启
 
+	//商店
+	void initStore();
+	void buyAtt(Ref* pSender);
+	void buyDef(Ref* pSender);
+	void buyBlood(Ref* pSender);
+	void buyExit(Ref* pSender);
+	bool hasStore;
+	ValueMap storeObject;
+	bool buyLayerOpen;
+
 	Map<int, Teleport*> teleportDict;
 	Map<int, NPC*> npcDict;
 
