@@ -74,16 +74,16 @@ void FightLayer::fight(GameScene* scene, Hero* hero, Enemy* enemy, Vec2 targetTi
 					//怪物图片消失
 					sGlobal->gameMap->getEnemyLayer()->removeTileAt(targetTilePosition);
 
-					if (enemy->name == "JuniorGuard") //打败boss
+					if (enemy->name == "StoneMan") //打败boss
 					{
-						sGlobal->gameOver();
+						sGlobal->gameOver("YOU WIN!");
 					}
 				}
 				else //战败，游戏结束
 				{
 					//如果音效开启，则播放音效
 					if (Setting::isEffect)	SimpleAudioEngine::getInstance()->playEffect("gameEffect/HeroDead.wav");
-					sGlobal->gameOver();
+					sGlobal->gameOver("GAME OVER!");
 				}
 
 				//释放空间

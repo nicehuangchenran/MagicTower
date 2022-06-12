@@ -22,7 +22,7 @@ public:
 	void initEnemyMap();
 
 	//游戏结束
-	void gameOver();
+	void gameOver(const char* msg);
 
 	//游戏场景
 	GameScene *gameScene;
@@ -49,7 +49,7 @@ public:
 	//SavedProgress* saved;
 	SavedProgress* saved;
 
-	GameMap* levels[LEVEL_NUM];
+	GameMap* savedLevels[LEVEL_NUM];
 };
 
 #endif // !_GLOBAL_H_

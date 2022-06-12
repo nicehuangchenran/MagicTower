@@ -53,7 +53,7 @@ void SavedProgress::saveGame()
 
 void SavedProgress::saveLevel(const GameScene* scene)
 {
-	sGlobal->levels[sGlobal->currentLevel - 1] = scene->_tileMap;
+	sGlobal->savedLevels[sGlobal->currentLevel - 1] = scene->_tileMap;
 }
 
 map<Point, int>* SavedProgress::saveObjects(const GameMap* map, const string& type) 
