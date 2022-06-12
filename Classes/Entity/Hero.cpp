@@ -237,7 +237,7 @@ void Hero::teleTransport(Teleport* teleport)
 void Hero::getItem(const int gid)
 {
 	//CCLOG("%d", gid);
-		if (gid >= 1 && gid <= 3)
+	if (gid >= 1 && gid <= 3)
 	{
 		getKey(ITEM_COLOR(gid - 1));
 	}

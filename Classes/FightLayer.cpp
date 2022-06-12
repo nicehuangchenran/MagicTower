@@ -40,6 +40,7 @@ void FightLayer::initDisplay(const Hero* const hero, const Enemy* const enemy)
 
 void FightLayer::fight(test_start* scene, Hero* hero, Enemy* enemy, Vec2 targetTilePosition)
 {
+	whoseTurn = 0; //默认英雄先攻击
 	this->schedule([=](float dlt)
 		{
 			//当英雄血量或怪物血量为0时结束战斗
