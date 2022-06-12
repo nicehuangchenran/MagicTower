@@ -89,8 +89,8 @@ bool HelloWorld::init()
     //添加菜单控件
     MenuItemFont::setFontName("fonts/arial.ttf");
     MenuItemFont::setFontSize(28);
-    auto item1 = MenuItemFont::create("开始新游戏", CC_CALLBACK_1(HelloWorld::menuItemStart, this));
-    auto item2 = MenuItemFont::create("载入存档");
+    auto item1 = MenuItemFont::create("开始新的游戏", CC_CALLBACK_1(HelloWorld::menuItemStart, this));
+    auto item2 = MenuItemFont::create("继续上次游戏", CC_CALLBACK_1(HelloWorld::menuItemContinue, this));
     auto item3 = MenuItemFont::create("游戏说明", CC_CALLBACK_1(HelloWorld::menuItemIntro, this));
     auto item4 = MenuItemFont::create("选项设置", CC_CALLBACK_1(HelloWorld::menuItemSetting, this));
     auto item5 = MenuItemFont::create("退出游戏", CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
@@ -131,4 +131,13 @@ void HelloWorld::menuItemStart(Ref* PSender)
 {
     if (Setting::isEffect)  SimpleAudioEngine::getInstance()->playEffect("button_click.wav");
     Director::getInstance()->pushScene(TransitionFadeTR::create(1.0f, GameScene::createScene()));
+}
+
+void HelloWorld::menuItemContinue(Ref* Psender)
+{
+    if (sGlobal->paused == true)
+    {
+        Director::getInstance()->popScene();
+        sGlobal->paused = false;
+    }
 }

@@ -50,6 +50,8 @@ public:
 	SavedProgress* saved;
 
 	GameMap* savedLevels[LEVEL_NUM];
+
+	bool paused; //返回标题
 };
 
 #endif // !_GLOBAL_H_
