@@ -133,34 +133,14 @@ void GameMap::showTip(const char* tip)
         MoveBy::create(0.5f, Point(0, 32)),
         DelayTime::create(0.5f),
         FadeOut::create(0.3f),
-        [=]() 
+        [=]()
         {
-            sGlobal->hero->removeChild(tipLabel,true);
+            sGlobal->hero->removeChild(tipLabel, true);
         },
         nullptr);
 
     tipLabel->runAction(action);
 }
-
-void GameMap::showInfo(const char* info, int time)
-{
-    auto label = Label::createWithTTF(info, "fonts/Marker Felt.ttf", 24);
-    label->setPosition(16, 54); //设置标签位置
-    label->enableShadow(Color4B(166, 166, 166, 166), Size(3, 3)); //设置阴影效果
-    label->enableOutline(Color4B::RED, 2); //设置边框效果
-    sGlobal->hero->addChild(label, 0); //加到英雄身上（加在this会被挡住）
-
-    sGlobal->hero->isStopping = false;
-    schedule([=](float dlt)
-        {
-            sGlobal->hero->isStopping = true;
-            sGlobal->hero->removeChild(label,true);
-            unschedule("tip");
-        }
-    , time / 1000.0f, "tip");
-}
-
-
 
 void GameMap::chooseInvincible()
 {

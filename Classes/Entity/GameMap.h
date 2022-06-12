@@ -27,7 +27,6 @@ public:
 	Point positionForTileCoord(Point tileCoord);  // tile坐标 -> GL坐标
 	void showTip(const char* tip);
 	void deleteDoor(Vec2 position);
-	void showInfo(const char* info, int time);
 
 	//无敌控制
 	void chooseInvincible(); 

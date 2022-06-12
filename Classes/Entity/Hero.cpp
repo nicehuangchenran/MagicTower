@@ -78,7 +78,7 @@ bool Hero::init(test_start* scene, Vec2 tilePosition)
 	key[RED] = 0;
 	sword = "无";
 	shield = "无";
-
+	gift = false;
 	return true;
 }
 
@@ -226,7 +226,7 @@ COLLISION_TYPE Hero::collisionCheck(Vec2 targetGLPosition)
 		}
 		else
 		{
-			sGlobal->gameMap->showInfo("No Key!", 500);
+			sGlobal->gameMap->showTip("没有钥匙!");
 		}
 		
 		return COLLI_DOOR;
@@ -281,8 +281,6 @@ void Hero::talkWithNPC(NPC* npc)
 			break;
 	}
 }
-
-
 
 void Hero::teleTransport(Teleport* teleport)
 {	
