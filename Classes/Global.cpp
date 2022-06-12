@@ -4,7 +4,7 @@ Global* sGlobal = new Global;
 
 Global::Global() :
 	GameScene(nullptr), gameLayer(nullptr), controlLayer(nullptr), gameMap(nullptr), hero(nullptr), saved(nullptr),
-	currentLevel(1), heroSpawnTileCoord(Point{ OBJECT_SIZE*10, OBJECT_SIZE })
+	currentLevel(1), curMaxLevel(0), heroSpawnTileCoord(Point{ OBJECT_SIZE*10, OBJECT_SIZE })
 {
 	initEnemyMap();
 };
