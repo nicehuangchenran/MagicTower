@@ -22,8 +22,6 @@ GameMap* GameMap::create(const char* filePath)
     }
 }
 
-
-
 void GameMap::mapInit()
 {
     floorLayer = this->getLayer("floor");

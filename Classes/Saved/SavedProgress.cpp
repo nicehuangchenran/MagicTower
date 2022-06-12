@@ -1,4 +1,4 @@
-#include "savedProgress.h"
+#include "Headers.h"
 
 /*
 SavedProgress::SavedProgress(void) {
@@ -39,23 +39,25 @@ SavedProgress::SavedProgress(void) {
 	//levels->insert(0, *map0);
 }
 
-void SavedProgress::saveGame() {
+void SavedProgress::saveGame() 
+{
 	const int& levelNum = sGlobal->currentLevel;
-	for (int i = 1; i <= levelNum; i++) {
+	for (int i = 1; i <= levelNum; i++) 
+	{
 		//此处saveEnemies的参数应为对应关卡
 		//saveEnemies();
 		//saveObject();
 	}
 }
 
-void SavedProgress::saveLevel(const test_start* scene) {
+void SavedProgress::saveLevel(const test_start* scene)
+{
 	sGlobal->levels[sGlobal->currentLevel - 1] = scene->_tileMap;
 }
 
 map<Point, int>* SavedProgress::saveObjects(const GameMap* map, const string& type) {
-	std::map<Point, int>* info = new std::map<Point, int>;
+	auto info = new std::map<Point, int>;
 	//TMXObjectGroup* group = map->objectGroupNamed("enemy");
-	Vector<Enemy*> group = map->enemyArray;
 	/*const ValueVector& objects = group->getObjects();
 
 	for (ValueVector::const_iterator it = objects.begin(); it != objects.end(); it++) {
@@ -67,11 +69,18 @@ map<Point, int>* SavedProgress::saveObjects(const GameMap* map, const string& ty
 		
 		info.insert({ GID, *tile });
 	}*/
-	for (Vector<Enemy*>::iterator it = group.begin(); it != group.end(); ++it) {
-		//读取地图上存在的物品信息放入info
-		Point tile = (*it)->graphPosition;
-		int GID = (*it)->startGID;
-		info->insert({ tile, GID });
+	auto enemyLayer = sGlobal->gameMap->getLayer("enemy");
+	Size s = enemyLayer->getLayerSize();
+	for (int x = 0; x < s.width; x++)
+	{
+		for (int y = 0; y < s.height; y++)
+		{
+			int gid = enemyLayer->getTileGIDAt(Point(x, y));
+			if (gid)
+			{
+				info->insert({ Point(x,y), gid });
+			}
+		}
 	}
 	return info;
 }
