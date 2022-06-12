@@ -2,12 +2,11 @@
 #define _ENEMY_H_
 
 #include "cocos2d.h"
-#include "ChangableObject.h"
 #include "Constants.h"
 
 USING_NS_CC;
 
-class Enemy : public ChangableObject
+class Enemy : public Node
 {
 public:
 	Enemy();
