@@ -30,10 +30,6 @@ public:
 	void fightWithEnemy(const int enemyID, Vec2 targetTilePosition); //与怪物战斗
 	void talkWithNPC(NPC* npc); //与npc对话
 
-	//选择无敌模式
-	void chooseInvincible();
-	void ifInvincible(Ref* pSender);
-
 	void walkAnimation(const int faceDirection); // 行走动画
 	void moveIsDone(Node* node); //将状态置为停止
 	void teleTransport(Teleport* teleport);

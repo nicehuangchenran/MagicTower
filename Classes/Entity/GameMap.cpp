@@ -159,18 +159,21 @@ void GameMap::showInfo(const char* info, int time)
 
 void GameMap::chooseInvincible()
 {
-    Size visibleSize = Director::getInstance()->getVisibleSize();
-    MenuItemFont::setFontName("fonts/arial.ttf");
-    MenuItemFont::setFontSize(20);
+    if (chooseWindow)
+    {
+        return;
+    }
     auto item1 = MenuItemFont::create("开启无敌", CC_CALLBACK_1(GameMap::openInvincible, this));
-    auto item2 = MenuItemFont::create("关闭无敌", CC_CALLBACK_1(GameMap::closeInvincible, this));
+    auto item2 = MenuItemFont::create("取消", CC_CALLBACK_1(GameMap::closeInvincible, this));
+    item1->setFontName("fonts/arial.ttf");
+    item2->setFontName("fonts/arial.ttf");
 
     //添加菜单
-    auto menu = Menu::create(item1,item2, nullptr);
+    auto menu = Menu::create(item1, item2, nullptr);
     menu->alignItemsVertically();
-    menu->setPosition(Vec2(-2 * OBJECT_SIZE-10, 4*OBJECT_SIZE));
-    sGlobal->gameMap->addChild(menu);
-
+    menu->setPosition(Vec2(-80, 128));
+    sGlobal->gameMap->addChild(menu, 0, "chooseWindow");
+    chooseWindow = true;
 }
 
 void GameMap::openInvincible(Ref* pSender)
@@ -183,16 +186,13 @@ void GameMap::openInvincible(Ref* pSender)
     {
         sGlobal->hero->key[i] = 100;
     }
+    sGlobal->test_start->flushHeroProperties();
+    sGlobal->gameMap->removeChildByName("chooseWindow");
+    chooseWindow = false;
 }
 
 void GameMap::closeInvincible(Ref* pSender)
 {
-    sGlobal->hero->atk = INIT_ATK;
-    sGlobal->hero->def = INIT_DEF;
-    sGlobal->hero->blood = INIT_BLOOD;
-    sGlobal->hero->gold = INIT_GOLD;
-    for (auto i : { YELLOW,BLUE,RED })
-    {
-        sGlobal->hero->key[i] = 0;
-    }
+    sGlobal->gameMap->removeChildByName("chooseWindow");
+    chooseWindow = false;
 }

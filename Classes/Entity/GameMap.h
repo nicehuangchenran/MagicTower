@@ -31,8 +31,9 @@ public:
 
 	//无敌控制
 	void chooseInvincible(); 
-	void openInvincible(Ref* );
-	void closeInvincible(Ref*);
+	void openInvincible(Ref* pSender);
+	void closeInvincible(Ref* pSender);
+	bool chooseWindow = 0; //无敌选择界面是否开启
 
 	Vector<Enemy*> enemyArray;
 	Map<int, Teleport*> teleportDict; // 传送门类
