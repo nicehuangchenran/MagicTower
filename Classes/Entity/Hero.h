@@ -7,7 +7,7 @@
 USING_NS_CC;
 
 class FightLayer;
-class test_start;
+class GameScene;
 class NPC;
 class GameMap;
 
@@ -16,8 +16,8 @@ public:
 	int faceDirection;
 	Hero();
 	~Hero();
-	static Hero* create(test_start* scene, Vec2 position); //创建对象
-	bool init(test_start* scene, Vec2 position); //初始化对象
+	static Hero* create(GameScene* scene, Vec2 position); //创建对象
+	bool init(GameScene* scene, Vec2 position); //初始化对象
 	void move(EventKeyboard::KeyCode code); //移动一格
 
 	void getItem(const int gid);
@@ -49,7 +49,7 @@ public:
 	int targetDoorGID;
 	bool isStopping; //是否处于静止状态（用于动画时禁止其他操作）
 	
-	test_start* scene; //当前所在场景
+	GameScene* scene; //当前所在场景
 	FightLayer* fightLayer; //战斗界面
 
 	Hero& operator=(const Hero& last);

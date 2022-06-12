@@ -32,7 +32,8 @@ string SavedProgress::stringFromDict(const ValueMap& dict) {
 	return s;
 }*/
 
-SavedProgress::SavedProgress(void) {
+SavedProgress::SavedProgress(void) 
+{
 	sGlobal->saved = this;
 	//levels = new Map<int, GameMap>;
 	//static GameMap* map0 = new GameMap;
@@ -50,7 +51,7 @@ void SavedProgress::saveGame()
 	}
 }
 
-void SavedProgress::saveLevel(const test_start* scene)
+void SavedProgress::saveLevel(const GameScene* scene)
 {
 	sGlobal->levels[sGlobal->currentLevel - 1] = scene->_tileMap;
 }

@@ -1,7 +1,6 @@
 #ifndef _GLOBAL_H_
 #define _GLOBAL_H_
 
-#include "Singleton.h"
 #include "Entity/Enemy.h"
 #include "Constants.h"
 
@@ -13,7 +12,7 @@ class GameMap;
 class Hero;
 class ControlLayer;
 class Teleport;
-class test_start;
+class GameScene;
 class SavedProgress;
 
 class Global
@@ -26,7 +25,7 @@ public:
 	void initEnemyMap();
 
 	//游戏场景
-	test_start *test_start;
+	GameScene *GameScene;
 
 	//游戏主图层
 	GameLayer *gameLayer;

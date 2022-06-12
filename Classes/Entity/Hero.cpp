@@ -23,7 +23,7 @@ Hero& Hero::operator=(const Hero& last)
 	return *this;
 }
 
-Hero* Hero::create(test_start* scene, Vec2 tilePosition)
+Hero* Hero::create(GameScene* scene, Vec2 tilePosition)
 {
 	auto heroPointer = new Hero;
 
@@ -40,7 +40,7 @@ Hero* Hero::create(test_start* scene, Vec2 tilePosition)
 	}
 }
 
-bool Hero::init(test_start* scene, Vec2 tilePosition)
+bool Hero::init(GameScene* scene, Vec2 tilePosition)
 {
 	//调用父类初始化函数
 	if (!Node::init())
@@ -78,7 +78,7 @@ bool Hero::init(test_start* scene, Vec2 tilePosition)
 	key[RED] = 0;
 	sword = "无";
 	shield = "无";
-
+	gift = false;
 	return true;
 }
 
@@ -226,7 +226,7 @@ COLLISION_TYPE Hero::collisionCheck(Vec2 targetGLPosition)
 		}
 		else
 		{
-			sGlobal->gameMap->showInfo("No Key!", 500);
+			sGlobal->gameMap->showTip("没有钥匙!");
 		}
 		
 		return COLLI_DOOR;
@@ -282,12 +282,10 @@ void Hero::talkWithNPC(NPC* npc)
 	}
 }
 
-
-
 void Hero::teleTransport(Teleport* teleport)
 {	
 
-	sGlobal->saved->saveLevel(sGlobal->test_start);
+	sGlobal->saved->saveLevel(sGlobal->GameScene);
 	this->setParent(nullptr);
 
 	// 获取目标层数与英雄位置，然后切换场景
@@ -295,7 +293,7 @@ void Hero::teleTransport(Teleport* teleport)
 	if (sGlobal->currentLevel > sGlobal->curMaxLevel)
 		sGlobal->curMaxLevel = sGlobal->currentLevel; //更新最高层数
 	sGlobal->heroSpawnTileCoord = teleport->targetHeroPosition;
-	Director::getInstance()->pushScene(TransitionFadeTR::create(0.5f, sGlobal -> test_start -> createScene()));
+	Director::getInstance()->pushScene(TransitionFadeTR::create(0.5f, sGlobal -> GameScene -> createScene()));
 
 }
 

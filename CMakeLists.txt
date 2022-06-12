@@ -51,15 +51,12 @@ list(APPEND GAME_SOURCE
      Classes/Scene/HelloWorldScene.cpp
      Classes/Scene/SettingScene.cpp
      Classes/Scene/Introduction.cpp
-     Classes/Scene/test_start.cpp
-     Classes/Entity/ChangableObject.cpp
+     Classes/Scene/GameScene.cpp
      Classes/Entity/Enemy.cpp
      Classes/Entity/NPC.cpp
-     Classes/Entity/Key.cpp
-     Classes/Entity/Potion.cpp
      Classes/Entity/Hero.cpp
-     Classes/Entity/GameMap.cpp
      Classes/Entity/Teleport.cpp
+     Classes/GameMap.cpp
      Classes/Saved/SavedProgress.cpp
      Classes/AppDelegate.cpp
      Classes/Global.cpp
@@ -69,15 +66,12 @@ list(APPEND GAME_HEADER
      Classes/Scene/HelloWorldScene.h
      Classes/Scene/SettingScene.h
      Classes/Scene/Introduction.h
-     Classes/Scene/test_start.h
-     Classes/Entity/ChangableObject.h
+     Classes/Scene/GameScene.h
      Classes/Entity/Enemy.h
      Classes/Entity/NPC.h
-     Classes/Entity/Key.h
-     Classes/Entity/Potion.h
      Classes/Entity/Hero.h
-     Classes/Entity/GameMap.h
      Classes/Entity/Teleport.h
+     Classes/GameMap.h
      Classes/Saved/SavedProgress.h
      Classes/AppDelegate.h
      Classes/Constants.h

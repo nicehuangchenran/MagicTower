@@ -24,7 +24,7 @@
 
 #include "HelloWorldScene.h"
 #include "SettingScene.h"
-#include "test_start.h"
+#include "GameScene.h"
 #include "Introduction.h"
 #include "SimpleAudioEngine.h"
 
@@ -130,5 +130,5 @@ void HelloWorld::menuItemIntro(Ref *PSender)
 void HelloWorld::menuItemStart(Ref* PSender)
 {
     if (Setting::isEffect)  SimpleAudioEngine::getInstance()->playEffect("button_click.wav");
-    Director::getInstance()->pushScene(TransitionFadeTR::create(1.0f, test_start::createScene()));
+    Director::getInstance()->pushScene(TransitionFadeTR::create(1.0f, GameScene::createScene()));
 }

@@ -14,12 +14,12 @@ using namespace CocosDenshion;
 #include "Constants.h"
 #include "FightLayer.h"
 
-#include "Scene/test_start.h"
+#include "Scene/GameScene.h"
 
 #include "Entity/NPC.h"
 #include "Entity/Enemy.h"
 #include "Entity/Hero.h"
-#include "Entity/GameMap.h"
+#include "GameMap.h"
 #include "Entity/Teleport.h"
 
 #include "Saved/SavedProgress.h"
