@@ -35,6 +35,9 @@ void GameMap::mapInit()
 
     initEnemy();
     initObject();
+
+    /*if (sGlobal->curMaxLevel > sGlobal->currentLevel)
+        loadSaved();*/
 }
 
 void GameMap::initEnemy()

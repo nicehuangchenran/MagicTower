@@ -32,6 +32,8 @@ public:
 	Vector<Enemy*> enemyArray;
 	Map<int, Teleport*> teleportDict; // 传送门类
 	//Map<int, NPC*> npcDict;  // 有bug，暂且搁置
+
+	GameMap(const GameMap&map);
 };
 
 #endif // !_GAME_MAP_H_

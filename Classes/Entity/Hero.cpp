@@ -45,6 +45,11 @@ bool Hero::init(test_start* scene, Vec2 tilePosition)
 	//初始化状态数据
 	targetTilePosition = tilePosition;
 	targetGLPosition = sGlobal -> gameMap -> positionForTileCoord(tilePosition);
+	isStopping = true;
+	if (sGlobal->hero) {
+		*this = *sGlobal->hero;
+		return true;
+	}
 	blood = INIT_BLOOD;
 	atk = INIT_ATK;
 	def = INIT_DEF;
@@ -54,7 +59,7 @@ bool Hero::init(test_start* scene, Vec2 tilePosition)
 	key[ITEM_COLOR_RED] = 0;
 	sword = "无";
 	shield = "无";
-	isStopping = true;
+	
 	floor = 1;
 
 	//战斗界面
@@ -113,13 +118,13 @@ void Hero::move(EventKeyboard::KeyCode code)
 	
 	//碰撞检测
 	CollisionType colli = collisionCheck(targetGLPosition);
+	CCLOG("type = %d", colli);
 	if (colli == kWall || colli == kEnemy || colli == kDoor || colli == kNPC)
 	{
 		//脸部方向改变，绘制新图
 		this->image->setTextureRect(Rect(0, OBJECT_SIZE * faceDirection + 1, OBJECT_SIZE, OBJECT_SIZE));
 		return;
 	}
-	
 	//行走动画
 	walkAnimation(faceDirection);
 
@@ -134,6 +139,13 @@ void Hero::move(EventKeyboard::KeyCode code)
 	this->runAction(action);
 
 	isStopping = false;
+
+	if (colli == kTeleport) {
+		//this->setPosition(this->getPosition() - moveDist);
+		faceDirection = DIRECTION_DOWN;
+		this->image->setTextureRect(Rect(0, OBJECT_SIZE * faceDirection + 1, OBJECT_SIZE, OBJECT_SIZE));
+	}
+	CCLOG("x = %d y = %d", this->getPosition().x, this->getPosition().y);
 }
 
 void Hero::moveIsDone(Node* node)
@@ -235,11 +247,15 @@ CollisionType Hero::collisionCheck(Vec2 targetGLPosition)
 }
 
 void Hero::teleTransport(Teleport* teleport)
-{	// 获取目标层数与英雄位置，然后切换场景
+{	
+	sGlobal->saved->saveLevel(sGlobal->test_start);
+	this->setParent(nullptr);
+	// 获取目标层数与英雄位置，然后切换场景
 	sGlobal->currentLevel = teleport->targetID;
+	if (sGlobal->currentLevel > sGlobal->curMaxLevel)
+		sGlobal->curMaxLevel = sGlobal->currentLevel; //更新最高层数
 	sGlobal->heroSpawnTileCoord = teleport->targetHeroPosition;
-	Director::getInstance()->replaceScene(TransitionFadeTR::create(0.5f, sGlobal -> test_start -> createScene()));
-	
+	Director::getInstance()->pushScene(TransitionFadeTR::create(0.5f, sGlobal -> test_start -> createScene()));
 }
 
 void Hero::getItem(const int gid)

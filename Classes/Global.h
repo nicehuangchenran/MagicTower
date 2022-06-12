@@ -3,6 +3,7 @@
 
 #include "Singleton.h"
 #include "Entity/Enemy.h"
+#include "Constants.h"
 
 using namespace cocos2d;
 
@@ -13,6 +14,7 @@ class Hero;
 class ControlLayer;
 class Teleport;
 class test_start;
+class SavedProgress;
 
 class Global
 {
@@ -41,11 +43,20 @@ public:
 	//目标地图的层数
 	int currentLevel = 1;
 
+	//目前最高层数
+	int curMaxLevel = 1;
+
 	//勇士出现的起始位置
 	Vec2 heroSpawnTileCoord;
 	
 	// 怪物ID到怪物数据的映射
 	std::map<int, Enemy> enemyMap;
+
+	//当前存档
+	//SavedProgress* saved;
+	SavedProgress* saved;
+
+	GameMap* levels[LEVEL_NUM];
 };
 
 #endif // !_GLOBAL_H_

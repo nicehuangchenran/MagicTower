@@ -10,6 +10,9 @@ const int ENEMY_NUM = 16;
 //GID最大值
 const int GID_MAX = 360;
 
+//关卡总数
+const int LEVEL_NUM = 11;
+
 //怪物攻击类型
 const int ENEMY_TYPE_NORMAL = 0; //物攻类怪物
 const int ENEMY_TYPE_CRITICAL = 1; //暴击类怪物

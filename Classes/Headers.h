@@ -9,12 +9,16 @@
 #include "Global.h"
 #include "Constants.h"
 #include "FightLayer.h"
+
 #include "Scene/test_start.h"
+
 #include "Entity/NPC.h"
 #include "Entity/Enemy.h"
 #include "Entity/Hero.h"
 #include "Entity/GameMap.h"
 #include "Entity/Teleport.h"
+
+#include "Saved/SavedProgress.h"
 
 extern Global* sGlobal;
 

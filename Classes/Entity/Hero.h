@@ -58,6 +58,23 @@ public:
 
 	friend class FightLayer; //允许战斗时改变自己的属性
 	
+	Hero& operator=(const Hero& last)
+	{
+		blood = last.blood;
+		atk = last.atk;
+		def = last.def;
+		gold = last.gold;
+		floor = last.floor;
+		image = last.image;
+		key[YELLOW] = last.key[YELLOW];
+		key[BLUE] = last.key[BLUE];
+		key[RED] = last.key[RED];
+		sword = last.sword;
+		shield = last.shield;
+		fightLayer = last.fightLayer;
+		return *this;
+	}
+
 protected:
 	Sprite* image; //勇士形象图片
 	Vec2 targetTilePosition;  // 目标位置的Tile坐标

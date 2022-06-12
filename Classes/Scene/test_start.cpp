@@ -29,8 +29,8 @@ bool test_start::init()
     }
     
     auto visibleSize = Director::getInstance()->getVisibleSize();
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
-    
+    Vec2 origin = Director::getInstance()->getVisibleOrigin(); 
+
     //添加UI界面
     gameUI = Sprite::create("img/2.png");
     gameUI->setPosition(visibleSize / 2);
@@ -40,7 +40,13 @@ bool test_start::init()
     char mapID[20];
     sprintf(mapID, "%d.tmx", sGlobal->currentLevel);
     log("%s", mapID);
-    _tileMap = GameMap::create(mapID);
+    if (sGlobal->curMaxLevel > sGlobal->currentLevel) {
+        _tileMap = sGlobal->levels[sGlobal->currentLevel - 1];
+        sGlobal->gameMap = _tileMap;
+        _tileMap->setParent(nullptr);
+    }
+    else
+        _tileMap = GameMap::create(mapID);
     
     _tileMap -> setAnchorPoint(Vec2(0.5,0.5));
     _tileMap -> setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height / 2));
@@ -50,7 +56,12 @@ bool test_start::init()
     
     //添加英雄
     auto hero = Hero::create(this, Vec2(0, 0));
+    
     sGlobal->hero->setPosition(Vec2(sGlobal -> heroSpawnTileCoord));
+    hero->scene = this;
+    
+    if (hero->getParent())
+        hero->setParent(nullptr);
     addChild(sGlobal->hero, 0);
 
     initHeroProperties();
@@ -120,7 +131,7 @@ void test_start::flushHeroProperties()
     atkNum->setString(StringUtils::format("%d", sGlobal->hero->atkNum()));
     defNum->setString(StringUtils::format("%d", sGlobal->hero->defNum()));
     mnyNum->setString(StringUtils::format("%d", sGlobal->hero->mnyNum()));
-    floorNum->setString(StringUtils::format("%d", sGlobal->hero->floor));
+    floorNum->setString(StringUtils::format("%d", sGlobal->currentLevel));
     swordName->setString(StringUtils::format("%s", sGlobal->hero->swordName().data()));
     shieldName->setString(StringUtils::format("%s", sGlobal->hero->shieldName().data()));
 }
