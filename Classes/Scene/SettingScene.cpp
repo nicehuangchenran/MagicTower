@@ -1,10 +1,3 @@
-//
-//  SettingScene.cpp
-//  MagicTower
-//
-//  Created by 焦骜 on 2022/6/1.
-//
-
 #include "SettingScene.h"
 #include "HelloWorldScene.h"
 #include "ui/CocosGUI.h"
