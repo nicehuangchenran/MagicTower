@@ -38,9 +38,9 @@ void Global::initEnemyMap()
 	in.close();
 }
 
-void Global::gameOver()
+void Global::gameOver(const char* msg)
 {
-	auto label = LabelTTF::create("Game Over!", "Arial", 72);
+	auto label = LabelTTF::create(msg, "Arial", 72);
 	label->enableShadow(Size(5,5), 0.5f, 0.5f);
 	label->setColor(Color3B::RED);
 	label->setPosition(Director::getInstance()->getVisibleSize() / 2);

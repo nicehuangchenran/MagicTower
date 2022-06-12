@@ -41,7 +41,7 @@ bool GameScene::init()
     log("%s", mapID);
     if (sGlobal->curMaxLevel >= sGlobal->currentLevel) 
     {
-        _tileMap = sGlobal->levels[sGlobal->currentLevel - 1];
+        _tileMap = sGlobal->savedLevels[sGlobal->currentLevel - 1];
         sGlobal->gameMap = _tileMap;
         _tileMap->setParent(nullptr);
         _tileMap->initObject();
