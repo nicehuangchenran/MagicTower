@@ -84,10 +84,10 @@ void GameMap::initObject()
         std::string type = dict.at("type").asString();
       
         // 如果对象种类是npc，创建对象并加入npcDict中
-        if (type == "npc") 
+        if (type == "NPC") 
         {
             auto npc = new NPC(dict, x, y);
-            //npcDict.insert(index, npc);
+            npcDict.insert(index, npc);
         }
       
         // 如果对象种类是teleport，创建对象并加入teleportDict中

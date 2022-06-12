@@ -27,6 +27,7 @@ public:
 	void getSword(const WEAPON_TYPE type); //获得剑
 	void getShield(const WEAPON_TYPE type); //获得盾
 	void fightWithEnemy(const int enemyID, Vec2 targetTilePosition); //与怪物战斗
+	void npcTalk(const int npcID);
 	void walkAnimation(const int faceDirection); // 行走动画
 	void moveIsDone(Node* node); //将状态置为停止
 	void teleTransport(Teleport* teleport);

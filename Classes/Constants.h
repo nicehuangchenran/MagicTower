@@ -66,7 +66,7 @@ enum COLLISION_TYPE
 
 //英雄初始数值
 const int INIT_BLOOD = 400; //血量
-const int INIT_ATK = 10; //攻击
+const int INIT_ATK = 100; //攻击
 const int INIT_DEF = 10; //防御
 const int INIT_GOLD = 100; //金币
 
