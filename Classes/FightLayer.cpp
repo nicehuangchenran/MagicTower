@@ -184,7 +184,7 @@ void FightLayer::showLoseBlood(const int loseBlood, const ENEMY_TYPE type, const
 		{
 			this->removeChild(label);
 		},
-		NULL);
+		nullptr);
 
 	label->runAction(action);
 }

@@ -75,7 +75,7 @@ bool test_start::init()
 void test_start::initHeroProperties() {
 
     //初始化钥匙图案
-    for (int i = 0; i < 3; i++)
+    for (auto i : { 0,1,2 })
     {
         auto keyImg = Sprite::create("img/1.png", Rect(i * 32, 0, 32, 32));
         keyImg->setPosition(610, 256 - i * 26);
@@ -111,7 +111,7 @@ void test_start::initHeroProperties() {
 
 void test_start::flushHeroProperties()
 {
-    for (int i = 0; i < 3; i++)
+    for (auto i : { 0,1,2 })
     {
         keyNum[i]->setString(StringUtils::format("%d", sGlobal->hero->keyNum(i)));
     }

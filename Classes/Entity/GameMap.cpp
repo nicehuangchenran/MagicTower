@@ -74,9 +74,9 @@ void GameMap::initObject()
 {
     auto group = this->objectGroupNamed("object");
     const ValueVector& objects = group->getObjects();
-    for (ValueVector::const_iterator it = objects.begin(); it != objects.end(); it++)
+    for (auto obj : objects)
     {
-        const ValueMap& dict = (*it).asValueMap();
+        const ValueMap& dict = obj.asValueMap();
         int x = dict.at("x").asInt();
         int y = dict.at("y").asInt();
         auto tileCoord = tileCoordForPosition(Point(x, y));
@@ -134,7 +134,7 @@ void GameMap::showTip(const char* tip)
         {
             sGlobal->hero->removeChild(tipLabel);
         },
-        NULL);
+        nullptr);
 
     tipLabel->runAction(action);
 }
@@ -166,7 +166,7 @@ void GameMap::chooseInvincible()
     auto item2 = MenuItemFont::create("关闭无敌", CC_CALLBACK_1(GameMap::closeInvincible, this));
 
     //添加菜单
-    auto menu = Menu::create(item1,item2, NULL);
+    auto menu = Menu::create(item1,item2, nullptr);
     menu->alignItemsVertically();
     menu->setPosition(Vec2(-2 * OBJECT_SIZE-10, 4*OBJECT_SIZE));
     sGlobal->gameMap->addChild(menu);
@@ -179,8 +179,10 @@ void GameMap::openInvincible(Ref* pSender)
     sGlobal->hero->def = 999;
     sGlobal->hero->blood = 9999;
     sGlobal->hero->gold = 9999;
-    for (int i = 0; i < 4; i++)
+    for (auto i : { YELLOW,BLUE,RED })
+    {
         sGlobal->hero->key[i] = 100;
+    }
 }
 
 void GameMap::closeInvincible(Ref* pSender)
@@ -189,6 +191,8 @@ void GameMap::closeInvincible(Ref* pSender)
     sGlobal->hero->def = INIT_DEF;
     sGlobal->hero->blood = INIT_BLOOD;
     sGlobal->hero->gold = INIT_GOLD;
-    for (int i = 0; i < 4; i++)
+    for (auto i : { YELLOW,BLUE,RED })
+    {
         sGlobal->hero->key[i] = 0;
+    }
 }
