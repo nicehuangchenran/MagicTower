@@ -26,6 +26,8 @@ GameMap* GameMap::create(const char* filePath)
     }
 }
 
+
+
 void GameMap::mapInit()
 {
     floorLayer = this->getLayer("floor");
@@ -126,7 +128,7 @@ void GameMap::showTip(const char* tip)
         FadeOut::create(0.3f),
         [=]() 
         {
-            sGlobal->hero->removeChild(tipLabel);
+            sGlobal->hero->removeChild(tipLabel,true);
         },
         NULL);
 
@@ -151,7 +153,7 @@ void GameMap::showInfo(const char* info, int time)
     schedule([=](float dlt)
         {
             sGlobal->hero->isStopping = true;
-            sGlobal->hero->removeChild(label);
+            sGlobal->hero->removeChild(label,true);
             unschedule("tip");
         }
     , time / 1000.0f, "tip");

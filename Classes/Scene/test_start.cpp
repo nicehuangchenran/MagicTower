@@ -44,6 +44,8 @@ bool test_start::init()
         _tileMap = sGlobal->levels[sGlobal->currentLevel - 1];
         sGlobal->gameMap = _tileMap;
         _tileMap->setParent(nullptr);
+        _tileMap->initObject();
+        
     }
     else
         _tileMap = GameMap::create(mapID);
@@ -53,17 +55,19 @@ bool test_start::init()
     addChild(_tileMap, 0, 1);
     auto tileSize = _tileMap->getTileSize();
     auto tileMapSize = Size(_tileMap->getMapSize().width * tileSize.width, _tileMap->getMapSize().height * tileSize.height);
-    
+    //this->reorderChild(this->getChildByName("tel"), 2);
     //添加英雄
-    auto hero = Hero::create(this, Vec2(0, 0));
+    //if (sGlobal->hero)    this->removeChild(sGlobal->hero);
+    auto hero = Hero::create(this, Vec2(sGlobal->heroSpawnTileCoord));
     
-    sGlobal->hero->setPosition(Vec2(sGlobal -> heroSpawnTileCoord));
-    hero->scene = this;
-    
+    sGlobal->hero->setPosition(Vec2(sGlobal->heroSpawnTileCoord));
+    addChild(hero, 0,"hero");
+
+    /*
     if (hero->getParent())
         hero->setParent(nullptr);
-    addChild(sGlobal->hero, 0);
-
+    
+    */
     initHeroProperties();
 
     auto listenerkey = EventListenerKeyboard::create();

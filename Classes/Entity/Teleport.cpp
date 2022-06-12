@@ -20,7 +20,7 @@ Teleport::Teleport(const ValueMap& dict, const int x, const int y)
 	teleport->setPosition(Vec2(telePosition));
 
 	//sGlobal->test_start->addChild(teleport,1);
-	sGlobal->test_start->addChild(teleport, 1, "tel");
+	sGlobal->test_start->addChild(teleport, 2, "tel");
 }
 
 Teleport::~Teleport()

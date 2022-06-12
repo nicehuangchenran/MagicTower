@@ -47,14 +47,11 @@ bool Hero::init(test_start* scene, Vec2 tilePosition)
 	targetGLPosition = sGlobal -> gameMap -> positionForTileCoord(tilePosition);
 	isStopping = true;
 
-	//设置精灵
-	image = Sprite::create("img/1.png", Rect(0, OBJECT_SIZE * 10 + 1, OBJECT_SIZE, OBJECT_SIZE));//创建精灵
-	image->setAnchorPoint(Point::ZERO);//设置锚点为左下角
-	this->addChild(image);//绑定精灵
-
 	//绑定场景
 	this->scene = scene;
-
+	this->initWithFile("img/1.png", Rect(0, OBJECT_SIZE * 10 + 1, OBJECT_SIZE, OBJECT_SIZE));
+	this->setAnchorPoint(Vec2::ZERO);
+	this->setPosition(targetGLPosition);
 	if (sGlobal->hero) {
 		*this = *sGlobal->hero;
 		return true;
@@ -124,14 +121,14 @@ void Hero::move(EventKeyboard::KeyCode code)
 	if (colli == kWall || colli == kEnemy || colli == kDoor || colli == kNPC)
 	{
 		//脸部方向改变，绘制新图
-		this->image->setTextureRect(Rect(0, OBJECT_SIZE * faceDirection + 1, OBJECT_SIZE, OBJECT_SIZE));
+		this->setTextureRect(Rect(0, OBJECT_SIZE * faceDirection + 1, OBJECT_SIZE, OBJECT_SIZE));
 		return;
 	}
 	//行走动画
 	walkAnimation(faceDirection);
 
 	//脸部方向改变，绘制新图
-	this->image->setTextureRect(Rect(0, OBJECT_SIZE * faceDirection + 1, OBJECT_SIZE, OBJECT_SIZE));
+	this->setTextureRect(Rect(0, OBJECT_SIZE * faceDirection + 1, OBJECT_SIZE, OBJECT_SIZE));
 
 	//移动到新位置
 	Action* action = Sequence::create(
@@ -167,7 +164,7 @@ void Hero::walkAnimation(int faceDirection)
 	animFrames.pushBack(frame2);
 	animFrames.pushBack(frame3);
 	auto animation = Animation::createWithSpriteFrames(animFrames, 0.05f);
-	image->runAction(Repeat::create(Animate::create(animation), 1));
+	this->runAction(Repeat::create(Animate::create(animation), 1));
 }
 
 CollisionType Hero::collisionCheck(Vec2 targetGLPosition)

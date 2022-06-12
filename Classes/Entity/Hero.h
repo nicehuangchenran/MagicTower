@@ -11,7 +11,7 @@ USING_NS_CC;
 class FightLayer;
 class test_start;
 
-class Hero :public Node {
+class Hero :public Sprite {
 public:
 	enum Color {
 		YELLOW = 0,
